@@ -1,0 +1,80 @@
+//获取系统用户目录
+def get_UserHome() {
+    String home = System.properties['user.home']
+    println("userHome: $home")
+    return home
+}
+
+//获取local.properties解析
+def get_LocalProperties() {
+    Properties properties = null
+    File f = rootProject.file('local.properties')
+    if (f.exists()) {
+        println("localProperties: ${f.absolutePath}")
+        properties = new Properties()
+        properties.load(f.newDataInputStream())
+    }
+    return properties
+}
+
+//获取Android SDK目录
+def get_SdkPath() {
+    String DEF_PATH = "/opt/android-sdk-linux"
+    String sdkPath = null
+    Properties properties = localProperties
+    if (properties != null) {
+        sdkPath = properties.getProperty('sdk.dir')
+        println("sdk.dir: $sdkPath")
+    }
+    if (sdkPath == null) {
+        sdkPath = System.getenv()['ANDROID_HOME']
+        println("ANDROID_HOME: $sdkPath")
+    }
+    if (sdkPath == null) {
+        sdkPath = System.getenv()['ANDROID_SDK']
+        println("ANDROID_SDK: $sdkPath")
+    }
+    if (sdkPath == null) {
+        sdkPath = DEF_PATH
+        println("DEF_SDK: $sdkPath")
+    }
+    return sdkPath
+}
+
+ext {
+    userHome = _UserHome
+    localProperties = _LocalProperties
+    sdkPath = _SdkPath
+    defMaven = "http://maven.aliyun.com/nexus/content/groups/public"
+
+    android = [
+            pluginVersion    : "3.1.2",
+            properties       : localProperties,
+            sdkPath          : sdkPath,
+            //////////////////////////////////
+            compileSdkVersion: 27,
+            buildToolsVersion: "27.0.3",
+            minSdkVersion    : 21,
+            targetSdkVersion : 27,
+            versionCode      : 10000,
+            versionName      : "1.0.0",
+            supportVersion   : "27.1.1",
+            kotlin_stdlib    : "1.2.+",
+            anko_version     : "0.10.+",
+    ]
+
+    maven = [
+
+            gradleCache        : "file:${userHome}/.gradle/caches/modules-2/files-2.1",
+            sdkMaven           : "file:${android.sdkPath}/extras/m2repository",
+            sdkAndroidMaven    : "file:${android.sdkPath}/extras/android/m2repository",
+            sdkGoogleMaven     : "file:${android.sdkPath}/extras/google/m2repository",
+            aliyunMaven        : "http://maven.aliyun.com/nexus/content/groups/public",
+            jcenter            : "http://jcenter.bintray.com",
+            mavenCenter        : "https://repo1.maven.org/maven2/",
+            googleMaven        : "https://maven.google.com",
+            jitpack            : "https://jitpack.io",
+            igexin             : "http://mvn.gt.igexin.com/nexus/content/repositories/releases/",
+    ]
+
+}
