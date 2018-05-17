@@ -1,2 +1,1 @@
-include ':app', ':ijkplayer_videocache', ':ijkplayer_exo2', ':ijkplayer_java'
-//include ':app', ':gsyVideoPlayer', ':gsyVideoPlayer-java', ':gsyvideoplayer-androidvideocache', ':gsyvideoplayer-exo2'
+include ':app'

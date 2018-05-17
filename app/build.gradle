@@ -1,35 +1,18 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
+
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
 
 android {
-
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
-
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.ybj366533.yy_videoplayer"
-
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode rootProject.ext.android.versionCode
-        versionName rootProject.ext.android.versionName
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        multiDexEnabled true
-
-        externalNativeBuild {
-            cmake {
-                cppFlags ""
-            }
-        }
-
-//        ndk {
-//            // 设置支持的 SO 库构架，注意这里要根据你的实际情况来设置
-//            abiFilters 'armeabi', 'armeabi-v7a', 'x86'
-//            //abiFilters 'armeabi', 'armeabi-v7a', 'x86', 'arm64-v8a', 'x86_64', 'mips', 'mips64'
-//        }
     }
     buildTypes {
         release {
@@ -37,77 +20,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
-        }
-    }
-
-
-    lintOptions {
-        abortOnError false
-    }
-
-    dataBinding {
-        enabled true
-    }
-
-    sourceSets {
-        main.java.srcDirs = ['src/main/kotlin', 'src/main/java']
-    }
-
-
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    testImplementation 'junit:junit:4.12'
-    kapt rootProject.ext.dependencies['databinding-compile']
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version", {}
-
-    implementation rootProject.ext.dependencies['multidex']
-    implementation rootProject.ext.dependencies['anko']
-    implementation rootProject.ext.dependencies['appcompat-v7']
-    implementation rootProject.ext.dependencies['recyclerview-v7']
-    implementation rootProject.ext.dependencies['design']
-    implementation rootProject.ext.dependencies['support-annotations']
-
-    implementation rootProject.ext.dependencies['eventbus']
-    //implementation rootProject.ext.dependencies['nineoldandroids']
-    //RxJava
-    implementation rootProject.ext.dependencies['rxjava2']
-    implementation rootProject.ext.dependencies['rxandroid2']
-    implementation rootProject.ext.dependencies['rxpermissions2']
-    implementation rootProject.ext.dependencies['rxlifecycle2'], {
-        exclude module: 'rxjava'
-    }
-    implementation rootProject.ext.dependencies['rxlifecycle2-components']
-    //implementation rootProject.ext.dependencies['rxlifecycle2-kotlin']
-
-    //retrofit网络
-    implementation rootProject.ext.dependencies['retrofit']
-    implementation rootProject.ext.dependencies['retrofit-converter-gson']
-    implementation rootProject.ext.dependencies['retrofit-adapter-rxjava2']
-    implementation rootProject.ext.dependencies['logging-interceptor']
-
-    implementation rootProject.ext.dependencies['glide'], {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    implementation rootProject.ext.dependencies['android-gif-drawable']
-    implementation rootProject.ext.dependencies['WheelPicker']
-    implementation rootProject.ext.dependencies['ucrop']
-    implementation rootProject.ext.dependencies['PhotoPicker'], {
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude module: 'appcompat-v7'
-        exclude module: 'recyclerview-v7'
-        exclude module: 'design'
-        exclude module: 'glide'
-    }
-    implementation rootProject.ext.dependencies['cymRecyclerViewAdapter']
 }
