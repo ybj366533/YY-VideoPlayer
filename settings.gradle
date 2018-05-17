@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':videoplayer', ':videoplayer-androidvideocache', ':videoplayer-exo2'

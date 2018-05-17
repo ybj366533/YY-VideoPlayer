@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/YY-VideoPlayer.iml" filepath="$PROJECT_DIR$/YY-VideoPlayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/videoplayer/videoplayer.iml" filepath="$PROJECT_DIR$/videoplayer/videoplayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/videoplayer-androidvideocache/videoplayer-androidvideocache.iml" filepath="$PROJECT_DIR$/videoplayer-androidvideocache/videoplayer-androidvideocache.iml" />
+      <module fileurl="file://$PROJECT_DIR$/videoplayer-exo2/videoplayer-exo2.iml" filepath="$PROJECT_DIR$/videoplayer-exo2/videoplayer-exo2.iml" />
     </modules>
   </component>
 </project>

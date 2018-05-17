@@ -5,14 +5,26 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
     defaultConfig {
         applicationId "com.ybj366533.yy_videoplayer"
-        minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions.includeCompileClasspath = true
+        }
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi', 'armeabi-v7a', 'x86'
+        }
+
     }
     buildTypes {
         release {
@@ -30,4 +42,28 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+
+    annotationProcessor rootProject.ext.dependencies['apt_butterKnife']
+    compile rootProject.ext.dependencies['butterKnife']
+    compile rootProject.ext.dependencies['recyclerview-v7']
+    compile rootProject.ext.dependencies['support-v4']
+    compile rootProject.ext.dependencies['design']
+
+//    compile rootProject.ext.dependencies['rxjava2']
+//    compile rootProject.ext.dependencies['rxandroid2']
+//    compile rootProject.ext.dependencies['rxpermissions2']
+//    compile rootProject.ext.dependencies['rxlifecycle2'], {
+//        exclude module: 'rxjava'
+//    }
+//    compile rootProject.ext.dependencies['rxlifecycle2-components']
+
+    compile rootProject.ext.dependencies['glide']
+    compile rootProject.ext.dependencies['glide-loader-okhttp3']
+    compile rootProject.ext.dependencies['fresco']
+
+    compile rootProject.ext.dependencies['cymRecyclerViewAdapter']
+
+
+    compile project(':videoplayer')
 }
