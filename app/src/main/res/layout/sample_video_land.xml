@@ -101,7 +101,7 @@
         android:layout_marginTop="6dp"
         android:visibility="gone" />
 
-    <com.migu.videoplayer.view.ENDownloadView
+    <com.ybj366533.videoplayer.view.ENDownloadView
         android:id="@+id/loading"
         android:layout_width="28dp"
         android:layout_height="28dp"

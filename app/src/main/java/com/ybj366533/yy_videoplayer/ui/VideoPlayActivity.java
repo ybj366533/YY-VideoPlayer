@@ -10,7 +10,7 @@ import android.transition.Transition;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.migu.videoplayer.VideoManager;
+import com.ybj366533.videoplayer.VideoManager;
 import com.ybj366533.yy_videoplayer.R;
 import com.ybj366533.yy_videoplayer.listener.OnTransitionListener;
 import com.ybj366533.yy_videoplayer.model.SwitchVideoModel;

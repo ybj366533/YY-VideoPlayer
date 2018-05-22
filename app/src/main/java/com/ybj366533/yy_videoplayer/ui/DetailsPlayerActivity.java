@@ -8,8 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.migu.videoplayer.VideoManager;
-import com.migu.videoplayer.utils.OrientationUtils;
+import com.ybj366533.videoplayer.VideoManager;
+import com.ybj366533.videoplayer.utils.OrientationUtils;
 import com.ybj366533.yy_videoplayer.R;
 import com.ybj366533.yy_videoplayer.model.SwitchVideoModel;
 import com.ybj366533.yy_videoplayer.video.SampleVideo;

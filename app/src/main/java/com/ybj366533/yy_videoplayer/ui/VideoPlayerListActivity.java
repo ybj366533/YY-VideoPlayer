@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
 
-import com.migu.videoplayer.VideoManager;
+import com.ybj366533.videoplayer.VideoManager;
 import com.ybj366533.yy_videoplayer.R;
 import com.ybj366533.yy_videoplayer.adapter.VideoPlayerListAdapter;
 import com.ybj366533.yy_videoplayer.model.PlayerVideoModel;

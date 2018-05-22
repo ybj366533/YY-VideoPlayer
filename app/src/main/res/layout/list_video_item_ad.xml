@@ -9,7 +9,7 @@
         android:layout_height="@dimen/post_media_height" />
 
 
-    <com.migu.videoplayer.video.ADVideoPlayer
+    <com.ybj366533.videoplayer.video.ADVideoPlayer
         android:id="@+id/video_ad_player"
         android:layout_width="match_parent"
         android:layout_height="@dimen/post_media_height"

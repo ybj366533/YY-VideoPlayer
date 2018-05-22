@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-import com.migu.videoplayer.VideoBaseManager;
-import com.migu.videoplayer.utils.CommonUtil;
-import com.migu.videoplayer.video.base.VideoPlayer;
+import com.ybj366533.videoplayer.VideoBaseManager;
+import com.ybj366533.videoplayer.utils.CommonUtil;
+import com.ybj366533.videoplayer.video.base.VideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import java.util.Map;
 
 import tv.danmaku.ijk.media.player.IjkLibLoader;
 
-import static com.migu.videoplayer.utils.CommonUtil.hideNavKey;
+import static com.ybj366533.videoplayer.utils.CommonUtil.hideNavKey;
 
 //import com.example.gsyvideoplayer.R;
 

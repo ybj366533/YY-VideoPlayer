@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.migu.videoplayer.utils.FileUtils;
+import com.ybj366533.videoplayer.utils.FileUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;

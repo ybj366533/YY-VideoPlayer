@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.migu.videoplayer.utils.VideoHelper;
+import com.ybj366533.videoplayer.utils.VideoHelper;
 import com.ybj366533.yy_videoplayer.R;
 import com.ybj366533.yy_videoplayer.model.VideoModel;
 

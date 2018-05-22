@@ -3,7 +3,7 @@ package com.ybj366533.yy_videoplayer.effect;
 import android.graphics.Bitmap;
 import android.opengl.GLSurfaceView;
 
-import com.migu.videoplayer.render.view.MiguVideoGLView.ShaderInterface;
+import com.ybj366533.videoplayer.render.view.MiguVideoGLView.ShaderInterface;
 
 
 /**

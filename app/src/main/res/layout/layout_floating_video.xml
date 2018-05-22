@@ -12,7 +12,7 @@
 
     </FrameLayout>
 
-    <com.migu.videoplayer.view.ENPlayView
+    <com.ybj366533.videoplayer.view.ENPlayView
         android:id="@+id/start"
         android:layout_width="35dp"
         android:layout_height="35dp"

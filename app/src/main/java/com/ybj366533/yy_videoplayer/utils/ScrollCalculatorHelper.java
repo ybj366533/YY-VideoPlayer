@@ -8,8 +8,8 @@ import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-import com.migu.videoplayer.utils.NetworkUtils;
-import com.migu.videoplayer.video.base.BaseVideoPlayer;
+import com.ybj366533.videoplayer.utils.NetworkUtils;
+import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
 
 /**
  * 计算滑动，自动播放的帮助类
@@ -131,7 +131,7 @@ public class ScrollCalculatorHelper {
 
     /***************************************自动播放的点击播放确认******************************************/
     private void startPlayLogic(BaseVideoPlayer gsyBaseVideoPlayer, Context context) {
-        if (!com.migu.videoplayer.utils.CommonUtil.isWifiConnected(context)) {
+        if (!com.ybj366533.videoplayer.utils.CommonUtil.isWifiConnected(context)) {
             //这里判断是否wifi
             showWifiDialog(gsyBaseVideoPlayer, context);
             return;
@@ -141,19 +141,19 @@ public class ScrollCalculatorHelper {
 
     private void showWifiDialog(final BaseVideoPlayer gsyBaseVideoPlayer, Context context) {
         if (!NetworkUtils.isAvailable(context)) {
-            Toast.makeText(context, context.getResources().getString(com.migu.videoplayer.R.string.no_net), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getResources().getString(com.ybj366533.videoplayer.R.string.no_net), Toast.LENGTH_LONG).show();
             return;
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(context.getResources().getString(com.migu.videoplayer.R.string.tips_not_wifi));
-        builder.setPositiveButton(context.getResources().getString(com.migu.videoplayer.R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
+        builder.setMessage(context.getResources().getString(com.ybj366533.videoplayer.R.string.tips_not_wifi));
+        builder.setPositiveButton(context.getResources().getString(com.ybj366533.videoplayer.R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 gsyBaseVideoPlayer.startPlayLogic();
             }
         });
-        builder.setNegativeButton(context.getResources().getString(com.migu.videoplayer.R.string.tips_not_wifi_cancel), new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(context.getResources().getString(com.ybj366533.videoplayer.R.string.tips_not_wifi_cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

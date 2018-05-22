@@ -7,10 +7,10 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
 import com.bumptech.glide.Glide;
-import com.migu.videoplayer.utils.CommonUtil;
-import com.migu.videoplayer.utils.Debuger;
-import com.migu.videoplayer.video.NormalVideoPlayer;
-import com.migu.videoplayer.video.base.BaseVideoPlayer;
+import com.ybj366533.videoplayer.utils.CommonUtil;
+import com.ybj366533.videoplayer.utils.Debuger;
+import com.ybj366533.videoplayer.video.NormalVideoPlayer;
+import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 
 //import com.example.gsyvideoplayer.R;

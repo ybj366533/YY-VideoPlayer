@@ -9,14 +9,14 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.migu.videoplayer.listener.VideoShotListener;
-import com.migu.videoplayer.listener.VideoShotSaveListener;
-import com.migu.videoplayer.render.RenderView;
-import com.migu.videoplayer.render.glrender.VideoGLViewBaseRender;
-import com.migu.videoplayer.render.view.IMiGuRenderView;
-import com.migu.videoplayer.render.view.MiguVideoGLView;
-import com.migu.videoplayer.render.view.listener.IMiGuSurfaceListener;
-import com.migu.videoplayer.utils.MeasureHelper;
+import com.ybj366533.videoplayer.listener.VideoShotListener;
+import com.ybj366533.videoplayer.listener.VideoShotSaveListener;
+import com.ybj366533.videoplayer.render.RenderView;
+import com.ybj366533.videoplayer.render.glrender.VideoGLViewBaseRender;
+import com.ybj366533.videoplayer.render.view.IMiGuRenderView;
+import com.ybj366533.videoplayer.render.view.MiguVideoGLView;
+import com.ybj366533.videoplayer.render.view.listener.IMiGuSurfaceListener;
+import com.ybj366533.videoplayer.utils.MeasureHelper;
 
 import java.io.File;
 

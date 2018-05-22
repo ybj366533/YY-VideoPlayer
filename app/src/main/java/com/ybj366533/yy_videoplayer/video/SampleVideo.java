@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.migu.videoplayer.utils.VideoType;
-import com.migu.videoplayer.video.StandardVideoPlayer;
-import com.migu.videoplayer.video.base.BaseVideoPlayer;
-import com.migu.videoplayer.video.base.VideoPlayer;
+import com.ybj366533.videoplayer.utils.VideoType;
+import com.ybj366533.videoplayer.video.StandardVideoPlayer;
+import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
+import com.ybj366533.videoplayer.video.base.VideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 import com.ybj366533.yy_videoplayer.model.SwitchVideoModel;
 import com.ybj366533.yy_videoplayer.view.SwitchVideoTypeDialog;

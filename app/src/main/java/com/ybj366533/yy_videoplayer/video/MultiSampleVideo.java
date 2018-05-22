@@ -6,8 +6,8 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.danikula.videocache.HttpProxyCacheServer;
-import com.migu.videoplayer.utils.Debuger;
-import com.migu.videoplayer.video.base.MiGuVideoViewBridge;
+import com.ybj366533.videoplayer.utils.Debuger;
+import com.ybj366533.videoplayer.video.base.MiGuVideoViewBridge;
 import com.ybj366533.yy_videoplayer.video.manager.CustomManager;
 
 import java.io.File;

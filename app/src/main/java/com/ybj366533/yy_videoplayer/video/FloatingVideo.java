@@ -7,14 +7,14 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.migu.videoplayer.utils.Debuger;
-import com.migu.videoplayer.video.StandardVideoPlayer;
+import com.ybj366533.videoplayer.utils.Debuger;
+import com.ybj366533.videoplayer.video.StandardVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.migu.videoplayer.utils.CommonUtil.hideNavKey;
+import static com.ybj366533.videoplayer.utils.CommonUtil.hideNavKey;
 
 //import com.example.gsyvideoplayer.R;
 
@@ -59,7 +59,7 @@ public class FloatingVideo extends StandardVideoPlayer {
         mScreenWidth = getActivityContext().getResources().getDisplayMetrics().widthPixels;
         mScreenHeight = getActivityContext().getResources().getDisplayMetrics().heightPixels;
         mAudioManager = (AudioManager) getActivityContext().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-        mStartButton = findViewById(com.migu.videoplayer.R.id.start);
+        mStartButton = findViewById(com.ybj366533.videoplayer.R.id.start);
         mStartButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

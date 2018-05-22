@@ -5,8 +5,8 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.migu.videoplayer.video.StandardVideoPlayer;
-import com.migu.videoplayer.video.base.BaseVideoPlayer;
+import com.ybj366533.videoplayer.video.StandardVideoPlayer;
+import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 
 /**

@@ -3,7 +3,7 @@ package com.ybj366533.yy_videoplayer.video;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.migu.videoplayer.video.StandardVideoPlayer;
+import com.ybj366533.videoplayer.video.StandardVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 
 /**

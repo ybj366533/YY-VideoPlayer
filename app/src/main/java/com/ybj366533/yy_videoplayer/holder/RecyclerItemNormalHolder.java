@@ -5,10 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.migu.videoplayer.VideoManager;
-import com.migu.videoplayer.builder.VideoOptionBuilder;
-import com.migu.videoplayer.listener.SampleCallBack;
-import com.migu.videoplayer.video.StandardVideoPlayer;
+import com.ybj366533.videoplayer.VideoManager;
+import com.ybj366533.videoplayer.builder.VideoOptionBuilder;
+import com.ybj366533.videoplayer.listener.SampleCallBack;
+import com.ybj366533.videoplayer.video.StandardVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 import com.ybj366533.yy_videoplayer.model.VideoModel;
 

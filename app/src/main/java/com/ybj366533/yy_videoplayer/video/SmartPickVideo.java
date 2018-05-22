@@ -8,11 +8,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.danikula.videocache.HttpProxyCacheServer;
-import com.migu.videoplayer.VideoManager;
-import com.migu.videoplayer.listener.MediaPlayerListener;
-import com.migu.videoplayer.video.StandardVideoPlayer;
-import com.migu.videoplayer.video.base.BaseVideoPlayer;
-import com.migu.videoplayer.video.base.VideoPlayer;
+import com.ybj366533.videoplayer.VideoManager;
+import com.ybj366533.videoplayer.listener.MediaPlayerListener;
+import com.ybj366533.videoplayer.video.StandardVideoPlayer;
+import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
+import com.ybj366533.videoplayer.video.base.VideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 import com.ybj366533.yy_videoplayer.model.SwitchVideoModel;
 import com.ybj366533.yy_videoplayer.view.LoadingDialog;

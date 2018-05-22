@@ -12,25 +12,25 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
 
-import com.migu.videoplayer.builder.VideoOptionBuilder;
-import com.migu.videoplayer.listener.LockClickListener;
-import com.migu.videoplayer.listener.VideoAllCallBack;
-import com.migu.videoplayer.listener.VideoProgressListener;
-import com.migu.videoplayer.render.view.MiguVideoGLView;
-import com.migu.videoplayer.utils.Debuger;
-import com.migu.videoplayer.utils.OrientationUtils;
-import com.migu.videoplayer.video.StandardVideoPlayer;
-import com.migu.videoplayer.video.base.BaseVideoPlayer;
-import com.migu.videoplayer.video.base.VideoPlayer;
+import com.ybj366533.videoplayer.builder.VideoOptionBuilder;
+import com.ybj366533.videoplayer.listener.LockClickListener;
+import com.ybj366533.videoplayer.listener.VideoAllCallBack;
+import com.ybj366533.videoplayer.listener.VideoProgressListener;
+import com.ybj366533.videoplayer.render.view.MiguVideoGLView;
+import com.ybj366533.videoplayer.utils.Debuger;
+import com.ybj366533.videoplayer.utils.OrientationUtils;
+import com.ybj366533.videoplayer.video.StandardVideoPlayer;
+import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
+import com.ybj366533.videoplayer.video.base.VideoPlayer;
 import com.transitionseverywhere.TransitionManager;
 
 import java.io.File;
 import java.util.Map;
 
-import static com.migu.videoplayer.utils.CommonUtil.getActionBarHeight;
-import static com.migu.videoplayer.utils.CommonUtil.getStatusBarHeight;
-import static com.migu.videoplayer.utils.CommonUtil.hideNavKey;
-import static com.migu.videoplayer.utils.CommonUtil.showNavKey;
+import static com.ybj366533.videoplayer.utils.CommonUtil.getActionBarHeight;
+import static com.ybj366533.videoplayer.utils.CommonUtil.getStatusBarHeight;
+import static com.ybj366533.videoplayer.utils.CommonUtil.hideNavKey;
+import static com.ybj366533.videoplayer.utils.CommonUtil.showNavKey;
 
 
 /**
@@ -111,7 +111,7 @@ public class SmallVideoHelper {
     public SmallVideoHelper(Context context, StandardVideoPlayer player) {
         gsyVideoPlayer = player;
         this.context = context;
-        this.windowViewContainer = (ViewGroup) (com.migu.videoplayer.utils.CommonUtil.scanForActivity(context)).findViewById(Window.ID_ANDROID_CONTENT);
+        this.windowViewContainer = (ViewGroup) (com.ybj366533.videoplayer.utils.CommonUtil.scanForActivity(context)).findViewById(Window.ID_ANDROID_CONTENT);
 
     }
 
@@ -120,7 +120,7 @@ public class SmallVideoHelper {
      */
     private void resolveToFull() {
         systemUiVisibility = ((Activity) context).getWindow().getDecorView().getSystemUiVisibility();
-        com.migu.videoplayer.utils.CommonUtil.hideSupportActionBar(context, gsyVideoOptionBuilder.isHideActionBar(), gsyVideoOptionBuilder.isHideStatusBar());
+        com.ybj366533.videoplayer.utils.CommonUtil.hideSupportActionBar(context, gsyVideoOptionBuilder.isHideActionBar(), gsyVideoOptionBuilder.isHideStatusBar());
         if (gsyVideoOptionBuilder.isHideKey()) {
             hideNavKey(context);
         }
@@ -255,7 +255,7 @@ public class SmallVideoHelper {
                 if (gsyVideoOptionBuilder.isHideKey()) {
                     showNavKey(context, systemUiVisibility);
                 }
-                com.migu.videoplayer.utils.CommonUtil.showSupportActionBar(context, gsyVideoOptionBuilder.isHideActionBar(), gsyVideoOptionBuilder.isHideStatusBar());
+                com.ybj366533.videoplayer.utils.CommonUtil.showSupportActionBar(context, gsyVideoOptionBuilder.isHideActionBar(), gsyVideoOptionBuilder.isHideStatusBar());
             }
         }, delay);
     }
