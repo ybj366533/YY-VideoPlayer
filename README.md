@@ -11,7 +11,7 @@
 * **UI      UI控件层**：VideoControlView、VideoPlayer、StandardVideoPlayer。
 #### 结构如下图：
 
-![框架图](https://gitee.com/MiGu_902N/MiGuVideoPlayer/raw/master/MiGuPlayer_Structure.jpeg)
+![框架图](https://github.com/ybj366533/YY-VideoPlayer/blob/master/VideoPalyer_Structure.jpg)
 
 
 #### 应用接口文档
