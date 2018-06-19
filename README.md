@@ -2,10 +2,10 @@
 
 #### 项目介绍
 基于IJKPlayer 的视频播放器 （demo实现）
-1.UGC 仿抖音播放页
-2.点播 仿bili播放页
-3.列表点播
-4.列表自动播放 仿知乎
+* 1.UGC 仿抖音播放页
+* 2.点播 仿bili播放页
+* 3.列表点播
+* 4.列表自动播放 仿知乎
 
 #### 软件架构
 * **Player  播放内核层**：IjkMediaPlayer、ExoPlayr2、MediaPlayer（IPlayerManager）。
