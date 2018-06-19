@@ -9,11 +9,11 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.danikula.videocache.HttpProxyCacheServer;
+//import com.danikula.videocache.HttpProxyCacheServer;
 import com.ybj366533.videoplayer.R;
 import com.ybj366533.videoplayer.VideoADManager;
 import com.ybj366533.videoplayer.utils.CommonUtil;
-import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
 import com.ybj366533.videoplayer.video.base.MiGuVideoViewBridge;
 
 import java.io.File;
@@ -87,10 +87,10 @@ public class ADVideoPlayer extends StandardVideoPlayer {
         VideoADManager.releaseAllVideos();
     }
 
-    @Override
-    protected HttpProxyCacheServer getProxy(Context context, File file) {
-        return VideoADManager.getProxy(context, file);
-    }
+//    @Override
+//    protected HttpProxyCacheServer getProxy(Context context, File file) {
+//        return VideoADManager.getProxy(context, file);
+//    }
 
 
     @Override
@@ -205,7 +205,7 @@ public class ADVideoPlayer extends StandardVideoPlayer {
     }
 
     @Override
-    protected void cloneParams(BaseVideoPlayer from, BaseVideoPlayer to) {
+    protected void cloneParams(MiGuVideoPlayer from, MiGuVideoPlayer to) {
         super.cloneParams(from, to);
         ADVideoPlayer sf = (ADVideoPlayer) from;
         ADVideoPlayer st = (ADVideoPlayer) to;

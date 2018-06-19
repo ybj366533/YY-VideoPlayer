@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-import com.danikula.videocache.HttpProxyCacheServer;
+//import com.danikula.videocache.HttpProxyCacheServer;
 import com.ybj366533.videoplayer.listener.MediaPlayerListener;
 import com.ybj366533.videoplayer.utils.CommonUtil;
-import com.ybj366533.videoplayer.video.base.VideoPlayer;
+import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
 
 import java.io.File;
 
@@ -84,43 +84,43 @@ public class VideoManager extends VideoBaseManager {
     /**
      * 获取缓存代理服务
      */
-    protected static HttpProxyCacheServer getProxy(Context context) {
-        HttpProxyCacheServer proxy = VideoManager.instance().proxy;
-        return proxy == null ? (VideoManager.instance().proxy =
-                VideoManager.instance().newProxy(context)) : proxy;
-    }
+//    protected static HttpProxyCacheServer getProxy(Context context) {
+//        HttpProxyCacheServer proxy = VideoManager.instance().proxy;
+//        return proxy == null ? (VideoManager.instance().proxy =
+//                VideoManager.instance().newProxy(context)) : proxy;
+//    }
 
 
     /**
      * 获取缓存代理服务,带文件目录的
      */
-    public static HttpProxyCacheServer getProxy(Context context, File file) {
-
-        //如果为空，返回默认的
-        if (file == null) {
-            return getProxy(context);
-        }
-
-        //如果已经有缓存文件路径，那么判断缓存文件路径是否一致
-        if (VideoManager.instance().cacheFile != null
-                && !VideoManager.instance().cacheFile.getAbsolutePath().equals(file.getAbsolutePath())) {
-            //不一致先关了旧的
-            HttpProxyCacheServer proxy = VideoManager.instance().proxy;
-
-            if (proxy != null) {
-                proxy.shutdown();
-            }
-            //开启新的
-            return (VideoManager.instance().proxy =
-                    VideoManager.instance().newProxy(context, file));
-        } else {
-            //还没有缓存文件的或者一致的，返回原来
-            HttpProxyCacheServer proxy = VideoManager.instance().proxy;
-
-            return proxy == null ? (VideoManager.instance().proxy =
-                    VideoManager.instance().newProxy(context, file)) : proxy;
-        }
-    }
+//    public static HttpProxyCacheServer getProxy(Context context, File file) {
+//
+//        //如果为空，返回默认的
+//        if (file == null) {
+//            return getProxy(context);
+//        }
+//
+//        //如果已经有缓存文件路径，那么判断缓存文件路径是否一致
+//        if (VideoManager.instance().cacheFile != null
+//                && !VideoManager.instance().cacheFile.getAbsolutePath().equals(file.getAbsolutePath())) {
+//            //不一致先关了旧的
+//            HttpProxyCacheServer proxy = VideoManager.instance().proxy;
+//
+//            if (proxy != null) {
+//                proxy.shutdown();
+//            }
+//            //开启新的
+//            return (VideoManager.instance().proxy =
+//                    VideoManager.instance().newProxy(context, file));
+//        } else {
+//            //还没有缓存文件的或者一致的，返回原来
+//            HttpProxyCacheServer proxy = VideoManager.instance().proxy;
+//
+//            return proxy == null ? (VideoManager.instance().proxy =
+//                    VideoManager.instance().newProxy(context, file)) : proxy;
+//        }
+//    }
 
     /**
      * 退出全屏，主要用于返回键
@@ -192,9 +192,9 @@ public class VideoManager extends VideoBaseManager {
     public static boolean isFullState(Activity activity) {
         ViewGroup vp = (ViewGroup) (CommonUtil.scanForActivity(activity)).findViewById(Window.ID_ANDROID_CONTENT);
         final View full = vp.findViewById(FULLSCREEN_ID);
-        VideoPlayer gsyVideoPlayer = null;
+        BaseVideoPlayer gsyVideoPlayer = null;
         if (full != null) {
-            gsyVideoPlayer = (VideoPlayer) full;
+            gsyVideoPlayer = (BaseVideoPlayer) full;
         }
         return gsyVideoPlayer != null;
     }

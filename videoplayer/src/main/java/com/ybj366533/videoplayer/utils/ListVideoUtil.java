@@ -13,8 +13,8 @@ import android.widget.FrameLayout;
 
 import com.ybj366533.videoplayer.listener.VideoAllCallBack;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
 import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
-import com.ybj366533.videoplayer.video.base.VideoPlayer;
 import com.transitionseverywhere.TransitionManager;
 
 import java.io.File;
@@ -255,7 +255,7 @@ public class ListVideoUtil {
     /**
      * 如果是5.0的，要从原位置过度到全屏位置
      */
-    private void resolveMaterialFullVideoShow(BaseVideoPlayer gsyVideoPlayer) {
+    private void resolveMaterialFullVideoShow(MiGuVideoPlayer gsyVideoPlayer) {
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) gsyVideoPlayer.getLayoutParams();
         lp.setMargins(0, 0, 0, 0);
         lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -302,7 +302,7 @@ public class ListVideoUtil {
     /**
      * 动画回到正常效果
      */
-    private void resolveMaterialToNormal(final VideoPlayer gsyVideoPlayer) {
+    private void resolveMaterialToNormal(final BaseVideoPlayer gsyVideoPlayer) {
         if (showFullAnimation && fullViewContainer instanceof FrameLayout) {
             int delay = orientationUtils.backToProtVideo();
             handler.postDelayed(new Runnable() {
@@ -414,7 +414,7 @@ public class ListVideoUtil {
      * @param statusBar 是否有状态栏
      */
     public void showSmallVideo(Point size, final boolean actionBar, final boolean statusBar) {
-        if (gsyVideoPlayer.getCurrentState() == VideoPlayer.CURRENT_STATE_PLAYING) {
+        if (gsyVideoPlayer.getCurrentState() == BaseVideoPlayer.CURRENT_STATE_PLAYING) {
             gsyVideoPlayer.showSmallVideo(size, actionBar, statusBar);
             isSmall = true;
         }

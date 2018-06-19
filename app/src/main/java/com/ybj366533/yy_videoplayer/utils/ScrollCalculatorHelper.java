@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.ybj366533.videoplayer.utils.NetworkUtils;
-import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
 
 /**
  * 计算滑动，自动播放的帮助类
@@ -59,21 +59,21 @@ public class ScrollCalculatorHelper {
 
         RecyclerView.LayoutManager layoutManager = view.getLayoutManager();
 
-        BaseVideoPlayer gsyBaseVideoPlayer = null;
+        MiGuVideoPlayer gsyBaseVideoPlayer = null;
 
         boolean needPlay = false;
 
         for (int i = 0; i < visibleCount; i++) {
             if (layoutManager.getChildAt(i) != null && layoutManager.getChildAt(i).findViewById(playId) != null) {
-                BaseVideoPlayer player = (BaseVideoPlayer) layoutManager.getChildAt(i).findViewById(playId);
+                MiGuVideoPlayer player = (MiGuVideoPlayer) layoutManager.getChildAt(i).findViewById(playId);
                 Rect rect = new Rect();
                 player.getLocalVisibleRect(rect);
                 int height = player.getHeight();
                 //说明第一个完全可视
                 if (rect.top == 0 && rect.bottom == height) {
                     gsyBaseVideoPlayer = player;
-                    if ((player.getCurrentPlayer().getCurrentState() == BaseVideoPlayer.CURRENT_STATE_NORMAL
-                            || player.getCurrentPlayer().getCurrentState() == BaseVideoPlayer.CURRENT_STATE_ERROR)) {
+                    if ((player.getCurrentPlayer().getCurrentState() == MiGuVideoPlayer.CURRENT_STATE_NORMAL
+                            || player.getCurrentPlayer().getCurrentState() == MiGuVideoPlayer.CURRENT_STATE_ERROR)) {
                         needPlay = true;
                     }
                     break;
@@ -84,7 +84,7 @@ public class ScrollCalculatorHelper {
 
         if (gsyBaseVideoPlayer != null && needPlay) {
             if (runnable != null) {
-                BaseVideoPlayer tmpPlayer = runnable.gsyBaseVideoPlayer;
+                MiGuVideoPlayer tmpPlayer = runnable.gsyBaseVideoPlayer;
                 playHandler.removeCallbacks(runnable);
                 runnable = null;
                 if (tmpPlayer == gsyBaseVideoPlayer) {
@@ -101,9 +101,9 @@ public class ScrollCalculatorHelper {
 
     private class PlayRunnable implements Runnable {
 
-        BaseVideoPlayer gsyBaseVideoPlayer;
+        MiGuVideoPlayer gsyBaseVideoPlayer;
 
-        public PlayRunnable(BaseVideoPlayer gsyBaseVideoPlayer) {
+        public PlayRunnable(MiGuVideoPlayer gsyBaseVideoPlayer) {
             this.gsyBaseVideoPlayer = gsyBaseVideoPlayer;
         }
 
@@ -130,7 +130,7 @@ public class ScrollCalculatorHelper {
 
 
     /***************************************自动播放的点击播放确认******************************************/
-    private void startPlayLogic(BaseVideoPlayer gsyBaseVideoPlayer, Context context) {
+    private void startPlayLogic(MiGuVideoPlayer gsyBaseVideoPlayer, Context context) {
         if (!com.ybj366533.videoplayer.utils.CommonUtil.isWifiConnected(context)) {
             //这里判断是否wifi
             showWifiDialog(gsyBaseVideoPlayer, context);
@@ -139,7 +139,7 @@ public class ScrollCalculatorHelper {
         gsyBaseVideoPlayer.startPlayLogic();
     }
 
-    private void showWifiDialog(final BaseVideoPlayer gsyBaseVideoPlayer, Context context) {
+    private void showWifiDialog(final MiGuVideoPlayer gsyBaseVideoPlayer, Context context) {
         if (!NetworkUtils.isAvailable(context)) {
             Toast.makeText(context, context.getResources().getString(com.ybj366533.videoplayer.R.string.no_net), Toast.LENGTH_LONG).show();
             return;

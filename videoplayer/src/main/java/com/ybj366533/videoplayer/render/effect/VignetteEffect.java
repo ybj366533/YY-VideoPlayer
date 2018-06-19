@@ -2,14 +2,14 @@ package com.ybj366533.videoplayer.render.effect;
 
 import android.opengl.GLSurfaceView;
 
-import com.ybj366533.videoplayer.render.view.MiguVideoGLView;
+import com.ybj366533.videoplayer.render.view.MiguVideoGLView.ShaderInterface;
 
 
 /**
  * Applies lomo-camera style effect to video.
  *
  */
-public class VignetteEffect implements MiguVideoGLView.ShaderInterface {
+public class VignetteEffect implements ShaderInterface {
     private int mWidth = 0;
     private int mHeight = 0;
     private float mScale = 0f;

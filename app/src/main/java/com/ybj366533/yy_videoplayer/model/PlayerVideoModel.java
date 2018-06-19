@@ -5,11 +5,13 @@ public class PlayerVideoModel {
     private String hd_path;
     private String name;
     private Float longTime;
-    private int imgPath;
-    public PlayerVideoModel(){
+    private String imgPath;
+
+    public PlayerVideoModel() {
 
     }
-    public PlayerVideoModel(String path, String hd_path, String name, int imgPath, Float longTime) {
+
+    public PlayerVideoModel(String path, String hd_path, String name, String imgPath, Float longTime) {
         this.path = path;
         this.hd_path = hd_path;
         this.name = name;
@@ -41,11 +43,11 @@ public class PlayerVideoModel {
         this.hd_path = hd_path;
     }
 
-    public int getImgPath() {
+    public String getImgPath() {
         return imgPath;
     }
 
-    public void setImgPath(int imgPath) {
+    public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
     }
 

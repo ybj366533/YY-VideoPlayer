@@ -18,8 +18,8 @@ import com.ybj366533.videoplayer.listener.VideoAllCallBack;
 import com.ybj366533.videoplayer.listener.VideoProgressListener;
 import com.ybj366533.videoplayer.render.view.MiguVideoGLView;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
 import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
-import com.ybj366533.videoplayer.video.base.VideoPlayer;
 import com.transitionseverywhere.TransitionManager;
 
 import java.io.File;
@@ -201,7 +201,7 @@ public class VideoHelper {
     /**
      * 如果是5.0的，要从原位置过度到全屏位置
      */
-    private void resolveMaterialFullVideoShow(BaseVideoPlayer gsyVideoPlayer) {
+    private void resolveMaterialFullVideoShow(MiGuVideoPlayer gsyVideoPlayer) {
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) gsyVideoPlayer.getLayoutParams();
         lp.setMargins(0, 0, 0, 0);
         lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -256,7 +256,7 @@ public class VideoHelper {
     /**
      * 动画回到正常效果
      */
-    private void resolveMaterialToNormal(final VideoPlayer gsyVideoPlayer) {
+    private void resolveMaterialToNormal(final BaseVideoPlayer gsyVideoPlayer) {
         if (mVideoOptionBuilder.isShowFullAnimation() && mFullViewContainer instanceof FrameLayout) {
             int delay = mOrientationUtils.backToProtVideo();
             mHandler.postDelayed(new Runnable() {
@@ -381,6 +381,22 @@ public class VideoHelper {
         }
     }
 
+    public void addVideoPlayer(final int position, View imgView, String tag,
+                               ViewGroup container) {
+        container.removeAllViews();
+        if (isCurrentViewPlaying(position, tag)) {
+            if (!isFull) {
+                ViewGroup viewGroup = (ViewGroup) mGsyVideoPlayer.getParent();
+                if (viewGroup != null)
+                    viewGroup.removeAllViews();
+                container.addView(mGsyVideoPlayer);
+            }
+        } else {
+            container.removeAllViews();   //增加封面
+            container.addView(imgView);
+        }
+    }
+
     /**
      * 设置列表播放中的位置和TAG,防止错位，回复播放位置
      *
@@ -482,7 +498,7 @@ public class VideoHelper {
      * @param statusBar 是否有状态栏
      */
     public void showSmallVideo(Point size, final boolean actionBar, final boolean statusBar) {
-        if (mGsyVideoPlayer.getCurrentState() == VideoPlayer.CURRENT_STATE_PLAYING) {
+        if (mGsyVideoPlayer.getCurrentState() == BaseVideoPlayer.CURRENT_STATE_PLAYING) {
             mGsyVideoPlayer.showSmallVideo(size, actionBar, statusBar);
             isSmall = true;
         }

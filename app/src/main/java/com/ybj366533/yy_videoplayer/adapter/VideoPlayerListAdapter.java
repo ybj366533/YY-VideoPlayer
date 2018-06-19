@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.ybj366533.yy_videoplayer.R;
 import com.ybj366533.yy_videoplayer.holder.RecyclerItemBaseHolder;
 import com.ybj366533.yy_videoplayer.model.PlayerVideoModel;
@@ -26,6 +27,8 @@ public class VideoPlayerListAdapter extends RecyclerView.Adapter {
     private List<PlayerVideoModel> itemDataList = null;
 
     private Context context = null;
+
+    private onItemClickListener listener;
 
     public VideoPlayerListAdapter(Context context, List<PlayerVideoModel> itemDataList) {
         this.itemDataList = itemDataList;
@@ -87,18 +90,29 @@ public class VideoPlayerListAdapter extends RecyclerView.Adapter {
         public void onBind(final int position, final PlayerVideoModel videoModel) {
 
             //增加封面
-            listItem.setImageDrawable(context.getResources().getDrawable(videoModel.getImgPath()));
-
+//            listItem.setImageDrawable(context.getResources().getDrawable());
+            Glide.with(context)
+                    .load(videoModel.getImgPath())
+                    .into(listItem);
             listItemBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, DetailsPlayerActivity.class);
-                    intent.putExtra("video", videoModel.getPath());
-                    context.startActivity(intent);
+                    listener.onItemClick(videoModel);
+//                    Intent intent = new Intent(context, DetailsPlayerActivity.class);
+//                    intent.putExtra("video", videoModel.getPath());
+//                    context.startActivity(intent);
                 }
-        });
+            });
         }
 
+    }
+
+    public void setItemClickListener(onItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface onItemClickListener {
+        void onItemClick(PlayerVideoModel videoModel);
     }
 
 

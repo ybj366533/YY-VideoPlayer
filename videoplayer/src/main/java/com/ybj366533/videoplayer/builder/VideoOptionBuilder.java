@@ -9,7 +9,7 @@ import com.ybj366533.videoplayer.listener.VideoProgressListener;
 import com.ybj366533.videoplayer.render.effect.NoEffect;
 import com.ybj366533.videoplayer.render.view.MiguVideoGLView;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
-import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
 
 import java.io.File;
 import java.util.Map;
@@ -544,85 +544,85 @@ public class VideoOptionBuilder {
         return this;
     }
 
-    public void build(StandardVideoPlayer gsyVideoPlayer) {
+    public void build(StandardVideoPlayer mVideoPlayer) {
         if (mBottomShowProgressDrawable != null && mBottomShowProgressThumbDrawable != null) {
-            gsyVideoPlayer.setBottomShowProgressBarDrawable(mBottomShowProgressDrawable, mBottomShowProgressThumbDrawable);
+            mVideoPlayer.setBottomShowProgressBarDrawable(mBottomShowProgressDrawable, mBottomShowProgressThumbDrawable);
         }
         if (mBottomProgressDrawable != null) {
-            gsyVideoPlayer.setBottomProgressBarDrawable(mBottomProgressDrawable);
+            mVideoPlayer.setBottomProgressBarDrawable(mBottomProgressDrawable);
         }
         if (mVolumeProgressDrawable != null) {
-            gsyVideoPlayer.setDialogVolumeProgressBar(mVolumeProgressDrawable);
+            mVideoPlayer.setDialogVolumeProgressBar(mVolumeProgressDrawable);
         }
 
         if (mDialogProgressBarDrawable != null) {
-            gsyVideoPlayer.setDialogProgressBar(mDialogProgressBarDrawable);
+            mVideoPlayer.setDialogProgressBar(mDialogProgressBarDrawable);
         }
 
         if (mDialogProgressHighLightColor > 0 && mDialogProgressNormalColor > 0) {
-            gsyVideoPlayer.setDialogProgressColor(mDialogProgressHighLightColor, mDialogProgressNormalColor);
+            mVideoPlayer.setDialogProgressColor(mDialogProgressHighLightColor, mDialogProgressNormalColor);
         }
 
-        build((BaseVideoPlayer) gsyVideoPlayer);
+        build((MiGuVideoPlayer) mVideoPlayer);
     }
 
-    public void build(BaseVideoPlayer gsyVideoPlayer) {
-        gsyVideoPlayer.setPlayTag(mPlayTag);
-        gsyVideoPlayer.setPlayPosition(mPlayPosition);
+    public void build(MiGuVideoPlayer mVideoPlayer) {
+        mVideoPlayer.setPlayTag(mPlayTag);
+        mVideoPlayer.setPlayPosition(mPlayPosition);
 
-        gsyVideoPlayer.setThumbPlay(mThumbPlay);
+        mVideoPlayer.setThumbPlay(mThumbPlay);
 
         if (mThumbImageView != null) {
-            gsyVideoPlayer.setThumbImageView(mThumbImageView);
+            mVideoPlayer.setThumbImageView(mThumbImageView);
         }
 
-        gsyVideoPlayer.setNeedLockFull(mNeedLockFull);
+        mVideoPlayer.setNeedLockFull(mNeedLockFull);
 
         if (mLockClickListener != null) {
-            gsyVideoPlayer.setLockClickListener(mLockClickListener);
+            mVideoPlayer.setLockClickListener(mLockClickListener);
         }
 
-        gsyVideoPlayer.setDismissControlTime(mDismissControlTime);
+        mVideoPlayer.setDismissControlTime(mDismissControlTime);
 
 
         if (mSeekOnStart > 0) {
-            gsyVideoPlayer.setSeekOnStart(mSeekOnStart);
+            mVideoPlayer.setSeekOnStart(mSeekOnStart);
         }
 
-        gsyVideoPlayer.setShowFullAnimation(mShowFullAnimation);
-        gsyVideoPlayer.setLooping(mLooping);
+        mVideoPlayer.setShowFullAnimation(mShowFullAnimation);
+        mVideoPlayer.setLooping(mLooping);
         if (mVideoAllCallBack != null) {
-            gsyVideoPlayer.setVideoAllCallBack(mVideoAllCallBack);
+            mVideoPlayer.setVideoAllCallBack(mVideoAllCallBack);
         }
         if (mVideoProgressListener != null) {
-            gsyVideoPlayer.setGSYVideoProgressListener(mVideoProgressListener);
+            mVideoPlayer.setGSYVideoProgressListener(mVideoProgressListener);
         }
-        gsyVideoPlayer.setAutoFullWithSize(mAutoFullWithSize);
-        gsyVideoPlayer.setRotateViewAuto(mRotateViewAuto);
-        gsyVideoPlayer.setLockLand(mLockLand);
-        gsyVideoPlayer.setSpeed(mSpeed, mSounchTouch);
-        gsyVideoPlayer.setHideKey(mHideKey);
-        gsyVideoPlayer.setIsTouchWiget(mIsTouchWiget);
-        gsyVideoPlayer.setIsTouchWigetFull(mIsTouchWigetFull);
-        gsyVideoPlayer.setNeedShowWifiTip(mNeedShowWifiTip);
-        gsyVideoPlayer.setEffectFilter(mEffectFilter);
-        gsyVideoPlayer.setStartAfterPrepared(mStartAfterPrepared);
-        gsyVideoPlayer.setReleaseWhenLossAudio(mReleaseWhenLossAudio);
-        gsyVideoPlayer.setFullHideActionBar(mActionBar);
-        gsyVideoPlayer.setFullHideStatusBar(mStatusBar);
+        mVideoPlayer.setAutoFullWithSize(mAutoFullWithSize);
+        mVideoPlayer.setRotateViewAuto(mRotateViewAuto);
+        mVideoPlayer.setLockLand(mLockLand);
+        mVideoPlayer.setSpeed(mSpeed, mSounchTouch);
+        mVideoPlayer.setHideKey(mHideKey);
+        mVideoPlayer.setIsTouchWiget(mIsTouchWiget);
+        mVideoPlayer.setIsTouchWigetFull(mIsTouchWigetFull);
+        mVideoPlayer.setNeedShowWifiTip(mNeedShowWifiTip);
+        mVideoPlayer.setEffectFilter(mEffectFilter);
+        mVideoPlayer.setStartAfterPrepared(mStartAfterPrepared);
+        mVideoPlayer.setReleaseWhenLossAudio(mReleaseWhenLossAudio);
+        mVideoPlayer.setFullHideActionBar(mActionBar);
+        mVideoPlayer.setFullHideStatusBar(mStatusBar);
         if (mEnlargeImageRes > 0) {
-            gsyVideoPlayer.setEnlargeImageRes(mEnlargeImageRes);
+            mVideoPlayer.setEnlargeImageRes(mEnlargeImageRes);
         }
         if (mShrinkImageRes > 0) {
-            gsyVideoPlayer.setShrinkImageRes(mShrinkImageRes);
+            mVideoPlayer.setShrinkImageRes(mShrinkImageRes);
         }
-        gsyVideoPlayer.setShowPauseCover(mShowPauseCover);
-        gsyVideoPlayer.setSeekRatio(mSeekRatio);
-        gsyVideoPlayer.setRotateWithSystem(mRotateWithSystem);
+        mVideoPlayer.setShowPauseCover(mShowPauseCover);
+        mVideoPlayer.setSeekRatio(mSeekRatio);
+        mVideoPlayer.setRotateWithSystem(mRotateWithSystem);
         if (mSetUpLazy) {
-            gsyVideoPlayer.setUpLazy(mUrl, mCacheWithPlay, mCachePath, mMapHeadData, mVideoTitle);
+            mVideoPlayer.setUpLazy(mUrl, mCacheWithPlay, mCachePath, mMapHeadData, mVideoTitle);
         } else {
-            gsyVideoPlayer.setUp(mUrl, mCacheWithPlay, mCachePath, mMapHeadData, mVideoTitle);
+            mVideoPlayer.setUp(mUrl, mCacheWithPlay, mCachePath, mMapHeadData, mVideoTitle);
         }
     }
 

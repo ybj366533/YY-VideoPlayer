@@ -29,13 +29,20 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/open_btn"
+            android:id="@+id/open_full_btn"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
-            android:text="播放页面" />
+            android:text="全屏播放页面" />
 
         <Button
-            android:id="@+id/open_list"
+            android:id="@+id/open_window_btn"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="小窗播放页面" />
+
+        <Button
+            android:id="@+id/open_list_btn"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

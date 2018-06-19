@@ -5,25 +5,55 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <com.ybj366533.yy_videoplayer.video.MiGuListVideoPlayer
+        android:id="@+id/video_player"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/color_FF4081">
-        <ImageButton
-            android:id="@+id/btn_back"
+        android:layout_height="300dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_FFFFFF"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/video_back"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"/>
-        <TextView
+            android:text="下一个" />
+
+        <Button
+            android:id="@+id/btn_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="播放列表"
-            android:textColor="@color/color_FFFFFF"
-            android:layout_centerInParent="true"
-            android:textSize="@dimen/sp_16"/>
-    </RelativeLayout>
+            android:text="播放速度：1" />
+
+        <Button
+            android:id="@+id/btn_shot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="截图" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_FFFFFF"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_start_gif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始录制gif" />
+
+        <Button
+            android:id="@+id/btn_stop_gif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="结束生成gif" />
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_item_recycler"
         android:layout_width="match_parent"

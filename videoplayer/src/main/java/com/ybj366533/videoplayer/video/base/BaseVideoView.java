@@ -11,20 +11,20 @@ import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.InflateException;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import com.danikula.videocache.HttpProxyCacheServer;
-import com.danikula.videocache.file.Md5FileNameGenerator;
+//import com.danikula.videocache.HttpProxyCacheServer;
+//import com.danikula.videocache.file.Md5FileNameGenerator;
 import com.ybj366533.videoplayer.listener.MediaPlayerListener;
 import com.ybj366533.videoplayer.listener.VideoAllCallBack;
 import com.ybj366533.videoplayer.utils.CommonUtil;
 import com.ybj366533.videoplayer.utils.Debuger;
 import com.ybj366533.videoplayer.utils.NetInfoModule;
-import com.ybj366533.videoplayer.utils.StorageUtils;
 
 import java.io.File;
 import java.util.HashMap;
@@ -38,7 +38,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  * Created by guoshuyu on 2017/8/2.
  */
 
-public abstract class VideoView extends MiGuTextureRenderView implements MediaPlayerListener {
+public abstract class BaseVideoView extends MiGuTextureRenderView implements MediaPlayerListener {
 
     //正常
     public static final int CURRENT_STATE_NORMAL = 0;
@@ -54,7 +54,6 @@ public abstract class VideoView extends MiGuTextureRenderView implements MediaPl
     public static final int CURRENT_STATE_AUTO_COMPLETE = 6;
     //错误状态
     public static final int CURRENT_STATE_ERROR = 7;
-
     //避免切换时频繁setup
     public static final int CHANGE_DELAY_TIME = 2000;
 
@@ -156,23 +155,27 @@ public abstract class VideoView extends MiGuTextureRenderView implements MediaPl
 
     //网络监听
     protected NetInfoModule mNetInfoModule;
+//    private List<TextModel> textList = new ArrayList<>();
+//
+//    private Long startTime = -1L;
+//    private Long endTime = -1L;
 
-    public VideoView(@NonNull Context context) {
+    public BaseVideoView(@NonNull Context context) {
         super(context);
         init(context);
     }
 
-    public VideoView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public BaseVideoView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public VideoView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public BaseVideoView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
-    public VideoView(Context context, Boolean fullFlag) {
+    public BaseVideoView(Context context, Boolean fullFlag) {
         super(context);
         mIfCurrentIsFullscreen = fullFlag;
         init(context);
@@ -300,6 +303,7 @@ public abstract class VideoView extends MiGuTextureRenderView implements MediaPl
      * 开始播放逻辑
      */
     protected void startButtonLogic() {
+        Log.e("player", "onClickStart");
         if (mVideoAllCallBack != null && mCurrentState == CURRENT_STATE_NORMAL) {
             Debuger.printfLog("onClickStartIcon");
             mVideoAllCallBack.onClickStartIcon(mOriginUrl, mTitle, this);
@@ -318,6 +322,8 @@ public abstract class VideoView extends MiGuTextureRenderView implements MediaPl
     }
 
     protected void startPrepare() {
+//        Log.e("player", "onStartPrepared");
+//        startTime = System.currentTimeMillis();
         if (getGSYVideoManager().listener() != null) {
             getGSYVideoManager().listener().onCompletion();
         }
@@ -435,25 +441,26 @@ public abstract class VideoView extends MiGuTextureRenderView implements MediaPl
         mCache = cacheWithPlay;
         mCachePath = cachePath;
         mOriginUrl = url;
+        //TODO 设置缓存
         if (isCurrentMediaListener() &&
                 (System.currentTimeMillis() - mSaveChangeViewTIme) < CHANGE_DELAY_TIME)
             return false;
         mCurrentState = CURRENT_STATE_NORMAL;
-        if (cacheWithPlay && url.startsWith("http") && !url.contains("127.0.0.1") && !url.contains(".m3u8")) {
-            HttpProxyCacheServer proxy = getProxy(getActivityContext().getApplicationContext(), cachePath);
-            if (proxy != null) {
-                //此处转换了url，然后再赋值给mUrl。
-                url = proxy.getProxyUrl(url);
-                mCacheFile = (!url.startsWith("http"));
-                //注册上缓冲监听
-                if (!mCacheFile && getGSYVideoManager() != null) {
-                    proxy.registerCacheListener(getGSYVideoManager().getCacheListener(), mOriginUrl);
-                }
-            }
-        } else if (!cacheWithPlay && (!url.startsWith("http") && !url.startsWith("rtmp")
-                && !url.startsWith("rtsp") && !url.contains(".m3u8"))) {
-            mCacheFile = true;
-        }
+//        if (cacheWithPlay && url.startsWith("http") && !url.contains("127.0.0.1") && !url.contains(".m3u8")) {
+//            HttpProxyCacheServer proxy = getProxy(getActivityContext().getApplicationContext(), cachePath);
+//            if (proxy != null) {
+//                //此处转换了url，然后再赋值给mUrl。
+//                url = proxy.getProxyUrl(url);
+//                mCacheFile = (!url.startsWith("http"));
+//                //注册上缓冲监听
+//                if (!mCacheFile && getGSYVideoManager() != null) {
+//                    proxy.registerCacheListener(getGSYVideoManager().getCacheListener(), mOriginUrl);
+//                }
+//            }
+//        } else if (!cacheWithPlay && (!url.startsWith("http") && !url.startsWith("rtmp")
+//                && !url.startsWith("rtsp") && !url.contains(".m3u8"))) {
+//            mCacheFile = true;
+//        }
         this.mUrl = url;
         this.mTitle = title;
         if (changeState)
@@ -510,7 +517,8 @@ public abstract class VideoView extends MiGuTextureRenderView implements MediaPl
             try {
                 if (mCurrentPosition > 0 && getGSYVideoManager().getMediaPlayer() != null) {
                     if (seek) {
-                        getGSYVideoManager().getMediaPlayer().seekTo(mCurrentPosition);
+                        seekTo(mCurrentPosition);
+//                        getGSYVideoManager().getMediaPlayer().seekTo(mCurrentPosition);
                     }
                     getGSYVideoManager().getMediaPlayer().start();
                     setStateAndUi(CURRENT_STATE_PLAYING);
@@ -563,6 +571,7 @@ public abstract class VideoView extends MiGuTextureRenderView implements MediaPl
 
         if (mVideoAllCallBack != null && isCurrentMediaListener()) {
             Debuger.printfLog("onPrepared");
+            Log.e("player", "onPrepared");
             mVideoAllCallBack.onPrepared(mOriginUrl, mTitle, this);
         }
 
@@ -706,17 +715,17 @@ public abstract class VideoView extends MiGuTextureRenderView implements MediaPl
             mUrl = mOriginUrl;
         } else if (mUrl.contains("127.0.0.1")) {
             //是否为缓存了未完成的文件
-            Md5FileNameGenerator md5FileNameGenerator = new Md5FileNameGenerator();
-            String name = md5FileNameGenerator.generate(mOriginUrl);
-            if (mCachePath != null) {
-                String path = mCachePath.getAbsolutePath() + File.separator + name + ".download";
-                CommonUtil.deleteFile(path);
-            } else {
-                String path = StorageUtils.getIndividualCacheDirectory
-                        (getActivityContext().getApplicationContext()).getAbsolutePath()
-                        + File.separator + name + ".download";
-                CommonUtil.deleteFile(path);
-            }
+//            Md5FileNameGenerator md5FileNameGenerator = new Md5FileNameGenerator();
+//            String name = md5FileNameGenerator.generate(mOriginUrl);
+//            if (mCachePath != null) {
+//                String path = mCachePath.getAbsolutePath() + File.separator + name + ".download";
+//                CommonUtil.deleteFile(path);
+//            } else {
+//                String path = StorageUtils.getIndividualCacheDirectory
+//                        (getActivityContext().getApplicationContext()).getAbsolutePath()
+//                        + File.separator + name + ".download";
+//                CommonUtil.deleteFile(path);
+//            }
         }
 
     }
@@ -780,11 +789,8 @@ public abstract class VideoView extends MiGuTextureRenderView implements MediaPl
             }
 
             setStateAndUi(CURRENT_STATE_PLAYING);
-
-            if (getGSYVideoManager().getMediaPlayer() != null && mSeekOnStart > 0) {
-                getGSYVideoManager().getMediaPlayer().seekTo(mSeekOnStart);
-                mSeekOnStart = 0;
-            }
+            seekTo(mSeekOnStart);
+            mSeekOnStart = 0;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -861,13 +867,18 @@ public abstract class VideoView extends MiGuTextureRenderView implements MediaPl
 
     /************************* 需要继承处理部分 *************************/
 
+    protected abstract int getFullId();
+
+    protected abstract int getSmallId();
+
     /**
      * 获取代理服务
      *
      * @param file 文件可以为空
      * @return 如果不需要可以为空
      */
-    protected abstract HttpProxyCacheServer getProxy(Context context, File file);
+//    protected abstract HttpProxyCacheServer getProxy(Context context, File file);
+//
 
     /**
      * 退出全屏
@@ -1096,9 +1107,12 @@ public abstract class VideoView extends MiGuTextureRenderView implements MediaPl
      * seekto what you want
      */
     public void seekTo(long position) {
+        IjkMediaPlayer ijkMediaPlayer = (IjkMediaPlayer) getGSYVideoManager().getMediaPlayer();
         try {
             if (getGSYVideoManager().getMediaPlayer() != null && position > 0) {
                 getGSYVideoManager().getMediaPlayer().seekTo(position);
+                ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "seek-at-start", position);
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1137,6 +1151,7 @@ public abstract class VideoView extends MiGuTextureRenderView implements MediaPl
 
     /**
      * 单独设置mapHeader
+     *
      * @param headData
      */
     public void setMapHeadData(Map<String, String> headData) {

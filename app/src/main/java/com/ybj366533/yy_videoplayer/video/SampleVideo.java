@@ -9,11 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.ybj366533.videoplayer.utils.VideoType;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
 import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
-import com.ybj366533.videoplayer.video.base.VideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 import com.ybj366533.yy_videoplayer.model.SwitchVideoModel;
 import com.ybj366533.yy_videoplayer.view.SwitchVideoTypeDialog;
@@ -71,6 +70,10 @@ public class SampleVideo extends StandardVideoPlayer {
         initView();
     }
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.sample_video;
+    }
     private void initView() {
         mMoreScale = (TextView) findViewById(R.id.moreScale);
         mSwitchSize = (TextView) findViewById(R.id.switchSize);
@@ -78,7 +81,7 @@ public class SampleVideo extends StandardVideoPlayer {
         mChangeTransform = (TextView) findViewById(R.id.change_transform);
 
         //切换清晰度
-        mMoreScale.setOnClickListener(new OnClickListener() {
+        mMoreScale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!mHadPlay) {
@@ -100,7 +103,7 @@ public class SampleVideo extends StandardVideoPlayer {
         });
 
         //切换视频清晰度
-        mSwitchSize.setOnClickListener(new OnClickListener() {
+        mSwitchSize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showSwitchDialog();
@@ -108,7 +111,7 @@ public class SampleVideo extends StandardVideoPlayer {
         });
 
         //旋转播放角度
-        mChangeRotate.setOnClickListener(new OnClickListener() {
+        mChangeRotate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!mHadPlay) {
@@ -125,7 +128,7 @@ public class SampleVideo extends StandardVideoPlayer {
         });
 
         //镜像旋转
-        mChangeTransform.setOnClickListener(new OnClickListener() {
+        mChangeTransform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!mHadPlay) {
@@ -221,10 +224,6 @@ public class SampleVideo extends StandardVideoPlayer {
         return setUp(url.get(mSourcePosition).getUrl(), cacheWithPlay, cachePath, title);
     }
 
-    @Override
-    public int getLayoutId() {
-        return R.layout.sample_video;
-    }
 
 
     /**
@@ -236,7 +235,7 @@ public class SampleVideo extends StandardVideoPlayer {
      * @return
      */
     @Override
-    public BaseVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
+    public MiGuVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
         SampleVideo sampleVideo = (SampleVideo) super.startWindowFullscreen(context, actionBar, statusBar);
         sampleVideo.mSourcePosition = mSourcePosition;
         sampleVideo.mType = mType;
@@ -261,7 +260,7 @@ public class SampleVideo extends StandardVideoPlayer {
      * @param gsyVideoPlayer
      */
     @Override
-    protected void resolveNormalVideoShow(View oldF, ViewGroup vp, VideoPlayer gsyVideoPlayer) {
+    protected void resolveNormalVideoShow(View oldF, ViewGroup vp, MiGuVideoPlayer gsyVideoPlayer) {
         super.resolveNormalVideoShow(oldF, vp, gsyVideoPlayer);
         if (gsyVideoPlayer != null) {
             SampleVideo sampleVideo = (SampleVideo) gsyVideoPlayer;
@@ -328,8 +327,8 @@ public class SampleVideo extends StandardVideoPlayer {
             public void onItemClick(int position) {
                 final String name = mUrlList.get(position).getName();
                 if (mSourcePosition != position) {
-                    if ((mCurrentState == VideoPlayer.CURRENT_STATE_PLAYING
-                            || mCurrentState == VideoPlayer.CURRENT_STATE_PAUSE)
+                    if ((mCurrentState == MiGuVideoPlayer.CURRENT_STATE_PLAYING
+                            || mCurrentState == MiGuVideoPlayer.CURRENT_STATE_PAUSE)
                             && getGSYVideoManager().getMediaPlayer() != null) {
                         final String url = mUrlList.get(position).getUrl();
                         onVideoPause();

@@ -19,16 +19,16 @@
 
             <ImageView
                 android:id="@+id/duration_image_tip"
-                android:layout_width="36dp"
-                android:layout_height="27dp"
+                android:layout_width="120dp"
+                android:layout_height="72dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="8dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 

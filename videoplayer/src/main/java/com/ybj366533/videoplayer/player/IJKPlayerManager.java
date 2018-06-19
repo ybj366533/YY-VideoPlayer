@@ -86,7 +86,6 @@ public class IJKPlayerManager implements IPlayerManager {
             e.printStackTrace();
         }
     }
-
     @Override
     public void showDisplay(Message msg) {
         if (msg.obj == null && mediaPlayer != null) {

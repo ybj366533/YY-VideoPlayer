@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private AlertDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,18 +156,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.open_btn, R.id.open_list})
+    @OnClick({R.id.open_full_btn, R.id.open_window_btn, R.id.open_list_btn})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.open_btn:
+            case R.id.open_full_btn:
                 //直接一个页面播放的
-                Intent intent = new Intent(this, VideoPlayActivity.class);
-                intent.putExtra(VideoPlayActivity.TRANSITION, true);
+                Intent intent = new Intent(this, ViewPagerActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.open_list:
-                Intent intent2 = new Intent(this, VideoPlayerListActivity.class);
+            case R.id.open_window_btn:
+                Intent intent2 = new Intent(this, ScrollingActivity.class);
                 startActivity(intent2);
+                break;
+            case R.id.open_list_btn:
+                Intent intent3 = new Intent(this, VideoPlayerListActivity.class);
+                startActivity(intent3);
                 break;
 
         }

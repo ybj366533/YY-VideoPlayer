@@ -2,7 +2,7 @@ package com.ybj366533.videoplayer.video.base;
 
 import android.view.Surface;
 
-import com.danikula.videocache.CacheListener;
+//import com.danikula.videocache.CacheListener;
 import com.ybj366533.videoplayer.listener.MediaPlayerListener;
 
 import java.util.Map;
@@ -35,7 +35,7 @@ public interface MiGuVideoViewBridge {
 
     IMediaPlayer getMediaPlayer();
 
-    CacheListener getCacheListener();
+    //CacheListener getCacheListener();
 
     void releaseMediaPlayer();
 

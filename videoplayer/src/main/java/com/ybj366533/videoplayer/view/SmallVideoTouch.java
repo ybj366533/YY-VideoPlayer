@@ -4,7 +4,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
 
 /**
  * 小窗口触摸移动
@@ -14,14 +14,14 @@ public class SmallVideoTouch implements View.OnTouchListener {
     private int mDownX, mDownY;
     private int mMarginLeft, mMarginTop;
     private int _xDelta, _yDelta;
-    private BaseVideoPlayer mGsyBaseVideoPlayer;
+    private MiGuVideoPlayer mGsyMiGuVideoPlayer;
 
 
-    public SmallVideoTouch(BaseVideoPlayer gsyBaseVideoPlayer, int marginLeft, int marginTop) {
+    public SmallVideoTouch(MiGuVideoPlayer gsyMiGuVideoPlayer, int marginLeft, int marginTop) {
         super();
         mMarginLeft = marginLeft;
         mMarginTop = marginTop;
-        mGsyBaseVideoPlayer = gsyBaseVideoPlayer;
+        mGsyMiGuVideoPlayer = gsyMiGuVideoPlayer;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class SmallVideoTouch implements View.OnTouchListener {
                 mDownX = X;
                 mDownY = Y;
 
-                FrameLayout.LayoutParams lParams = (FrameLayout.LayoutParams) mGsyBaseVideoPlayer
+                FrameLayout.LayoutParams lParams = (FrameLayout.LayoutParams) mGsyMiGuVideoPlayer
                         .getLayoutParams();
                 _xDelta = X - lParams.leftMargin;
                 _yDelta = Y - lParams.topMargin;
@@ -46,7 +46,7 @@ public class SmallVideoTouch implements View.OnTouchListener {
                     return true;
                 }
             case MotionEvent.ACTION_MOVE:
-                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mGsyBaseVideoPlayer
+                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mGsyMiGuVideoPlayer
                         .getLayoutParams();
 
                 layoutParams.leftMargin = X - _xDelta;
@@ -68,7 +68,7 @@ public class SmallVideoTouch implements View.OnTouchListener {
                     layoutParams.topMargin = 0;
                 }
 
-                mGsyBaseVideoPlayer.setLayoutParams(layoutParams);
+                mGsyMiGuVideoPlayer.setLayoutParams(layoutParams);
 
         }
         return false;

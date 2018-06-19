@@ -1,8 +1,10 @@
 package com.ybj366533.videoplayer.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -15,9 +17,13 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Surface;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.Formatter;
 import java.util.Locale;
 
@@ -104,6 +110,7 @@ public class CommonUtil {
     }
 
 
+    @SuppressLint("RestrictedApi")
     public static void hideSupportActionBar(Context context, boolean actionBar, boolean statusBar) {
         if (actionBar) {
             AppCompatActivity appCompatActivity = CommonUtil.getAppCompActivity(context);
@@ -127,6 +134,7 @@ public class CommonUtil {
         }
     }
 
+    @SuppressLint("RestrictedApi")
     public static void showSupportActionBar(Context context, boolean actionBar, boolean statusBar) {
         if (actionBar) {
             AppCompatActivity appCompatActivity = CommonUtil.getAppCompActivity(context);
@@ -277,5 +285,24 @@ public class CommonUtil {
         return context.getWindowManager().getDefaultDisplay().getRotation() == Surface.ROTATION_90 ||
                 context.getWindowManager().getDefaultDisplay().getRotation() == Surface.ROTATION_270;
 
+    }
+
+    public static void setViewHeight(View view, int width, int height) {
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        if (null == layoutParams)
+            return;
+        layoutParams.width = width;
+        layoutParams.height = height;
+        view.setLayoutParams(layoutParams);
+    }
+
+    public static void saveBitmap(Bitmap bitmap) throws FileNotFoundException {
+        if (bitmap != null) {
+            File file = new File(FileUtils.getPath(), "GSY-" + System.currentTimeMillis() + ".jpg");
+            OutputStream outputStream;
+            outputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            bitmap.recycle();
+        }
     }
 }

@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ybj366533.videoplayer.model.VideoEntity;
+import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
 import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
-import com.ybj366533.videoplayer.video.base.VideoPlayer;
 import com.ybj366533.videoplayer.view.ENDownloadView;
 
 import java.io.File;
@@ -105,7 +105,7 @@ public class ListVideoPlayer extends StandardVideoPlayer {
     }
 
     @Override
-    protected void cloneParams(BaseVideoPlayer from, BaseVideoPlayer to) {
+    protected void cloneParams(MiGuVideoPlayer from, MiGuVideoPlayer to) {
         super.cloneParams(from, to);
         ListVideoPlayer sf = (ListVideoPlayer) from;
         ListVideoPlayer st = (ListVideoPlayer) to;
@@ -114,20 +114,20 @@ public class ListVideoPlayer extends StandardVideoPlayer {
     }
 
     @Override
-    public BaseVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
-        BaseVideoPlayer gsyBaseVideoPlayer = super.startWindowFullscreen(context, actionBar, statusBar);
-        if (gsyBaseVideoPlayer != null) {
-            ListVideoPlayer listGSYVideoPlayer = (ListVideoPlayer) gsyBaseVideoPlayer;
+    public MiGuVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
+        MiGuVideoPlayer gsyMiGuVideoPlayer = super.startWindowFullscreen(context, actionBar, statusBar);
+        if (gsyMiGuVideoPlayer != null) {
+            ListVideoPlayer listGSYVideoPlayer = (ListVideoPlayer) gsyMiGuVideoPlayer;
             VideoEntity videoEntity = mUriList.get(mPlayPosition);
             if (!TextUtils.isEmpty(videoEntity.getTitle())) {
                 listGSYVideoPlayer.mTitleTextView.setText(videoEntity.getTitle());
             }
         }
-        return gsyBaseVideoPlayer;
+        return gsyMiGuVideoPlayer;
     }
 
     @Override
-    protected void resolveNormalVideoShow(View oldF, ViewGroup vp, VideoPlayer gsyVideoPlayer) {
+    protected void resolveNormalVideoShow(View oldF, ViewGroup vp, MiGuVideoPlayer gsyVideoPlayer) {
         if (gsyVideoPlayer != null) {
             ListVideoPlayer listGSYVideoPlayer = (ListVideoPlayer) gsyVideoPlayer;
             VideoEntity videoEntity = mUriList.get(mPlayPosition);

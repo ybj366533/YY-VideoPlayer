@@ -7,14 +7,14 @@ import com.ybj366533.videoplayer.builder.VideoOptionBuilder;
 import com.ybj366533.videoplayer.listener.SampleCallBack;
 import com.ybj366533.videoplayer.utils.OrientationUtils;
 import com.ybj366533.videoplayer.video.ADVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
 import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
-import com.ybj366533.videoplayer.video.base.VideoPlayer;
-import com.ybj366533.videoplayer.video.base.VideoView;
+import com.ybj366533.videoplayer.video.base.BaseVideoView;
 
 /**
  * 详情AD模式播放页面基础类
  */
-public abstract class BaseADActivityDetail<T extends BaseVideoPlayer, R extends ADVideoPlayer> extends BaseActivityDetail<T> {
+public abstract class BaseADActivityDetail<T extends MiGuVideoPlayer, R extends ADVideoPlayer> extends BaseActivityDetail<T> {
 
     protected OrientationUtils mADOrientationUtils;
 
@@ -159,7 +159,7 @@ public abstract class BaseADActivityDetail<T extends BaseVideoPlayer, R extends 
     public void onEnterFullscreen(String url, Object... objects) {
         super.onEnterFullscreen(url, objects);
         //隐藏调全屏对象的返回按键
-        VideoPlayer gsyVideoPlayer = (VideoPlayer) objects[1];
+        MiGuVideoPlayer gsyVideoPlayer = (MiGuVideoPlayer) objects[1];
         gsyVideoPlayer.getBackButton().setVisibility(View.GONE);
     }
 
@@ -170,8 +170,8 @@ public abstract class BaseADActivityDetail<T extends BaseVideoPlayer, R extends 
 
     protected boolean isADStarted() {
         return getGSYADVideoPlayer().getCurrentPlayer().getCurrentState() >= 0 &&
-                getGSYADVideoPlayer().getCurrentPlayer().getCurrentState() != VideoView.CURRENT_STATE_NORMAL
-                && getGSYADVideoPlayer().getCurrentPlayer().getCurrentState() != VideoView.CURRENT_STATE_AUTO_COMPLETE;
+                getGSYADVideoPlayer().getCurrentPlayer().getCurrentState() != BaseVideoView.CURRENT_STATE_NORMAL
+                && getGSYADVideoPlayer().getCurrentPlayer().getCurrentState() != BaseVideoView.CURRENT_STATE_AUTO_COMPLETE;
     }
 
     /**

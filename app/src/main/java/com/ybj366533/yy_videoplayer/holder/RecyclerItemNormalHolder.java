@@ -5,11 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.ybj366533.videoplayer.VideoManager;
 import com.ybj366533.videoplayer.builder.VideoOptionBuilder;
 import com.ybj366533.videoplayer.listener.SampleCallBack;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
+import com.ybj366533.yy_videoplayer.model.PlayerVideoModel;
 import com.ybj366533.yy_videoplayer.model.VideoModel;
 
 import butterknife.BindView;
@@ -39,33 +41,29 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
         videoOptionBuilder = new VideoOptionBuilder();
     }
 
-    public void onBind(final int position, VideoModel videoModel) {
+    public void onBind(final int position, PlayerVideoModel videoModel) {
 
         //增加封面
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        Glide.with(context)
+                .load(videoModel.getImgPath())
+                .into(imageView);
         if (imageView.getParent() != null) {
             ViewGroup viewGroup = (ViewGroup) imageView.getParent();
             viewGroup.removeView(imageView);
-        }
-        String url;
-        String title;
-        if (position % 2 == 0) {
-            url = "https://res.exexm.com/cw_145225549855002";
-            title = "这是title";
-        } else {
-            url = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
-            title = "哦？Title？";
         }
         //防止错位，离开释放
         //gsyVideoPlayer.initUIState();
         videoOptionBuilder
                 .setIsTouchWiget(false)
                 .setThumbImageView(imageView)
-                .setUrl(url)
+                .setUrl(videoModel.getPath())
                 .setSetUpLazy(true)//lazy可以防止滑动卡顿
-                .setVideoTitle(title)
+                .setVideoTitle(videoModel.getName())
                 .setCacheWithPlay(true)
                 .setRotateViewAuto(true)
+                .setStartAfterPrepared(true)
+                .setLooping(true)
                 .setLockLand(true)
                 .setPlayTag(TAG)
                 .setShowFullAnimation(true)
@@ -96,7 +94,6 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
                         gsyVideoPlayer.getCurrentPlayer().getTitleTextView().setText((String)objects[0]);
                     }
                 }).build(gsyVideoPlayer);
-
 
         //增加title
         gsyVideoPlayer.getTitleTextView().setVisibility(View.GONE);

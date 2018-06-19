@@ -4,9 +4,9 @@ import android.content.Context;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-
 import com.ybj366533.videoplayer.utils.VideoHelper;
 import com.ybj366533.yy_videoplayer.R;
+import com.ybj366533.yy_videoplayer.model.PlayerVideoModel;
 import com.ybj366533.yy_videoplayer.model.VideoModel;
 
 import butterknife.BindView;
@@ -39,7 +39,7 @@ public class RecyclerItemViewHolder extends RecyclerItemBaseHolder {
         imageView = new ImageView(context);
     }
 
-    public void onBind(final int position, VideoModel videoModel) {
+    public void onBind(final int position, final PlayerVideoModel videoModel) {
 
         //增加封面
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -52,15 +52,9 @@ public class RecyclerItemViewHolder extends RecyclerItemBaseHolder {
                 getRecyclerBaseAdapter().notifyDataSetChanged();
                 //listVideoUtil.setLoop(true);
                 smallVideoHelper.setPlayPositionAndTag(position, TAG);
-                String url;
-                if (position % 2 == 0) {
-                    url = "https://res.exexm.com/cw_145225549855002";
-                } else {
-                    url = "http://7xse1z.com1.z0.glb.clouddn.com/1491813192";
-                }
                 //listVideoUtil.setCachePath(new File(FileUtils.getPath()));
 
-                gsySmallVideoHelperBuilder.setVideoTitle("title " + position).setUrl(url);
+                gsySmallVideoHelperBuilder.setVideoTitle("title " + position).setUrl(videoModel.getPath());
 
                 smallVideoHelper.startPlay();
 

@@ -5,7 +5,8 @@ import android.media.AudioManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import com.danikula.videocache.HttpProxyCacheServer;
+//import com.danikula.videocache.HttpProxyCacheServer;
+//
 import com.ybj366533.videoplayer.utils.Debuger;
 import com.ybj366533.videoplayer.video.base.MiGuVideoViewBridge;
 import com.ybj366533.yy_videoplayer.video.manager.CustomManager;
@@ -87,11 +88,11 @@ public class MultiSampleVideo extends SampleCoverVideo {
         CustomManager.releaseAllVideos(getKey());
     }
 
-    @Override
-    protected HttpProxyCacheServer getProxy(Context context, File file) {
-        return null;
-    }
-
+//    @Override
+//    protected HttpProxyCacheServer getProxy(Context context, File file) {
+//        return null;
+//    }
+//
 
 
     @Override

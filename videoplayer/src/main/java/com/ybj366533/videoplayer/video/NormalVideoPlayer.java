@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.ybj366533.videoplayer.video.base.VideoView;
+import com.ybj366533.videoplayer.video.base.BaseVideoView;
 
 /**
 
@@ -34,9 +34,9 @@ public class NormalVideoPlayer extends StandardVideoPlayer {
     protected void updateStartImage() {
         if(mStartButton instanceof ImageView) {
             ImageView imageView = (ImageView) mStartButton;
-            if (mCurrentState == VideoView.CURRENT_STATE_PLAYING) {
+            if (mCurrentState == BaseVideoView.CURRENT_STATE_PLAYING) {
                 imageView.setImageResource(com.ybj366533.videoplayer.R.drawable.video_click_pause_selector);
-            } else if (mCurrentState == VideoView.CURRENT_STATE_ERROR) {
+            } else if (mCurrentState == BaseVideoView.CURRENT_STATE_ERROR) {
                 imageView.setImageResource(com.ybj366533.videoplayer.R.drawable.video_click_play_selector);
             } else {
                 imageView.setImageResource(com.ybj366533.videoplayer.R.drawable.video_click_play_selector);

@@ -3,12 +3,10 @@ package com.ybj366533.yy_videoplayer.video;
 import android.content.Context;
 import android.util.AttributeSet;
 
+
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 
-/**
- * 无任何控制ui的播放
- */
 
 public class EmptyControlVideo extends StandardVideoPlayer {
 

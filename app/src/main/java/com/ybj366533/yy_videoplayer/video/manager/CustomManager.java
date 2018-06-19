@@ -7,9 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+//import com.example.gsyvideoplayer.R;
 import com.ybj366533.videoplayer.VideoBaseManager;
 import com.ybj366533.videoplayer.utils.CommonUtil;
-import com.ybj366533.videoplayer.video.base.VideoPlayer;
+import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 
 import java.util.HashMap;
@@ -18,8 +19,6 @@ import java.util.Map;
 import tv.danmaku.ijk.media.player.IjkLibLoader;
 
 import static com.ybj366533.videoplayer.utils.CommonUtil.hideNavKey;
-
-//import com.example.gsyvideoplayer.R;
 
 /**
  * 多个播放的管理器
@@ -178,9 +177,9 @@ public class CustomManager extends VideoBaseManager {
     public static boolean isFullState(Activity activity) {
         ViewGroup vp = (ViewGroup) (CommonUtil.scanForActivity(activity)).findViewById(Window.ID_ANDROID_CONTENT);
         final View full = vp.findViewById(FULLSCREEN_ID);
-        VideoPlayer gsyVideoPlayer = null;
+        MiGuVideoPlayer gsyVideoPlayer = null;
         if (full != null) {
-            gsyVideoPlayer = (VideoPlayer) full;
+            gsyVideoPlayer = (MiGuVideoPlayer) full;
         }
         return gsyVideoPlayer != null;
     }

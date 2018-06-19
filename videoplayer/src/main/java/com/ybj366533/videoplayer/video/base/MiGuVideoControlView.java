@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +18,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.ybj366533.videoplayer.R;
@@ -25,8 +25,12 @@ import com.ybj366533.videoplayer.listener.LockClickListener;
 import com.ybj366533.videoplayer.listener.VideoProgressListener;
 import com.ybj366533.videoplayer.utils.CommonUtil;
 import com.ybj366533.videoplayer.utils.Debuger;
+import com.ybj366533.videoplayer.widget.seekbar.IndicatorSeekBar;
+import com.ybj366533.videoplayer.widget.seekbar.IndicatorSeekBarListener;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -38,7 +42,7 @@ import static com.ybj366533.videoplayer.utils.CommonUtil.hideNavKey;
  * Created by guoshuyu on 2017/8/2.
  */
 
-public abstract class VideoControlView extends VideoView implements View.OnClickListener, View.OnTouchListener, SeekBar.OnSeekBarChangeListener {
+public abstract class MiGuVideoControlView extends BaseVideoPlayer implements View.OnClickListener, View.OnTouchListener, IndicatorSeekBarListener {
 
 
     //手指放下的位置
@@ -132,7 +136,7 @@ public abstract class VideoControlView extends VideoView implements View.OnClick
     protected View mLoadingProgressBar;
 
     //进度条
-    protected SeekBar mProgressBar;
+    protected IndicatorSeekBar mProgressBar;
 
     //全屏按键
     protected ImageView mFullscreenButton;
@@ -174,20 +178,24 @@ public abstract class VideoControlView extends VideoView implements View.OnClick
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
 
     protected VideoProgressListener mVideoProgressListener;
+    private List<Float> splitlist = new ArrayList<>();
+    private List<Integer> splitImglist = new ArrayList<>();
+    private int[] imgPath = {R.drawable.images_0, R.drawable.images_1, R.drawable.images_2, R.drawable.images_3, R.drawable.images_4, R.drawable.images_5, R.drawable.images_6, R.drawable.images_7, R.drawable.images_8, R.drawable.images_9,};
 
-    public VideoControlView(@NonNull Context context) {
+
+    public MiGuVideoControlView(@NonNull Context context) {
         super(context);
     }
 
-    public VideoControlView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public MiGuVideoControlView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public VideoControlView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public MiGuVideoControlView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public VideoControlView(Context context, Boolean fullFlag) {
+    public MiGuVideoControlView(Context context, Boolean fullFlag) {
         super(context, fullFlag);
     }
 
@@ -198,7 +206,7 @@ public abstract class VideoControlView extends VideoView implements View.OnClick
         mTitleTextView = (TextView) findViewById(R.id.title);
         mBackButton = (ImageView) findViewById(R.id.back);
         mFullscreenButton = (ImageView) findViewById(R.id.fullscreen);
-        mProgressBar = (SeekBar) findViewById(R.id.progress);
+        mProgressBar = (IndicatorSeekBar) findViewById(R.id.progress);
         mCurrentTimeTextView = (TextView) findViewById(R.id.current);
         mTotalTimeTextView = (TextView) findViewById(R.id.total);
         mBottomContainer = (ViewGroup) findViewById(R.id.layout_bottom);
@@ -223,7 +231,7 @@ public abstract class VideoControlView extends VideoView implements View.OnClick
         }
 
         if (mProgressBar != null) {
-            mProgressBar.setOnSeekBarChangeListener(this);
+            mProgressBar.setIndicatorSeekBarListener(this);
         }
 
         if (mBottomContainer != null) {
@@ -399,10 +407,10 @@ public abstract class VideoControlView extends VideoView implements View.OnClick
             if (mVideoAllCallBack != null && isCurrentMediaListener()) {
                 if (mIfCurrentIsFullscreen) {
                     Debuger.printfLog("onClickBlankFullscreen");
-                    mVideoAllCallBack.onClickBlankFullscreen(mOriginUrl, mTitle, VideoControlView.this);
+                    mVideoAllCallBack.onClickBlankFullscreen(mOriginUrl, mTitle, MiGuVideoControlView.this);
                 } else {
                     Debuger.printfLog("onClickBlank");
-                    mVideoAllCallBack.onClickBlank(mOriginUrl, mTitle, VideoControlView.this);
+                    mVideoAllCallBack.onClickBlank(mOriginUrl, mTitle, MiGuVideoControlView.this);
                 }
             }
             startDismissControlViewTimer();
@@ -554,19 +562,21 @@ public abstract class VideoControlView extends VideoView implements View.OnClick
         return false;
     }
 
+
     @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+    public void onProgressChanged(float progress) {
+        int totalTimeDuration = getDuration();
+        mSeekTimePosition = (int) (progress * getDuration()) / 100;
+        if (mSeekTimePosition > totalTimeDuration)
+            mSeekTimePosition = totalTimeDuration;
+        String seekTime = CommonUtil.stringForTime(mSeekTimePosition);
+        String totalTime = CommonUtil.stringForTime(totalTimeDuration);
+        showProgressDialog(0, seekTime, mSeekTimePosition, totalTime, totalTimeDuration);
+
     }
 
     @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-    }
-
-    /***
-     * 拖动进度条
-     */
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
+    public void onSeekTo(float progress) {
         if (mVideoAllCallBack != null && isCurrentMediaListener()) {
             if (isIfCurrentIsFullscreen()) {
                 Debuger.printfLog("onClickSeekbarFullscreen");
@@ -576,19 +586,44 @@ public abstract class VideoControlView extends VideoView implements View.OnClick
                 mVideoAllCallBack.onClickSeekbar(mOriginUrl, mTitle, this);
             }
         }
+        dismissProgressDialog();
         if (getGSYVideoManager().getMediaPlayer() != null && mHadPlay) {
-            try {
-                int time = seekBar.getProgress() * getDuration() / 100;
-                getGSYVideoManager().getMediaPlayer().seekTo(time);
-            } catch (Exception e) {
-                Debuger.printfWarning(e.toString());
-            }
+            int time = (int) (progress * getDuration()) / 100;
+            Log.e("seekTo", "seekTo = " + time);
+            seekTo(time);
         }
+    }
+
+    public void setSplit() {
+        float d = getDuration();
+        int p = getDuration()/10;
+        for (int i = 0; i < (d / p); i++) {
+            float a = (float) (p + (i * p)) / d;
+            splitlist.add(a);
+        }
+        mProgressBar.setmSplitList(splitlist);
+    }
+
+    public void setSplitImg(int url) {
+        float d = getDuration();
+        int p = getDuration()/10;
+        for (int i = 0; i < (d / p); i++) {
+            float a = (float) (p + (i * p)) / d;
+            splitlist.add(a);
+        }
+    }
+
+    public int getSplitImg(float progress) {
+        int p = getDuration()/10;
+        float d = progress / p;
+//        Log.e("getSplitImg", "progress = " + progress + "d =" + d);
+        return d > imgPath.length ? imgPath[0] : imgPath[(int) d];
     }
 
     @Override
     public void onPrepared() {
         super.onPrepared();
+        setSplit();
         if (mCurrentState != CURRENT_STATE_PREPAREING) return;
         startProgressTimer();
     }
@@ -715,11 +750,7 @@ public abstract class VideoControlView extends VideoView implements View.OnClick
         dismissVolumeDialog();
         dismissBrightnessDialog();
         if (mChangePosition && getGSYVideoManager().getMediaPlayer() != null && (mCurrentState == CURRENT_STATE_PLAYING || mCurrentState == CURRENT_STATE_PAUSE)) {
-            try {
-                getGSYVideoManager().getMediaPlayer().seekTo(mSeekTimePosition);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            seekTo(mSeekTimePosition);
             int duration = getDuration();
             int progress = mSeekTimePosition * 100 / (duration == 0 ? 1 : duration);
             if (mProgressBar != null) {
@@ -884,7 +915,8 @@ public abstract class VideoControlView extends VideoView implements View.OnClick
     }
 
     protected void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
-
+        Log.e("setProgressAndTime", "progress = " + progress + "secProgress = " + secProgress
+                + "currentTime = " + currentTime + "totalTime = " + totalTime);
         if (mVideoProgressListener != null && mCurrentState == CURRENT_STATE_PLAYING) {
             mVideoProgressListener.onProgress(progress, secProgress, currentTime, totalTime);
         }
@@ -896,7 +928,7 @@ public abstract class VideoControlView extends VideoView implements View.OnClick
         if (!mTouchingProgressBar) {
             if (progress != 0) mProgressBar.setProgress(progress);
         }
-        if (secProgress > 94) secProgress = 100;
+        if (secProgress > 92) secProgress = 100;
         if (secProgress != 0 && !mCacheFile) {
             mProgressBar.setSecondaryProgress(secProgress);
         }

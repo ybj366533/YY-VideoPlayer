@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/black">
 
     <FrameLayout
@@ -43,7 +44,21 @@
             android:text="00:00"
             android:textColor="#ffffff" />
 
-        <SeekBar
+        <!--<SeekBar-->
+            <!--android:id="@+id/progress"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_weight="1.0"-->
+            <!--android:background="@null"-->
+            <!--android:max="100"-->
+            <!--android:maxHeight="4dp"-->
+            <!--android:minHeight="4dp"-->
+            <!--android:paddingBottom="8dp"-->
+            <!--android:paddingTop="8dp"-->
+            <!--android:progressDrawable="@drawable/video_seek_progress"-->
+            <!--android:thumb="@drawable/video_seek_thumb" />-->
+        <com.ybj366533.videoplayer.widget.seekbar.IndicatorSeekBar
             android:id="@+id/progress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -55,9 +70,10 @@
             android:minHeight="4dp"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
-            android:progressDrawable="@drawable/video_seek_progress"
-            android:thumb="@drawable/video_seek_thumb" />
-
+            app:isb_max="100"
+            app:isb_min="0"
+            app:isb_progress="0"
+            app:isb_show_indicator="true" />
         <TextView
             android:id="@+id/total"
             android:layout_width="wrap_content"

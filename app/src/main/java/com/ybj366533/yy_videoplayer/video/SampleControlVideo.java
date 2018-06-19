@@ -8,10 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+
 import com.ybj366533.videoplayer.utils.VideoType;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
 import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
-import com.ybj366533.videoplayer.video.base.VideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 
 
@@ -64,7 +65,7 @@ public class SampleControlVideo extends StandardVideoPlayer {
         mChangeTransform = (TextView) findViewById(R.id.change_transform);
 
         //切换清晰度
-        mMoreScale.setOnClickListener(new OnClickListener() {
+        mMoreScale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!mHadPlay) {
@@ -86,7 +87,7 @@ public class SampleControlVideo extends StandardVideoPlayer {
         });
 
         //旋转播放角度
-        mChangeRotate.setOnClickListener(new OnClickListener() {
+        mChangeRotate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!mHadPlay) {
@@ -103,7 +104,7 @@ public class SampleControlVideo extends StandardVideoPlayer {
         });
 
         //镜像旋转
-        mChangeTransform.setOnClickListener(new OnClickListener() {
+        mChangeTransform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!mHadPlay) {
@@ -186,7 +187,7 @@ public class SampleControlVideo extends StandardVideoPlayer {
      * @return
      */
     @Override
-    public BaseVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
+    public MiGuVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
         SampleControlVideo sampleVideo = (SampleControlVideo) super.startWindowFullscreen(context, actionBar, statusBar);
         sampleVideo.mSourcePosition = mSourcePosition;
         sampleVideo.mType = mType;
@@ -209,7 +210,7 @@ public class SampleControlVideo extends StandardVideoPlayer {
      * @param gsyVideoPlayer
      */
     @Override
-    protected void resolveNormalVideoShow(View oldF, ViewGroup vp, VideoPlayer gsyVideoPlayer) {
+    protected void resolveNormalVideoShow(View oldF, ViewGroup vp, MiGuVideoPlayer gsyVideoPlayer) {
         super.resolveNormalVideoShow(oldF, vp, gsyVideoPlayer);
         if (gsyVideoPlayer != null) {
             SampleControlVideo sampleVideo = (SampleControlVideo) gsyVideoPlayer;

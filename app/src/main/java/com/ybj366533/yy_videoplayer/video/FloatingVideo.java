@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+//import com.example.gsyvideoplayer.R;
 import com.ybj366533.videoplayer.utils.Debuger;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
@@ -15,8 +16,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.ybj366533.videoplayer.utils.CommonUtil.hideNavKey;
-
-//import com.example.gsyvideoplayer.R;
 
 /**
  * 多窗体下的悬浮窗页面支持Video
@@ -60,7 +59,7 @@ public class FloatingVideo extends StandardVideoPlayer {
         mScreenHeight = getActivityContext().getResources().getDisplayMetrics().heightPixels;
         mAudioManager = (AudioManager) getActivityContext().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mStartButton = findViewById(com.ybj366533.videoplayer.R.id.start);
-        mStartButton.setOnClickListener(new OnClickListener() {
+        mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clickStartIcon();

@@ -21,19 +21,21 @@ import com.ybj366533.videoplayer.listener.VideoShotListener;
 import com.ybj366533.videoplayer.listener.VideoShotSaveListener;
 import com.ybj366533.videoplayer.utils.Debuger;
 import com.ybj366533.videoplayer.utils.NetworkUtils;
+import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
 import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
-import com.ybj366533.videoplayer.video.base.VideoPlayer;
 import com.ybj366533.videoplayer.view.ENDownloadView;
 import com.ybj366533.videoplayer.view.ENPlayView;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * 标准播放器，继承之后实现一些ui显示效果，如显示／隐藏ui，播放按键等
  */
 
-public class StandardVideoPlayer extends VideoPlayer {
+public class StandardVideoPlayer extends MiGuVideoPlayer {
 
     //亮度dialog
     protected Dialog mBrightnessDialog;
@@ -102,13 +104,13 @@ public class StandardVideoPlayer extends VideoPlayer {
             mBottomProgressBar.setProgressDrawable(mBottomProgressDrawable);
         }
 
-        if (mBottomShowProgressDrawable != null) {
-            mProgressBar.setProgressDrawable(mBottomProgressDrawable);
-        }
-
-        if (mBottomShowProgressThumbDrawable != null) {
-            mProgressBar.setThumb(mBottomShowProgressThumbDrawable);
-        }
+//        if (mBottomShowProgressDrawable != null) {
+//            mProgressBar.setProgressDrawable(mBottomProgressDrawable);
+//        }
+//
+//        if (mBottomShowProgressThumbDrawable != null) {
+//            mProgressBar.setThumb(mBottomShowProgressThumbDrawable);
+//        }
 
     }
 
@@ -220,15 +222,19 @@ public class StandardVideoPlayer extends VideoPlayer {
             if (mDialogProgressBar != null) {
                 mDialogProgressBar.setProgress(seekTimePosition * 100 / totalTimeDuration);
             }
-        if (deltaX > 0) {
-            if (mDialogIcon != null) {
-                mDialogIcon.setBackgroundResource(R.drawable.video_forward_icon);
-            }
-        } else {
-            if (mDialogIcon != null) {
-                mDialogIcon.setBackgroundResource(R.drawable.video_backward_icon);
-            }
+        if (mDialogIcon != null) {
+//                mDialogIcon.setBackgroundResource(R.drawable.video_backward_icon);
+            mDialogIcon.setBackgroundResource(getSplitImg(seekTimePosition));
         }
+//        if (deltaX > 0) {
+//            if (mDialogIcon != null) {
+//                mDialogIcon.setBackgroundResource(getSplitImg(seekTimePosition));
+//            }
+//        } else {
+//            if (mDialogIcon != null) {
+//                mDialogIcon.setBackgroundResource(getSplitImg(seekTimePosition));
+//            }
+//        }
 
     }
 
@@ -329,13 +335,13 @@ public class StandardVideoPlayer extends VideoPlayer {
     }
 
     @Override
-    protected void cloneParams(BaseVideoPlayer from, BaseVideoPlayer to) {
+    protected void cloneParams(MiGuVideoPlayer from, MiGuVideoPlayer to) {
         super.cloneParams(from, to);
         StandardVideoPlayer sf = (StandardVideoPlayer) from;
         StandardVideoPlayer st = (StandardVideoPlayer) to;
         if (st.mProgressBar != null && sf.mProgressBar != null) {
             st.mProgressBar.setProgress(sf.mProgressBar.getProgress());
-            st.mProgressBar.setSecondaryProgress(sf.mProgressBar.getSecondaryProgress());
+            st.mProgressBar.setSecondaryProgress(sf.mProgressBar.getCacheProgress());
         }
         if (st.mTotalTimeTextView != null && sf.mTotalTimeTextView != null) {
             st.mTotalTimeTextView.setText(sf.mTotalTimeTextView.getText());
@@ -354,16 +360,16 @@ public class StandardVideoPlayer extends VideoPlayer {
      * @return
      */
     @Override
-    public BaseVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
-        BaseVideoPlayer gsyBaseVideoPlayer = super.startWindowFullscreen(context, actionBar, statusBar);
-        if (gsyBaseVideoPlayer != null) {
-            StandardVideoPlayer gsyVideoPlayer = (StandardVideoPlayer) gsyBaseVideoPlayer;
+    public MiGuVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
+        MiGuVideoPlayer gsyMiGuVideoPlayer = super.startWindowFullscreen(context, actionBar, statusBar);
+        if (gsyMiGuVideoPlayer != null) {
+            StandardVideoPlayer gsyVideoPlayer = (StandardVideoPlayer) gsyMiGuVideoPlayer;
             gsyVideoPlayer.setLockClickListener(mLockClickListener);
             gsyVideoPlayer.setNeedLockFull(isNeedLockFull());
             initFullUI(gsyVideoPlayer);
             //比如你自定义了返回案件，但是因为返回按键底层已经设置了返回事件，所以你需要在这里重新增加的逻辑
         }
-        return gsyBaseVideoPlayer;
+        return gsyMiGuVideoPlayer;
     }
 
     /********************************各类UI的状态显示*********************************************/
@@ -455,7 +461,7 @@ public class StandardVideoPlayer extends VideoPlayer {
         setViewShowState(mBottomContainer, VISIBLE);
         setViewShowState(mStartButton, INVISIBLE);
         setViewShowState(mLoadingProgressBar, VISIBLE);
-        setViewShowState(mThumbImageViewLayout, INVISIBLE);
+        setViewShowState(mThumbImageViewLayout, VISIBLE);
         setViewShowState(mBottomProgressBar, INVISIBLE);
         setViewShowState(mLockScreen, GONE);
 
@@ -784,8 +790,8 @@ public class StandardVideoPlayer extends VideoPlayer {
         mBottomShowProgressDrawable = drawable;
         mBottomShowProgressThumbDrawable = thumb;
         if (mProgressBar != null) {
-            mProgressBar.setProgressDrawable(drawable);
-            mProgressBar.setThumb(thumb);
+//            mProgressBar.setProgressDrawable(drawable);
+//            mProgressBar.setThumb(thumb);
         }
     }
 
