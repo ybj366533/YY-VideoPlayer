@@ -43,11 +43,6 @@ public class RecyclerItemNormalHolder extends RecyclerItemBaseHolder {
 
         //增加封面
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        if (position % 2 == 0) {
-            imageView.setImageResource(R.mipmap.xxx1);
-        } else {
-            imageView.setImageResource(R.mipmap.xxx2);
-        }
         if (imageView.getParent() != null) {
             ViewGroup viewGroup = (ViewGroup) imageView.getParent();
             viewGroup.removeView(imageView);

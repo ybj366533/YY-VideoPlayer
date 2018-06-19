@@ -37,7 +37,7 @@ dependencies {
     api rootProject.ext.dependencies['ijkplayer_arm64']
     api rootProject.ext.dependencies['ijkplayer_x86_64']
     api rootProject.ext.dependencies['ijkplayer_x86']
-    api rootProject.ext.dependencies['ijkplayer_exo']
+//    api rootProject.ext.dependencies['ijkplayer_exo']
     api rootProject.ext.dependencies['transitions_everywhere']
 
     api project(':videoplayer-androidvideocache')

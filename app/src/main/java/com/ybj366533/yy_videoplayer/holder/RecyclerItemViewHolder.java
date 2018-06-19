@@ -43,7 +43,6 @@ public class RecyclerItemViewHolder extends RecyclerItemBaseHolder {
 
         //增加封面
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setImageResource(R.mipmap.xxx1);
 
         smallVideoHelper.addVideoPlayer(position, imageView, TAG, listItemContainer, listItemBtn);
 

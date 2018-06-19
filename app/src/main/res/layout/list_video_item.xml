@@ -7,8 +7,7 @@
         android:id="@+id/list_item_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/post_media_height"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/xxx1" />
+        android:scaleType="centerCrop" />
 
 
     <ImageView
