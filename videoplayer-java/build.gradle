@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 
 android {
-
     compileSdkVersion rootProject.ext.android.compileSdkVersion
 
     defaultConfig {
@@ -11,6 +10,7 @@ android {
         versionName "1.0"
 
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -22,15 +22,9 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+
 }
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api rootProject.ext.dependencies['appcompat-v7']
-//    api rootProject.ext.dependencies['ijkplayer_java']
-    api rootProject.ext.dependencies['exo_player2']
-    api rootProject.ext.dependencies['exo_player2_rtmp']
-    implementation project(':videoplayer-java')
-
-
 }

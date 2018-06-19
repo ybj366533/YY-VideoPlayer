@@ -30,7 +30,8 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
 
     api rootProject.ext.dependencies['appcompat-v7']
-    api rootProject.ext.dependencies['ijkplayer_java']
+    api rootProject.ext.dependencies['recyclerview-v7']
+//    api rootProject.ext.dependencies['ijkplayer_java']
     api rootProject.ext.dependencies['ijkplayer_armv7a']
     api rootProject.ext.dependencies['ijkplayer_armv5']
     api rootProject.ext.dependencies['ijkplayer_arm64']
@@ -40,6 +41,7 @@ dependencies {
     api rootProject.ext.dependencies['transitions_everywhere']
 
     api project(':videoplayer-androidvideocache')
+    api project(':videoplayer-java')
     api project(':videoplayer-exo2')
 
 }
