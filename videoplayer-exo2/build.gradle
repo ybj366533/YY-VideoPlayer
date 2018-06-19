@@ -25,10 +25,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile rootProject.ext.dependencies['appcompat-v7']
-    compile rootProject.ext.dependencies['ijkplayer_java']
-    compile rootProject.ext.dependencies['exo_player2']
-    compile rootProject.ext.dependencies['exo_player2_rtmp']
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api rootProject.ext.dependencies['appcompat-v7']
+    api rootProject.ext.dependencies['ijkplayer_java']
+    api rootProject.ext.dependencies['exo_player2']
+    api rootProject.ext.dependencies['exo_player2_rtmp']
 
 }

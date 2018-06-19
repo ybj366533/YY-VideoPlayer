@@ -27,19 +27,19 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile rootProject.ext.dependencies['appcompat-v7']
-    compile rootProject.ext.dependencies['ijkplayer_java']
-    compile rootProject.ext.dependencies['ijkplayer_armv7a']
-    compile rootProject.ext.dependencies['ijkplayer_armv5']
-    compile rootProject.ext.dependencies['ijkplayer_arm64']
-    compile rootProject.ext.dependencies['ijkplayer_x86_64']
-    compile rootProject.ext.dependencies['ijkplayer_x86']
-    compile rootProject.ext.dependencies['ijkplayer_exo']
-    compile rootProject.ext.dependencies['transitions_everywhere']
+    api rootProject.ext.dependencies['appcompat-v7']
+    api rootProject.ext.dependencies['ijkplayer_java']
+    api rootProject.ext.dependencies['ijkplayer_armv7a']
+    api rootProject.ext.dependencies['ijkplayer_armv5']
+    api rootProject.ext.dependencies['ijkplayer_arm64']
+    api rootProject.ext.dependencies['ijkplayer_x86_64']
+    api rootProject.ext.dependencies['ijkplayer_x86']
+    api rootProject.ext.dependencies['ijkplayer_exo']
+    api rootProject.ext.dependencies['transitions_everywhere']
 
-    compile project(':videoplayer-androidvideocache')
-    compile project(':videoplayer-exo2')
+    api project(':videoplayer-androidvideocache')
+    api project(':videoplayer-exo2')
 
 }
