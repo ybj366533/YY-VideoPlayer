@@ -6,10 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import com.danikula.videocache.HttpProxyCacheServer;
 import com.ybj366533.videoplayer.VideoManager;
 import com.ybj366533.videoplayer.utils.CommonUtil;
 import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
 import com.ybj366533.videoplayer.video.base.MiGuVideoViewBridge;
+
+import java.io.File;
 
 import tv.danmaku.ijk.media.player.IjkLibLoader;
 
@@ -106,6 +109,10 @@ public abstract class BaseVideoPlayer extends BaseVideoView {
             return getSmallWindowPlayer();
         }
         return this;
+    }
+    @Override
+    protected HttpProxyCacheServer getProxy(Context context, File file) {
+        return VideoManager.getProxy(context, file);
     }
 
 }

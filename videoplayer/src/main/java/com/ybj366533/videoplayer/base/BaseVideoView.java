@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.danikula.videocache.HttpProxyCacheServer;
 import com.ybj366533.videoplayer.listener.MediaPlayerListener;
 import com.ybj366533.videoplayer.listener.VideoPlayerListener;
 import com.ybj366533.videoplayer.utils.CommonUtil;
@@ -426,14 +427,29 @@ public abstract class BaseVideoView extends TextureRenderView implements MediaPl
      * @return
      */
     protected boolean setUp(String url, boolean cacheWithPlay, File cachePath, boolean changeState) {
-        this.mCache = cacheWithPlay;
-        this.mCachePath = cachePath;
-        this.mOriginUrl = url;
-        this.mUrl = url;
+        mCache = cacheWithPlay;
+        mCachePath = cachePath;
+        mOriginUrl = url;
         if (isCurrentMediaListener() &&
                 (System.currentTimeMillis() - mSaveChangeViewTIme) < CHANGE_DELAY_TIME)
             return false;
         mCurrentState = CURRENT_STATE_NORMAL;
+        if (cacheWithPlay && url.startsWith("http") && !url.contains("127.0.0.1") && !url.contains(".m3u8")) {
+            HttpProxyCacheServer proxy = getProxy(getActivityContext().getApplicationContext(), cachePath);
+            if (proxy != null) {
+                //此处转换了url，然后再赋值给mUrl。
+                url = proxy.getProxyUrl(url);
+                mCacheFile = (!url.startsWith("http"));
+                //注册上缓冲监听
+                if (!mCacheFile && getVideoManager() != null) {
+                    proxy.registerCacheListener(getVideoManager().getCacheListener(), mOriginUrl);
+                }
+            }
+        } else if (!cacheWithPlay && (!url.startsWith("http") && !url.startsWith("rtmp")
+                && !url.startsWith("rtsp") && !url.contains(".m3u8"))) {
+            mCacheFile = true;
+        }
+        this.mUrl = url;
         if (changeState)
             setStateAndUi(CURRENT_STATE_NORMAL);
         return true;
@@ -856,6 +872,13 @@ public abstract class BaseVideoView extends TextureRenderView implements MediaPl
 
     /************************* 公开接口 *************************/
 
+    /**
+     * 获取代理服务
+     *
+     * @param file 文件可以为空
+     * @return 如果不需要可以为空
+     */
+    protected abstract HttpProxyCacheServer getProxy(Context context, File file);
     /**
      * 获取当前播放状态
      */

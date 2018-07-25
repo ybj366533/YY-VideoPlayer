@@ -39,27 +39,27 @@ public class ViewPagerActivity extends AppCompatActivity {
 
     private ArrayList<PlayerVideoModel> mData = new ArrayList<>();
     private String[] pathList = {
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060619/26618252601954834.mp4?st=isU6ueMNgdiTnjLEiWOyxw&e=1529037650",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060620/26619957888050553.mp4?st=JmCpLJKTN5SPJv7qRPN4Ew&e=1529037650",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018061216/27124379319179984.mp4?st=0PcaGHwqG8JPtjNeiEIqJQ&e=1529035194",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018061215/27122597566373351.mp4?st=sh5L3VjfkngU0eOTEeE4Iw&e=1529035194",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018061215/27121796210146622.mp4?st=QcDW7j4bYYc9kipPq7HWMA&e=1529035194",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060821/26795757747010413.mp4?st=PgTHXQcw3cHDXHQ1GdGFKg&e=1529035194",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060821/26795700884473216.mp4?st=OYxV7KrpAMbmQjaBHguzVw&e=1529035194",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060719/26703489777967114.mp4?st=vuPzjF7wcX-9nGvBd1pWMA&e=1529035194",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060718/26699239029380704.mp4?st=Xr4MflEDwSqOGrutFCGP3Q&e=1529035194",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060520/26535899179808137.mp4?st=pLpImXI4Ri7CmZrP5nftSw&e=1529035194",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060519/26531989234740047.mp4?st=ELpYQy_DwXYNji25HVQjZw&e=1529035194",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060509/26494827326450521.mp4?st=rRl6r08_7tW6n-Qa-P2gsw&e=1529035194",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060417/26438035488103070.mp4?st=wCL5bzGm56IJzg8Nilf3_Q&e=1529035194",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060417/26435678433761049.mp4?st=rELScery2Eio1gX2GbkEVA&e=1529035194",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060414/26428035455673878.mp4?st=Epo1yRA1woqbvWgYhVTiGA&e=1529035194",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060414/26427975373544364.mp4?st=XPIFZuY1hkaKYQxjKQRKQw&e=1529035194",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060310/26326191386171885.mp4?st=3B53Ng-LDL80yS9ndb5FgA&e=1529035332",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018053022/26023141694915642.mp4?st=2yTjTunuLxuK6K_Oq5bXBQ&e=1529035332",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018053022/26022100946326325.mp4?st=rAZ-jLSENKuwMltWdLBPxQ&e=1529035332",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018053021/26018769670193680.mp4?st=-gRXhFb0rrAqmR2qPG_e3w&e=1529035332",
-            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018052915/25911786584930421.mp4?st=K4XW0yQfmfFd_-cF3E8i8A&e=1529035332",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060619/26618252601954834.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060620/26619957888050553.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018061216/27124379319179984.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018061215/27122597566373351.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018061215/27121796210146622.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060821/26795757747010413.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060821/26795700884473216.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060719/26703489777967114.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060718/26699239029380704.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060520/26535899179808137.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060519/26531989234740047.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060509/26494827326450521.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060417/26438035488103070.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060417/26435678433761049.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060414/26428035455673878.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060414/26427975373544364.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060310/26326191386171885.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018053022/26023141694915642.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018053022/26022100946326325.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018053021/26018769670193680.mp4",
+            "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018052915/25911786584930421.mp4",
     };
 
     private String[] imgPath = {
@@ -109,7 +109,6 @@ public class ViewPagerActivity extends AppCompatActivity {
 
     private void initView() {
         mRecyclerView = findViewById(R.id.recycler);
-        viewPageCalculatorHelper = new ViewPlageCalculatorHelper(R.id.video_view);
         mLayoutManager = new ViewPagerLayoutManager(this, OrientationHelper.VERTICAL);
         mAdapter = new RecycleViewAdapter(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -117,6 +116,7 @@ public class ViewPagerActivity extends AppCompatActivity {
     }
 
     private void initListener() {
+        viewPageCalculatorHelper = new ViewPlageCalculatorHelper(R.id.video_view);
         mLayoutManager.setOnViewPagerListener(new OnViewPagerListener() {
             @Override
             public void onPageRelease(boolean isNext, int position) {
@@ -176,7 +176,7 @@ public class ViewPagerActivity extends AppCompatActivity {
         for (int i = 0; i < 20; i++) {
             PlayerVideoModel videoModel = new PlayerVideoModel();
 //            int random = getRandom();
-            String videoPath = pathList[i];
+            String videoPath = "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018072416/30754509996582105.mp4?st=WeIcus-zkKdvaeMIx5wXfw&e=1537607337";
             videoModel.setPath(videoPath);
             videoModel.setHd_path(videoPath);
             videoModel.setImgPath(imgPath[i]);

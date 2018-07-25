@@ -1,6 +1,7 @@
 package com.ybj366533.yy_videoplayer.adapter;
 
 import android.content.Context;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.ybj366533.videoplayer.video.StandardVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 import com.ybj366533.yy_videoplayer.model.PlayerVideoModel;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.VideoViewHolder> {
@@ -103,6 +105,8 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
             videoOptionBuilder
                     .setIsTouchWiget(false)
                     .setUrl(model.getPath())
+                    .setCacheWithPlay(true)
+                    .setCachePath(new File(Environment.getExternalStorageDirectory() + File.separator + "YYIjk"))
                     .setLooping(true)
                     .setSetUpLazy(true)//lazy可以防止滑动卡顿
                     .setLockLand(true)

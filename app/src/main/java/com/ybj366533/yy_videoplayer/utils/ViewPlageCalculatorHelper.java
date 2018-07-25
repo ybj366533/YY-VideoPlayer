@@ -3,17 +3,13 @@ package com.ybj366533.yy_videoplayer.utils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Rect;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.Toast;
 
 import com.ybj366533.videoplayer.base.BaseVideoPlayer;
-import com.ybj366533.videoplayer.utils.CommonUtil;
 import com.ybj366533.videoplayer.utils.NetworkUtils;
 import com.ybj366533.videoplayer.video.FullScreenVideoView;
-import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 
 /**
@@ -27,10 +23,11 @@ public class ViewPlageCalculatorHelper {
     private int playId;
     private PlayRunnable runnable;
 
-    private Handler playHandler = new Handler();
+    private Handler playHandler;
 
     public ViewPlageCalculatorHelper(int playId) {
         this.playId = playId;
+        playHandler = new Handler();
     }
 
     public void onScrollSelectChanged(RecyclerView view, int selectId) {
@@ -45,15 +42,20 @@ public class ViewPlageCalculatorHelper {
 
     }
 
+    public void onScrollDestroy(){
+        this.selectId = -1;
+        this.releaseId = -1;
+        this.playId = 0;
+        runnable = null;
+        playHandler.removeCallbacksAndMessages(null);
+    }
 
     private void playVideo(RecyclerView view) {
         if (view == null) {
             return;
         }
         RecyclerView.LayoutManager layoutManager = view.getLayoutManager();
-
         BaseVideoPlayer baseVideoPlayer = null;
-
         boolean needPlay = false;
 
         if (layoutManager.findViewByPosition(selectId) != null) {
@@ -87,7 +89,7 @@ public class ViewPlageCalculatorHelper {
         }
         RecyclerView.LayoutManager layoutManager = view.getLayoutManager();
 
-        if (layoutManager.findViewByPosition(releaseId) != null) {
+        if (layoutManager.findViewByPosition(releaseId) != null && releaseId != selectId) {
             FullScreenVideoView player = (FullScreenVideoView) layoutManager.findViewByPosition(releaseId).findViewById(playId);
             if ((player.getCurrentPlayer().getCurrentState() == BaseVideoPlayer.CURRENT_STATE_PLAYING
                     || player.getCurrentPlayer().getCurrentState() == BaseVideoPlayer.CURRENT_STATE_PLAYING_BUFFERING_START)) {
@@ -119,11 +121,11 @@ public class ViewPlageCalculatorHelper {
 
     /***************************************自动播放的点击播放确认******************************************/
     private void startPlayLogic(BaseVideoPlayer baseVideoPlayer, Context context) {
-        if (!CommonUtil.isWifiConnected(context)) {
-            //这里判断是否wifi
-            showWifiDialog(baseVideoPlayer, context);
-            return;
-        }
+//        if (!CommonUtil.isWifiConnected(context)) {
+//            //这里判断是否wifi
+//            showWifiDialog(baseVideoPlayer, context);
+//            return;
+//        }
         baseVideoPlayer.startPlayLogic();
     }
 

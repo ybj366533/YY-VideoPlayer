@@ -2,6 +2,7 @@ package com.ybj366533.videoplayer;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -14,6 +15,10 @@ import android.view.Surface;
 //import com.danikula.videocache.HttpProxyCacheServer;
 //import com.danikula.videocache.file.Md5FileNameGenerator;
 //import com.danikula.videocache.headers.HeaderInjector;
+import com.danikula.videocache.CacheListener;
+import com.danikula.videocache.HttpProxyCacheServer;
+import com.danikula.videocache.file.Md5FileNameGenerator;
+import com.danikula.videocache.headers.HeaderInjector;
 import com.ybj366533.videoplayer.listener.MediaPlayerListener;
 import com.ybj366533.videoplayer.model.VideoModel;
 import com.ybj366533.videoplayer.model.VideoOptionModel;
@@ -21,6 +26,7 @@ import com.ybj366533.videoplayer.player.EXO2PlayerManager;
 import com.ybj366533.videoplayer.player.IJKPlayerManager;
 import com.ybj366533.videoplayer.player.IPlayerManager;
 import com.ybj366533.videoplayer.player.SystemPlayerManager;
+import com.ybj366533.videoplayer.utils.CommonUtil;
 import com.ybj366533.videoplayer.utils.Debuger;
 import com.ybj366533.videoplayer.utils.FileUtils;
 import com.ybj366533.videoplayer.utils.StorageUtils;
@@ -36,6 +42,7 @@ import java.util.Map;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkLibLoader;
+
 import com.ybj366533.videoplayer.model.TextModel;
 
 /**
@@ -44,7 +51,7 @@ import com.ybj366533.videoplayer.model.TextModel;
 
 public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListener, IMediaPlayer.OnCompletionListener,
         IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnErrorListener,
-        IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnInfoListener, MiGuVideoViewBridge {
+        IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnInfoListener, CacheListener, MiGuVideoViewBridge {
 
     public static String TAG = "VideoBaseManager";
     //准备
@@ -74,8 +81,8 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
     protected List<VideoOptionModel> optionModelList;
 
     //视频代理
-//    protected HttpProxyCacheServer proxy;
-//
+    protected HttpProxyCacheServer proxy;
+    //
     //是否需要的自定义缓冲路径
     protected File cacheFile;
 
@@ -116,9 +123,14 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
     //是否需要外部超时判断
     protected boolean needTimeOutOther;
 
-    private List<TextModel> textList = new ArrayList<>();
     private long mPrepareStartTime = 0;
+    private long mOpenInputEndTime = 0;
+    private long mFindStreamEndTime = 0;
+    private long mOpenComponentTime = 0;
     private long mPrepareEndTime = 0;
+    private long mFirstVideoPktTime = 0;
+    private long mFirstVideoDecodeEndTime = 0;
+    private long mFirstVideoDisplayEndTime = 0;
 
     /**
      * 设置自定义so包加载类
@@ -144,6 +156,48 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
         FileUtils.deleteFiles(new File(path));
     }
 
+    /**
+     * 删除url对应默认缓存文件
+     */
+    public static void clearDefaultCache(Context context, String url) {
+        Md5FileNameGenerator md5FileNameGenerator = new Md5FileNameGenerator();
+        String name = md5FileNameGenerator.generate(url);
+        String pathTmp = StorageUtils.getIndividualCacheDirectory
+                (context.getApplicationContext()).getAbsolutePath()
+                + File.separator + name + ".download";
+        String path = StorageUtils.getIndividualCacheDirectory
+                (context.getApplicationContext()).getAbsolutePath()
+                + File.separator + name;
+        CommonUtil.deleteFile(pathTmp);
+        CommonUtil.deleteFile(path);
+
+    }
+
+    /**
+     * 创建缓存代理服务,带文件目录的.
+     */
+    public HttpProxyCacheServer newProxy(Context context, File file) {
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        HttpProxyCacheServer.Builder builder = new HttpProxyCacheServer.Builder(context);
+        builder.cacheDirectory(file);
+        builder.headerInjector(new UserAgentHeadersInjector());
+        cacheFile = file;
+        return builder.build();
+    }
+
+    public void setProxy(HttpProxyCacheServer proxy) {
+        this.proxy = proxy;
+    }
+
+    /**
+     * 创建缓存代理服务
+     */
+    public HttpProxyCacheServer newProxy(Context context) {
+        return new HttpProxyCacheServer.Builder(context.getApplicationContext())
+                .headerInjector(new UserAgentHeadersInjector()).build();
+    }
 
     /**
      * 删除url对应默认缓存文件
@@ -172,7 +226,7 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
                 return new IJKPlayerManager();
         }
     }
-    
+
     @Override
     public MediaPlayerListener listener() {
         if (listener == null)
@@ -252,22 +306,6 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
     @Override
     public void onPrepared(IMediaPlayer mp) {
         mPrepareEndTime = System.currentTimeMillis();
-//        mHudViewHolder.updateLoadCost(mPrepareEndTime - mPrepareStartTime);
-        Long pTime = mPrepareEndTime - mPrepareStartTime;
-        TextModel textModel = new TextModel();
-        textModel.setLogId("Model#" + textList.size());
-        textModel.setLogTime(pTime);
-        textModel.setStartTime(mPrepareStartTime);
-        textModel.setEndTime(mPrepareEndTime);
-        textList.add(textModel);
-        Log.e(TAG, "(mPrepareEndTime -> mPrepareStartTime)\n" + textModel.toString());
-        if (textList.size() > 19) {
-            Long sunTime = 0L;
-            for (int i = 0; i < textList.size(); i++) {
-                sunTime = sunTime + textList.get(i).getLogTime();
-            }
-            Log.e("onPreparedStartVideo", "平均开启时长：" + (sunTime / 20));
-        }
 
         mainThreadHandler.post(new Runnable() {
             @Override
@@ -355,6 +393,82 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
                         cancelTimeOutBuffer();
                     }
                 }
+
+                switch (what) {
+                    case IMediaPlayer.MEDIA_INFO_OPEN_INPUT:
+                        mOpenInputEndTime = System.currentTimeMillis();
+//                        mHudViewHolder.updateOpenInputCost(mOpenInputEndTime - mPrepareStartTime);
+                        long OpenInputCost = mOpenInputEndTime - mPrepareStartTime;
+                        Log.e(TAG, "PERF: MEDIA_INFO_OPEN_INPUT\n" + "updateOpenInputCost = " + OpenInputCost);
+                        break;
+                    case IMediaPlayer.MEDIA_INFO_FIND_STREAM_INFO:
+                        mFindStreamEndTime = System.currentTimeMillis();
+//                        IjkMediaPlayer ijk = (IjkMediaPlayer) mMediaPlayer;
+//                        mHudViewHolder.updateFindStreamCost(mFindStreamEndTime - mPrepareStartTime, ijk.getTrafficStatisticByteCount());
+                        long FindStreamCost = mFindStreamEndTime - mPrepareStartTime;
+                        Log.e(TAG, "PERF: MEDIA_INFO_FIND_STREAM_INFO\n" + "FindStreamCost = " + FindStreamCost);
+                        break;
+                    case IMediaPlayer.MEDIA_INFO_COMPONENT_OPEN:
+                        mOpenComponentTime = System.currentTimeMillis();
+//                        mHudViewHolder.updateOpenComponentCost(mOpenComponentTime - mPrepareStartTime);
+                        long OpenComponentCost = mOpenComponentTime - mPrepareStartTime;
+                        Log.e(TAG, "PERF: MEDIA_INFO_COMPONENT_OPEN\n" + "OpenComponentCost = " + OpenComponentCost);
+                        break;
+                    case IMediaPlayer.MEDIA_INFO_VIDEO_FIRSTPKT_GOT:
+                        mFirstVideoPktTime = System.currentTimeMillis();
+//                        mHudViewHolder.updateFirstVideoPktCost(mFirstVideoPktTime - mPrepareStartTime);
+                        long FirstVideoPktCost = mFirstVideoPktTime - mPrepareStartTime;
+                        Log.e(TAG, "PERF: MEDIA_INFO_VIDEO_FIRSTPKT_GOT\n" + "FirstVideoPktCost = " + FirstVideoPktCost);
+                        break;
+                    case IMediaPlayer.MEDIA_INFO_VIDEO_DECODED_START:
+                        mFirstVideoDecodeEndTime = System.currentTimeMillis();
+//                        mHudViewHolder.updateFirstVideoDecodeCost(mFirstVideoDecodeEndTime - mPrepareStartTime);
+                        long FirstVideoDecodeCost = mFirstVideoDecodeEndTime - mPrepareStartTime;
+                        Log.e(TAG, "PERF: MEDIA_INFO_VIDEO_DECODED_START\n" + "FirstVideoDecodeCost = " + FirstVideoDecodeCost);
+                        break;
+                    case IMediaPlayer.MEDIA_INFO_VIDEO_TRACK_LAGGING:
+                        Log.e(TAG, "MEDIA_INFO_VIDEO_TRACK_LAGGING:");
+                        break;
+                    case IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:
+                        mFirstVideoDisplayEndTime = System.currentTimeMillis();
+                        long FirstVideoDisplayCost = mFirstVideoDisplayEndTime - mPrepareStartTime;
+//                        mHudViewHolder.updateFirstVideoDisplayCost(mFirstVideoDisplayEndTime - mPrepareStartTime);
+                        Log.e(TAG, "PERF: MEDIA_INFO_VIDEO_RENDERING_START:" + "FirstVideoDisplayCost = " + FirstVideoDisplayCost);
+                        break;
+                    case IMediaPlayer.MEDIA_INFO_BUFFERING_START:
+                        Log.e(TAG, "MEDIA_INFO_BUFFERING_START:");
+                        break;
+                    case IMediaPlayer.MEDIA_INFO_BUFFERING_END:
+                        Log.e(TAG, "MEDIA_INFO_BUFFERING_END:");
+                        break;
+                    case IMediaPlayer.MEDIA_INFO_NETWORK_BANDWIDTH:
+                        Log.e(TAG, "MEDIA_INFO_NETWORK_BANDWIDTH: " + extra);
+                        break;
+                    case IMediaPlayer.MEDIA_INFO_BAD_INTERLEAVING:
+                        Log.e(TAG, "MEDIA_INFO_BAD_INTERLEAVING:");
+                        break;
+                    case IMediaPlayer.MEDIA_INFO_NOT_SEEKABLE:
+                        Log.e(TAG, "MEDIA_INFO_NOT_SEEKABLE:");
+                        break;
+                    case IMediaPlayer.MEDIA_INFO_METADATA_UPDATE:
+                        Log.e(TAG, "MEDIA_INFO_METADATA_UPDATE:");
+                        break;
+                    case IMediaPlayer.MEDIA_INFO_UNSUPPORTED_SUBTITLE:
+                        Log.e(TAG, "MEDIA_INFO_UNSUPPORTED_SUBTITLE:");
+                        break;
+                    case IMediaPlayer.MEDIA_INFO_SUBTITLE_TIMED_OUT:
+                        Log.e(TAG, "MEDIA_INFO_SUBTITLE_TIMED_OUT:");
+                        break;
+                    case IMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED:
+//                        mVideoRotationDegree = arg2;
+                        Log.d(TAG, "MEDIA_INFO_VIDEO_ROTATION_CHANGED: " + extra);
+//                        if (mRenderView != null)
+//                            mRenderView.setVideoRotation(arg2);
+                        break;
+                    case IMediaPlayer.MEDIA_INFO_AUDIO_RENDERING_START:
+                        Log.d(TAG, "MEDIA_INFO_AUDIO_RENDERING_START:");
+                        break;
+                }
                 if (listener() != null) {
                     listener().onInfo(what, extra);
                 }
@@ -379,6 +493,11 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
 
 
     @Override
+    public void onCacheAvailable(File cacheFile, String url, int percentsAvailable) {
+        buffterPoint = percentsAvailable;
+    }
+
+    @Override
     public IMediaPlayer getMediaPlayer() {
         if (playerManager != null) {
             return playerManager.getMediaPlayer();
@@ -386,6 +505,10 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
         return null;
     }
 
+    @Override
+    public CacheListener getCacheListener() {
+        return this;
+    }
 
     @Override
     public int getLastState() {
@@ -459,6 +582,9 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
                         playerManager.release();
                     }
                     setNeedMute(false);
+                    if (proxy != null) {
+                        proxy.unregisterCacheListener(VideoBaseManager.this);
+                    }
                     buffterPoint = 0;
                     cancelTimeOutBuffer();
                     break;
@@ -554,13 +680,14 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
     /**
      * for android video cache header
      */
-//    private class UserAgentHeadersInjector implements HeaderInjector {
-//
-//        @Override
-//        public Map<String, String> addHeaders(String url) {
-//            return (mMapHeadData == null) ? new HashMap<String, String>() : mMapHeadData;
-//        }
-//    }
+    private class UserAgentHeadersInjector implements HeaderInjector {
+
+        @Override
+        public Map<String, String> addHeaders(String url) {
+            return (mMapHeadData == null) ? new HashMap<String, String>() : mMapHeadData;
+        }
+    }
+
     public int getVideoType() {
         return videoType;
     }
