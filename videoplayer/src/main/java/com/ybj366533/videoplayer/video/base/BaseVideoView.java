@@ -20,11 +20,15 @@ import android.view.WindowManager;
 
 //import com.danikula.videocache.HttpProxyCacheServer;
 //import com.danikula.videocache.file.Md5FileNameGenerator;
+import com.danikula.videocache.HttpProxyCacheServer;
+import com.danikula.videocache.file.Md5FileNameGenerator;
+import com.ybj366533.videoplayer.base.VideoViewBridge;
 import com.ybj366533.videoplayer.listener.MediaPlayerListener;
 import com.ybj366533.videoplayer.listener.VideoAllCallBack;
 import com.ybj366533.videoplayer.utils.CommonUtil;
 import com.ybj366533.videoplayer.utils.Debuger;
 import com.ybj366533.videoplayer.utils.NetInfoModule;
+import com.ybj366533.videoplayer.utils.StorageUtils;
 
 import java.io.File;
 import java.util.HashMap;
@@ -215,32 +219,32 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
 
     @Override
     public int getCurrentVideoWidth() {
-        if (getGSYVideoManager().getMediaPlayer() != null) {
-            return getGSYVideoManager().getMediaPlayer().getVideoWidth();
+        if (getVideoManager().getMediaPlayer() != null) {
+            return getVideoManager().getMediaPlayer().getVideoWidth();
         }
         return 0;
     }
 
     @Override
     public int getCurrentVideoHeight() {
-        if (getGSYVideoManager().getMediaPlayer() != null) {
-            return getGSYVideoManager().getMediaPlayer().getVideoHeight();
+        if (getVideoManager().getMediaPlayer() != null) {
+            return getVideoManager().getMediaPlayer().getVideoHeight();
         }
         return 0;
     }
 
     @Override
     public int getVideoSarNum() {
-        if (getGSYVideoManager().getMediaPlayer() != null) {
-            return getGSYVideoManager().getMediaPlayer().getVideoSarNum();
+        if (getVideoManager().getMediaPlayer() != null) {
+            return getVideoManager().getMediaPlayer().getVideoSarNum();
         }
         return 0;
     }
 
     @Override
     public int getVideoSarDen() {
-        if (getGSYVideoManager().getMediaPlayer() != null) {
-            return getGSYVideoManager().getMediaPlayer().getVideoSarDen();
+        if (getVideoManager().getMediaPlayer() != null) {
+            return getVideoManager().getMediaPlayer().getVideoSarDen();
         }
         return 0;
     }
@@ -324,20 +328,20 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
     protected void startPrepare() {
 //        Log.e("player", "onStartPrepared");
 //        startTime = System.currentTimeMillis();
-        if (getGSYVideoManager().listener() != null) {
-            getGSYVideoManager().listener().onCompletion();
+        if (getVideoManager().listener() != null) {
+            getVideoManager().listener().onCompletion();
         }
         if (mVideoAllCallBack != null) {
             Debuger.printfLog("onStartPrepared");
             mVideoAllCallBack.onStartPrepared(mOriginUrl, mTitle, this);
         }
-        getGSYVideoManager().setListener(this);
-        getGSYVideoManager().setPlayTag(mPlayTag);
-        getGSYVideoManager().setPlayPosition(mPlayPosition);
+        getVideoManager().setListener(this);
+        getVideoManager().setPlayTag(mPlayTag);
+        getVideoManager().setPlayPosition(mPlayPosition);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         ((Activity) getActivityContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mBackUpPlayingBufferState = -1;
-        getGSYVideoManager().prepare(mUrl, (mMapHeadData == null) ? new HashMap<String, String>() : mMapHeadData, mLooping, mSpeed);
+        getVideoManager().prepare(mUrl, (mMapHeadData == null) ? new HashMap<String, String>() : mMapHeadData, mLooping, mSpeed);
         setStateAndUi(CURRENT_STATE_PREPAREING);
     }
 
@@ -441,28 +445,26 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
         mCache = cacheWithPlay;
         mCachePath = cachePath;
         mOriginUrl = url;
-        //TODO 设置缓存
         if (isCurrentMediaListener() &&
                 (System.currentTimeMillis() - mSaveChangeViewTIme) < CHANGE_DELAY_TIME)
             return false;
         mCurrentState = CURRENT_STATE_NORMAL;
-//        if (cacheWithPlay && url.startsWith("http") && !url.contains("127.0.0.1") && !url.contains(".m3u8")) {
-//            HttpProxyCacheServer proxy = getProxy(getActivityContext().getApplicationContext(), cachePath);
-//            if (proxy != null) {
-//                //此处转换了url，然后再赋值给mUrl。
-//                url = proxy.getProxyUrl(url);
-//                mCacheFile = (!url.startsWith("http"));
-//                //注册上缓冲监听
-//                if (!mCacheFile && getGSYVideoManager() != null) {
-//                    proxy.registerCacheListener(getGSYVideoManager().getCacheListener(), mOriginUrl);
-//                }
-//            }
-//        } else if (!cacheWithPlay && (!url.startsWith("http") && !url.startsWith("rtmp")
-//                && !url.startsWith("rtsp") && !url.contains(".m3u8"))) {
-//            mCacheFile = true;
-//        }
+        if (cacheWithPlay && url.startsWith("http") && !url.contains("127.0.0.1") && !url.contains(".m3u8")) {
+            HttpProxyCacheServer proxy = getProxy(getActivityContext().getApplicationContext(), cachePath);
+            if (proxy != null) {
+                //此处转换了url，然后再赋值给mUrl。
+                url = proxy.getProxyUrl(url);
+                mCacheFile = (!url.startsWith("http"));
+                //注册上缓冲监听
+                if (!mCacheFile && getVideoManager() != null) {
+                    proxy.registerCacheListener(getVideoManager().getCacheListener(), mOriginUrl);
+                }
+            }
+        } else if (cacheWithPlay && (!url.startsWith("http") && !url.startsWith("rtmp")
+                && !url.startsWith("rtsp") && !url.contains(".m3u8"))) {
+            mCacheFile = true;
+        }
         this.mUrl = url;
-        this.mTitle = title;
         if (changeState)
             setStateAndUi(CURRENT_STATE_NORMAL);
         return true;
@@ -485,12 +487,12 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
             mPauseBeforePrepared = true;
         }
         try {
-            if (getGSYVideoManager().getMediaPlayer() != null &&
-                    getGSYVideoManager().getMediaPlayer().isPlaying()) {
+            if (getVideoManager().getMediaPlayer() != null &&
+                    getVideoManager().getMediaPlayer().isPlaying()) {
                 setStateAndUi(CURRENT_STATE_PAUSE);
-                mCurrentPosition = getGSYVideoManager().getMediaPlayer().getCurrentPosition();
-                if (getGSYVideoManager().getMediaPlayer() != null)
-                    getGSYVideoManager().getMediaPlayer().pause();
+                mCurrentPosition = getVideoManager().getMediaPlayer().getCurrentPosition();
+                if (getVideoManager().getMediaPlayer() != null)
+                    getVideoManager().getMediaPlayer().pause();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -515,12 +517,12 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
         mPauseBeforePrepared = false;
         if (mCurrentState == CURRENT_STATE_PAUSE) {
             try {
-                if (mCurrentPosition > 0 && getGSYVideoManager().getMediaPlayer() != null) {
+                if (mCurrentPosition > 0 && getVideoManager().getMediaPlayer() != null) {
                     if (seek) {
                         seekTo(mCurrentPosition);
-//                        getGSYVideoManager().getMediaPlayer().seekTo(mCurrentPosition);
+//                        getVideoManager().getMediaPlayer().seekTo(mCurrentPosition);
                     }
-                    getGSYVideoManager().getMediaPlayer().start();
+                    getVideoManager().getMediaPlayer().start();
                     setStateAndUi(CURRENT_STATE_PLAYING);
                     if (mAudioManager != null && !mReleaseWhenLossAudio) {
                         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
@@ -539,7 +541,7 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
     protected void netWorkErrorLogic() {
         final long currentPosition = getCurrentPositionWhenPlaying();
         Debuger.printfError("******* Net State Changed. renew player to connect *******" + currentPosition);
-        getGSYVideoManager().releaseMediaPlayer();
+        getVideoManager().releaseMediaPlayer();
         postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -594,7 +596,7 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
         }
 
         if (!mIfCurrentIsFullscreen)
-            getGSYVideoManager().setLastListener(null);
+            getVideoManager().setLastListener(null);
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         ((Activity) getActivityContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -618,11 +620,11 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
         }
 
         if (!mIfCurrentIsFullscreen) {
-            getGSYVideoManager().setListener(null);
-            getGSYVideoManager().setLastListener(null);
+            getVideoManager().setListener(null);
+            getVideoManager().setLastListener(null);
         }
-        getGSYVideoManager().setCurrentVideoHeight(0);
-        getGSYVideoManager().setCurrentVideoWidth(0);
+        getVideoManager().setCurrentVideoHeight(0);
+        getVideoManager().setCurrentVideoWidth(0);
 
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         ((Activity) getActivityContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -685,8 +687,8 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
 
     @Override
     public void onVideoSizeChanged() {
-        int mVideoWidth = getGSYVideoManager().getCurrentVideoWidth();
-        int mVideoHeight = getGSYVideoManager().getCurrentVideoHeight();
+        int mVideoWidth = getVideoManager().getCurrentVideoWidth();
+        int mVideoHeight = getVideoManager().getCurrentVideoHeight();
         if (mVideoWidth != 0 && mVideoHeight != 0 && mTextureView != null) {
             mTextureView.requestLayout();
         }
@@ -694,12 +696,12 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
 
     @Override
     protected void setDisplay(Surface surface) {
-        getGSYVideoManager().setDisplay(surface);
+        getVideoManager().setDisplay(surface);
     }
 
     @Override
     protected void releaseSurface(Surface surface) {
-        getGSYVideoManager().releaseSurface(surface);
+        getVideoManager().releaseSurface(surface);
     }
 
     /**
@@ -715,17 +717,17 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
             mUrl = mOriginUrl;
         } else if (mUrl.contains("127.0.0.1")) {
             //是否为缓存了未完成的文件
-//            Md5FileNameGenerator md5FileNameGenerator = new Md5FileNameGenerator();
-//            String name = md5FileNameGenerator.generate(mOriginUrl);
-//            if (mCachePath != null) {
-//                String path = mCachePath.getAbsolutePath() + File.separator + name + ".download";
-//                CommonUtil.deleteFile(path);
-//            } else {
-//                String path = StorageUtils.getIndividualCacheDirectory
-//                        (getActivityContext().getApplicationContext()).getAbsolutePath()
-//                        + File.separator + name + ".download";
-//                CommonUtil.deleteFile(path);
-//            }
+            Md5FileNameGenerator md5FileNameGenerator = new Md5FileNameGenerator();
+            String name = md5FileNameGenerator.generate(mOriginUrl);
+            if (mCachePath != null) {
+                String path = mCachePath.getAbsolutePath() + File.separator + name + ".download";
+                CommonUtil.deleteFile(path);
+            } else {
+                String path = StorageUtils.getIndividualCacheDirectory
+                        (getActivityContext().getApplicationContext()).getAbsolutePath()
+                        + File.separator + name + ".download";
+                CommonUtil.deleteFile(path);
+            }
         }
 
     }
@@ -737,7 +739,7 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
         int position = 0;
         if (mCurrentState == CURRENT_STATE_PLAYING || mCurrentState == CURRENT_STATE_PAUSE) {
             try {
-                position = (int) getGSYVideoManager().getMediaPlayer().getCurrentPosition();
+                position = (int) getVideoManager().getMediaPlayer().getCurrentPosition();
             } catch (Exception e) {
                 e.printStackTrace();
                 return position;
@@ -755,7 +757,7 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
     public int getDuration() {
         int duration = 0;
         try {
-            duration = (int) getGSYVideoManager().getMediaPlayer().getDuration();
+            duration = (int) getVideoManager().getMediaPlayer().getDuration();
         } catch (Exception e) {
             e.printStackTrace();
             return duration;
@@ -784,8 +786,8 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
         }
 
         try {
-            if (getGSYVideoManager().getMediaPlayer() != null) {
-                getGSYVideoManager().getMediaPlayer().start();
+            if (getVideoManager().getMediaPlayer() != null) {
+                getVideoManager().getMediaPlayer().start();
             }
 
             setStateAndUi(CURRENT_STATE_PLAYING);
@@ -814,8 +816,8 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
     }
 
     protected boolean isCurrentMediaListener() {
-        return getGSYVideoManager().listener() != null
-                && getGSYVideoManager().listener() == this;
+        return getVideoManager().listener() != null
+                && getVideoManager().listener() == this;
     }
 
     /**
@@ -877,7 +879,7 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
      * @param file 文件可以为空
      * @return 如果不需要可以为空
      */
-//    protected abstract HttpProxyCacheServer getProxy(Context context, File file);
+    protected abstract HttpProxyCacheServer getProxy(Context context, File file);
 //
 
     /**
@@ -902,7 +904,7 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
     /**
      * 获取管理器桥接的实现
      */
-    public abstract MiGuVideoViewBridge getGSYVideoManager();
+    public abstract VideoViewBridge getVideoManager();
 
     /**
      * 当前UI
@@ -966,10 +968,10 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
      * 再打开已经缓存的本地文件，网络速度才会回0.因为是播放本地文件了
      */
     public long getNetSpeed() {
-        if (getGSYVideoManager().getMediaPlayer() != null
-                && (getGSYVideoManager().getMediaPlayer() instanceof IjkMediaPlayer)) {
+        if (getVideoManager().getMediaPlayer() != null
+                && (getVideoManager().getMediaPlayer() instanceof IjkMediaPlayer)) {
             try {
-                return ((IjkMediaPlayer) getGSYVideoManager().getMediaPlayer()).getTcpSpeed();
+                return ((IjkMediaPlayer) getVideoManager().getMediaPlayer()).getTcpSpeed();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1062,8 +1064,8 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
     public void setSpeed(float speed, boolean soundTouch) {
         this.mSpeed = speed;
         this.mSoundTouch = soundTouch;
-        if (getGSYVideoManager().getMediaPlayer() != null) {
-            getGSYVideoManager().setSpeed(speed, soundTouch);
+        if (getVideoManager().getMediaPlayer() != null) {
+            getVideoManager().setSpeed(speed, soundTouch);
         }
     }
 
@@ -1075,9 +1077,9 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
      */
     public void setSpeedPlaying(float speed, boolean soundTouch) {
         setSpeed(speed, soundTouch);
-        if (getGSYVideoManager().getMediaPlayer() != null) {
-            if (getGSYVideoManager().getMediaPlayer() instanceof IjkMediaPlayer) {
-                IjkMediaPlayer ijkMediaPlayer = (IjkMediaPlayer) getGSYVideoManager().getMediaPlayer();
+        if (getVideoManager().getMediaPlayer() != null) {
+            if (getVideoManager().getMediaPlayer() instanceof IjkMediaPlayer) {
+                IjkMediaPlayer ijkMediaPlayer = (IjkMediaPlayer) getVideoManager().getMediaPlayer();
                 try {
                     ijkMediaPlayer.setSpeed(speed);
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "soundtouch", (soundTouch) ? 1 : 0);
@@ -1107,10 +1109,11 @@ public abstract class BaseVideoView extends MiGuTextureRenderView implements Med
      * seekto what you want
      */
     public void seekTo(long position) {
-        IjkMediaPlayer ijkMediaPlayer = (IjkMediaPlayer) getGSYVideoManager().getMediaPlayer();
+        IjkMediaPlayer ijkMediaPlayer = (IjkMediaPlayer) getVideoManager().getMediaPlayer();
+        //TODO 控制m3u8 SeekTo
         try {
-            if (getGSYVideoManager().getMediaPlayer() != null && position > 0) {
-                getGSYVideoManager().getMediaPlayer().seekTo(position);
+            if (getVideoManager().getMediaPlayer() != null && position > 0) {
+                getVideoManager().getMediaPlayer().seekTo(position);
                 ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "seek-at-start", position);
 
             }

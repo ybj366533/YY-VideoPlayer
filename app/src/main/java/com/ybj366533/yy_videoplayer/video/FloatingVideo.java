@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-//import com.example.gsyvideoplayer.R;
 import com.ybj366533.videoplayer.utils.Debuger;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
@@ -75,16 +74,16 @@ public class FloatingVideo extends StandardVideoPlayer {
 
     @Override
     protected void startPrepare() {
-        if (getGSYVideoManager().listener() != null) {
-            getGSYVideoManager().listener().onCompletion();
+        if (getVideoManager().listener() != null) {
+            getVideoManager().listener().onCompletion();
         }
-        getGSYVideoManager().setListener(this);
-        getGSYVideoManager().setPlayTag(mPlayTag);
-        getGSYVideoManager().setPlayPosition(mPlayPosition);
+        getVideoManager().setListener(this);
+        getVideoManager().setPlayTag(mPlayTag);
+        getVideoManager().setPlayPosition(mPlayPosition);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         //((Activity) getActivityContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mBackUpPlayingBufferState = -1;
-        getGSYVideoManager().prepare(mUrl, mMapHeadData, mLooping, mSpeed);
+        getVideoManager().prepare(mUrl, mMapHeadData, mLooping, mSpeed);
         setStateAndUi(CURRENT_STATE_PREPAREING);
     }
 
@@ -99,7 +98,7 @@ public class FloatingVideo extends StandardVideoPlayer {
         }
 
         if (!mIfCurrentIsFullscreen)
-            getGSYVideoManager().setLastListener(null);
+            getVideoManager().setLastListener(null);
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         //((Activity) getActivityContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -123,11 +122,11 @@ public class FloatingVideo extends StandardVideoPlayer {
         }
 
         if (!mIfCurrentIsFullscreen) {
-            getGSYVideoManager().setListener(null);
-            getGSYVideoManager().setLastListener(null);
+            getVideoManager().setListener(null);
+            getVideoManager().setLastListener(null);
         }
-        getGSYVideoManager().setCurrentVideoHeight(0);
-        getGSYVideoManager().setCurrentVideoWidth(0);
+        getVideoManager().setCurrentVideoHeight(0);
+        getVideoManager().setCurrentVideoWidth(0);
 
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         //((Activity) getActivityContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);

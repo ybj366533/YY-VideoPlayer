@@ -9,14 +9,12 @@ import android.view.Window;
 import com.danikula.videocache.HttpProxyCacheServer;
 import com.ybj366533.videoplayer.VideoManager;
 import com.ybj366533.videoplayer.utils.CommonUtil;
-import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
-import com.ybj366533.videoplayer.video.base.MiGuVideoViewBridge;
 
 import java.io.File;
 
 import tv.danmaku.ijk.media.player.IjkLibLoader;
 
-//import com.danikula.videocache.HttpProxyCacheServer;
+
 
 /**
  * 兼容的空View，目前用于 VideoManager的设置
@@ -53,7 +51,7 @@ public abstract class BaseVideoPlayer extends BaseVideoView {
      * 单例管理器
      */
     @Override
-    public MiGuVideoViewBridge getVideoManager() {
+    public VideoViewBridge getVideoManager() {
         return VideoManager.instance();
     }
 
@@ -111,7 +109,7 @@ public abstract class BaseVideoPlayer extends BaseVideoView {
         return this;
     }
     @Override
-    protected HttpProxyCacheServer getProxy(Context context, File file) {
+    public HttpProxyCacheServer getProxy(Context context, File file) {
         return VideoManager.getProxy(context, file);
     }
 

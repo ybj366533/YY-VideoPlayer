@@ -12,5 +12,13 @@
         android:gravity="center">
 
     </RelativeLayout>
+    <TableLayout
+        android:id="@+id/hud_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/ijk_transparent_dark"
+        android:padding="8dp" />
 
 </RelativeLayout>

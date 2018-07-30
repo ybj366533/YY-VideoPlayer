@@ -338,12 +338,12 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
             ViewGroup viewGroup = (ViewGroup) oldF.getParent();
             vp.removeView(viewGroup);
         }
-        mCurrentState = getGSYVideoManager().getLastState();
+        mCurrentState = getVideoManager().getLastState();
         if (mVideoPlayer != null) {
             cloneParams(mVideoPlayer, this);
         }
-        getGSYVideoManager().setListener(getGSYVideoManager().lastListener());
-        getGSYVideoManager().setLastListener(null);
+        getVideoManager().setListener(getVideoManager().lastListener());
+        getVideoManager().setLastListener(null);
         setStateAndUi(mCurrentState);
         addTextureView();
         mSaveChangeViewTIme = System.currentTimeMillis();
@@ -676,8 +676,8 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
 
             mVideoPlayer.addTextureView();
 
-            getGSYVideoManager().setLastListener(this);
-            getGSYVideoManager().setListener(mVideoPlayer);
+            getVideoManager().setLastListener(this);
+            getVideoManager().setListener(mVideoPlayer);
 
             checkoutState();
             return mVideoPlayer;
@@ -737,8 +737,8 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
             mVideoPlayer.setVideoAllCallBack(mVideoAllCallBack);
             mVideoPlayer.setSmallVideoTextureView(new SmallVideoTouch(mVideoPlayer, marginLeft, marginTop));
 
-            getGSYVideoManager().setLastListener(this);
-            getGSYVideoManager().setListener(mVideoPlayer);
+            getVideoManager().setLastListener(this);
+            getVideoManager().setListener(mVideoPlayer);
             if (mVideoAllCallBack != null) {
                 Debuger.printfError("onEnterSmallWidget");
                 mVideoAllCallBack.onEnterSmallWidget(mOriginUrl, mTitle, mVideoPlayer);
@@ -759,12 +759,12 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
         final ViewGroup vp = getViewGroup();
         MiGuVideoPlayer mPlayer = (MiGuVideoPlayer) vp.findViewById(getSmallId());
         removeVideo(vp, getSmallId());
-        mCurrentState = getGSYVideoManager().getLastState();
+        mCurrentState = getVideoManager().getLastState();
         if (mPlayer != null) {
             cloneParams(mPlayer, this);
         }
-        getGSYVideoManager().setListener(getGSYVideoManager().lastListener());
-        getGSYVideoManager().setLastListener(null);
+        getVideoManager().setListener(getVideoManager().lastListener());
+        getVideoManager().setLastListener(null);
         setStateAndUi(mCurrentState);
         addTextureView();
         mSaveChangeViewTIme = System.currentTimeMillis();
@@ -917,4 +917,5 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
     public void setAutoFullWithSize(boolean autoFullWithSize) {
         this.mAutoFullWithSize = autoFullWithSize;
     }
+
 }

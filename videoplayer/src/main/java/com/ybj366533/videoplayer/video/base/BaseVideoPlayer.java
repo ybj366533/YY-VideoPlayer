@@ -4,7 +4,9 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 //import com.danikula.videocache.HttpProxyCacheServer;
+import com.danikula.videocache.HttpProxyCacheServer;
 import com.ybj366533.videoplayer.VideoManager;
+import com.ybj366533.videoplayer.base.VideoViewBridge;
 
 import java.io.File;
 
@@ -45,7 +47,7 @@ public abstract class BaseVideoPlayer extends BaseVideoView {
      * 单例管理器
      */
     @Override
-    public MiGuVideoViewBridge getGSYVideoManager() {
+    public VideoViewBridge getVideoManager() {
         return VideoManager.instance();
     }
 
@@ -66,13 +68,13 @@ public abstract class BaseVideoPlayer extends BaseVideoView {
         VideoManager.releaseAllVideos();
     }
 
-//    /**
-//     * 获取缓存代理服务,带文件目录的
-//     */
-//    @Override
-//    protected HttpProxyCacheServer getProxy(Context context, File file) {
-//        return VideoManager.getProxy(context, file);
-//    }
+    /**
+     * 获取缓存代理服务,带文件目录的
+     */
+    @Override
+    public HttpProxyCacheServer getProxy(Context context, File file) {
+        return VideoManager.getProxy(context, file);
+    }
 
     @Override
     protected int getFullId() {

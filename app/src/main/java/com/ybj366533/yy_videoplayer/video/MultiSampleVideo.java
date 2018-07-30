@@ -8,10 +8,8 @@ import android.util.AttributeSet;
 //import com.danikula.videocache.HttpProxyCacheServer;
 //
 import com.ybj366533.videoplayer.utils.Debuger;
-import com.ybj366533.videoplayer.video.base.MiGuVideoViewBridge;
+import com.ybj366533.videoplayer.base.VideoViewBridge;
 import com.ybj366533.yy_videoplayer.video.manager.CustomManager;
-
-import java.io.File;
 
 import tv.danmaku.ijk.media.player.IjkLibLoader;
 
@@ -74,7 +72,7 @@ public class MultiSampleVideo extends SampleCoverVideo {
     }
 
     @Override
-    public MiGuVideoViewBridge getGSYVideoManager() {
+    public VideoViewBridge getVideoManager() {
         return CustomManager.getCustomManager(getKey());
     }
 

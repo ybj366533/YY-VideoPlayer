@@ -323,7 +323,7 @@ public abstract class MiGuVideoControlView extends BaseVideoPlayer implements Vi
             case CURRENT_STATE_NORMAL:
                 if (isCurrentMediaListener()) {
                     cancelProgressTimer();
-                    getGSYVideoManager().releaseMediaPlayer();
+                    getVideoManager().releaseMediaPlayer();
                     releasePauseCover();
                     mBuffterPoint = 0;
                     mSaveChangeViewTIme = 0;
@@ -344,7 +344,7 @@ public abstract class MiGuVideoControlView extends BaseVideoPlayer implements Vi
                 break;
             case CURRENT_STATE_ERROR:
                 if (isCurrentMediaListener()) {
-                    getGSYVideoManager().releaseMediaPlayer();
+                    getVideoManager().releaseMediaPlayer();
                 }
                 break;
             case CURRENT_STATE_AUTO_COMPLETE:
@@ -395,10 +395,10 @@ public abstract class MiGuVideoControlView extends BaseVideoPlayer implements Vi
                 return;
             }
             if (mCurrentState == CURRENT_STATE_NORMAL) {
-                if (!mUrl.startsWith("file") && !CommonUtil.isWifiConnected(getActivityContext()) && mNeedShowWifiTip) {
-                    showWifiDialog();
-                    return;
-                }
+//                if (!mUrl.startsWith("file") && !CommonUtil.isWifiConnected(getActivityContext()) && mNeedShowWifiTip) {
+//                    showWifiDialog();
+//                    return;
+//                }
                 startPlayLogic();
             } else if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
@@ -587,7 +587,7 @@ public abstract class MiGuVideoControlView extends BaseVideoPlayer implements Vi
             }
         }
         dismissProgressDialog();
-        if (getGSYVideoManager().getMediaPlayer() != null && mHadPlay) {
+        if (getVideoManager().getMediaPlayer() != null && mHadPlay) {
             int time = (int) (progress * getDuration()) / 100;
             Log.e("seekTo", "seekTo = " + time);
             seekTo(time);
@@ -749,7 +749,7 @@ public abstract class MiGuVideoControlView extends BaseVideoPlayer implements Vi
         dismissProgressDialog();
         dismissVolumeDialog();
         dismissBrightnessDialog();
-        if (mChangePosition && getGSYVideoManager().getMediaPlayer() != null && (mCurrentState == CURRENT_STATE_PLAYING || mCurrentState == CURRENT_STATE_PAUSE)) {
+        if (mChangePosition && getVideoManager().getMediaPlayer() != null && (mCurrentState == CURRENT_STATE_PLAYING || mCurrentState == CURRENT_STATE_PAUSE)) {
             seekTo(mSeekTimePosition);
             int duration = getDuration();
             int progress = mSeekTimePosition * 100 / (duration == 0 ? 1 : duration);
@@ -831,15 +831,15 @@ public abstract class MiGuVideoControlView extends BaseVideoPlayer implements Vi
             return;
         }
         if (mCurrentState == CURRENT_STATE_NORMAL || mCurrentState == CURRENT_STATE_ERROR) {
-            if (!mUrl.startsWith("file") && !mUrl.startsWith("android.resource") && !CommonUtil.isWifiConnected(getContext())
-                    && mNeedShowWifiTip) {
-                showWifiDialog();
-                return;
-            }
+//            if (!mUrl.startsWith("file") && !mUrl.startsWith("android.resource") && !CommonUtil.isWifiConnected(getContext())
+//                    && mNeedShowWifiTip) {
+//                showWifiDialog();
+//                return;
+//            }
             startButtonLogic();
         } else if (mCurrentState == CURRENT_STATE_PLAYING) {
             try {
-                getGSYVideoManager().getMediaPlayer().pause();
+                getVideoManager().getMediaPlayer().pause();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -864,7 +864,7 @@ public abstract class MiGuVideoControlView extends BaseVideoPlayer implements Vi
                 }
             }
             try {
-                getGSYVideoManager().getMediaPlayer().start();
+                getVideoManager().getMediaPlayer().start();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -915,8 +915,8 @@ public abstract class MiGuVideoControlView extends BaseVideoPlayer implements Vi
     }
 
     protected void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
-        Log.e("setProgressAndTime", "progress = " + progress + "secProgress = " + secProgress
-                + "currentTime = " + currentTime + "totalTime = " + totalTime);
+//        Log.e("setProgressAndTime", "progress = " + progress + "secProgress = " + secProgress
+//                + "currentTime = " + currentTime + "totalTime = " + totalTime);
         if (mVideoProgressListener != null && mCurrentState == CURRENT_STATE_PLAYING) {
             mVideoProgressListener.onProgress(progress, secProgress, currentTime, totalTime);
         }

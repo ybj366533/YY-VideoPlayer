@@ -13,15 +13,12 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
-import com.ybj366533.videoplayer.VideoManager;
 import com.ybj366533.videoplayer.builder.PageOptionBuilder;
-import com.ybj366533.videoplayer.builder.VideoOptionBuilder;
-import com.ybj366533.videoplayer.listener.SampleCallBack;
 import com.ybj366533.videoplayer.listener.VideoPlayerListener;
 import com.ybj366533.videoplayer.video.FullScreenVideoView;
-import com.ybj366533.videoplayer.video.StandardVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 import com.ybj366533.yy_videoplayer.model.PlayerVideoModel;
+import com.ybj366533.yy_videoplayer.model.VideoModel;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -32,7 +29,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     private Context mContext;
     private LayoutInflater mInflate;
 
-    private ArrayList<PlayerVideoModel> mData;
+    private ArrayList<VideoModel> mData;
     private int showItemId = -1;
 
     private PageVideoListener listener;
@@ -63,15 +60,15 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         return mData.size();
     }
 
-    public PlayerVideoModel getItemData(int position) {
+    public VideoModel getItemData(int position) {
         return mData.get(position);
     }
 
-    public ArrayList<PlayerVideoModel> getData() {
+    public ArrayList<VideoModel> getData() {
         return mData;
     }
 
-    public void setData(ArrayList<PlayerVideoModel> data) {
+    public void setData(ArrayList<VideoModel> data) {
         this.mData = data;
     }
 
@@ -95,18 +92,20 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
             mBottomProgressBar = itemView.findViewById(R.id.bottom_progressbar);
         }
 
-        public void onBind(final int position, PlayerVideoModel videoModel) {
+        public void onBind(final int position, VideoModel videoModel) {
 
-            PlayerVideoModel model = mData.get(position);
-            Glide.with(mContext)
-                    .load(model.getImgPath())
-                    .into(img_thumb);
+            VideoModel model = mData.get(position);
+//            Glide.with(mContext)
+//                    .load(model.getImgPath())
+//                    .into(img_thumb);
             img_thumb.animate().alpha(1f).start();
+            File dataDir = mContext.getApplicationContext().getExternalFilesDir(null);
+            String path = dataDir.getAbsolutePath() + File.separator + "gtvijk/cache";
             videoOptionBuilder
                     .setIsTouchWiget(false)
-                    .setUrl(model.getPath())
+                    .setUrl(model.getVideoPath())
                     .setCacheWithPlay(true)
-                    .setCachePath(new File(Environment.getExternalStorageDirectory() + File.separator + "YYIjk"))
+                    .setCachePath(new File(path))
                     .setLooping(true)
                     .setSetUpLazy(true)//lazy可以防止滑动卡顿
                     .setLockLand(true)
@@ -131,11 +130,11 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                             new Handler().postDelayed(new Runnable() {
                                 public void run() {
                                     // do something
+                                    listener.onPrepared();
                                     img_thumb.animate().alpha(0f).start();
                                 }
 
                             }, 100);
-
                         }
 
                         @Override
@@ -185,7 +184,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     }
 
     public interface PageVideoListener {
-        void onPrepared(PlayerVideoModel videoModel);
+        void onPrepared();
     }
 
     public int getShowItemId() {

@@ -16,7 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.danikula.videocache.HttpProxyCacheServer;
 import com.ybj366533.videoplayer.R;
+import com.ybj366533.videoplayer.VideoManager;
 import com.ybj366533.videoplayer.listener.VideoShotListener;
 import com.ybj366533.videoplayer.listener.VideoShotSaveListener;
 import com.ybj366533.videoplayer.utils.Debuger;
@@ -866,6 +868,4 @@ public class StandardVideoPlayer extends MiGuVideoPlayer {
             getCurrentPlayer().getRenderProxy().saveFrame(file, high, videoShotSaveListener);
         }
     }
-
-
 }

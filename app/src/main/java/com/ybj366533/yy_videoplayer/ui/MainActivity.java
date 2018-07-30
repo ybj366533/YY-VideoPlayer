@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.ybj366533.videoplayer.VideoManager;
 import com.ybj366533.yy_videoplayer.R;
 
 import butterknife.ButterKnife;
@@ -156,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.open_full_btn, R.id.open_window_btn, R.id.open_list_btn})
+    @OnClick({R.id.open_full_btn, R.id.open_window_btn, R.id.open_list_btn, R.id.remove_cache_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.open_full_btn:
@@ -171,6 +172,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.open_list_btn:
                 Intent intent3 = new Intent(this, VideoPlayerListActivity.class);
                 startActivity(intent3);
+                break;
+            case R.id.remove_cache_btn:
+                VideoManager.clearAllDefaultCache(this);
                 break;
 
         }

@@ -40,7 +40,7 @@ dependencies {
 //    api rootProject.ext.dependencies['ijkplayer_exo']
     api rootProject.ext.dependencies['transitions_everywhere']
 
-    api project(':videoplayer-androidvideocache')
+    api project(':videoplayer-videocache')
     api project(':videoplayer-java')
     api project(':videoplayer-exo2')
 

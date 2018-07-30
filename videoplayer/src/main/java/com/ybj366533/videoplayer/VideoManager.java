@@ -4,14 +4,18 @@ package com.ybj366533.videoplayer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
 //import com.danikula.videocache.HttpProxyCacheServer;
 import com.danikula.videocache.HttpProxyCacheServer;
+import com.danikula.videocache.file.Md5FileNameGenerator;
 import com.ybj366533.videoplayer.listener.MediaPlayerListener;
 import com.ybj366533.videoplayer.utils.CommonUtil;
+import com.ybj366533.videoplayer.utils.FileUtils;
+import com.ybj366533.videoplayer.utils.StorageUtils;
 import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
 
 import java.io.File;
@@ -55,30 +59,31 @@ public class VideoManager extends VideoBaseManager {
      * 同步创建一个临时管理器
      */
     public static synchronized VideoManager tmpInstance(MediaPlayerListener listener) {
-        VideoManager gsyVideoManager = new VideoManager(ijkLibLoader);
-        gsyVideoManager.buffterPoint = videoManager.buffterPoint;
-        gsyVideoManager.optionModelList = videoManager.optionModelList;
-        gsyVideoManager.cacheFile = videoManager.cacheFile;
-        gsyVideoManager.playTag = videoManager.playTag;
-        gsyVideoManager.mMapHeadData = videoManager.mMapHeadData;
-        gsyVideoManager.currentVideoWidth = videoManager.currentVideoWidth;
-        gsyVideoManager.currentVideoHeight = videoManager.currentVideoHeight;
-        gsyVideoManager.context = videoManager.context;
-        gsyVideoManager.lastState = videoManager.lastState;
-        gsyVideoManager.playPosition = videoManager.playPosition;
-        gsyVideoManager.timeOut = videoManager.timeOut;
-        gsyVideoManager.videoType = videoManager.videoType;
-        gsyVideoManager.needMute = videoManager.needMute;
-        gsyVideoManager.needTimeOutOther = videoManager.needTimeOutOther;
-        gsyVideoManager.setListener(listener);
-        return gsyVideoManager;
+        VideoManager mVideoManager = new VideoManager(ijkLibLoader);
+        mVideoManager.buffterPoint = videoManager.buffterPoint;
+        mVideoManager.optionModelList = videoManager.optionModelList;
+        mVideoManager.cacheFile = videoManager.cacheFile;
+        mVideoManager.playTag = videoManager.playTag;
+        mVideoManager.mMapHeadData = videoManager.mMapHeadData;
+        mVideoManager.currentVideoWidth = videoManager.currentVideoWidth;
+        mVideoManager.currentVideoHeight = videoManager.currentVideoHeight;
+        mVideoManager.context = videoManager.context;
+        mVideoManager.lastState = videoManager.lastState;
+        mVideoManager.playPosition = videoManager.playPosition;
+        mVideoManager.timeOut = videoManager.timeOut;
+        mVideoManager.videoType = videoManager.videoType;
+        mVideoManager.needMute = videoManager.needMute;
+        mVideoManager.needTimeOutOther = videoManager.needTimeOutOther;
+        mVideoManager.setListener(listener);
+        return mVideoManager;
     }
+
 
     /**
      * 替换管理器
      */
-    public static synchronized void changeManager(VideoManager gsyVideoManager) {
-        videoManager = gsyVideoManager;
+    public static synchronized void changeManager(VideoManager mVideoManager) {
+        videoManager = mVideoManager;
     }
 
 
@@ -91,6 +96,32 @@ public class VideoManager extends VideoBaseManager {
                 VideoManager.instance().newProxy(context)) : proxy;
     }
 
+    /**
+     * 删除默认所有缓存文件
+     */
+    public static void clearAllDefaultCache(Context context) {
+
+        File dataDir = context.getApplicationContext().getExternalFilesDir(null);
+        String path = dataDir.getAbsolutePath() + File.separator + "gtvijk/cache";
+        FileUtils.deleteFiles(new File(path));
+    }
+
+    /**
+     * 删除url对应默认缓存文件
+     */
+    public static void clearDefaultCache(Context context, String url) {
+        Md5FileNameGenerator md5FileNameGenerator = new Md5FileNameGenerator();
+        String name = md5FileNameGenerator.generate(url);
+        String pathTmp = StorageUtils.getIndividualCacheDirectory
+                (context.getApplicationContext()).getAbsolutePath()
+                + File.separator + name + ".download";
+        String path = StorageUtils.getIndividualCacheDirectory
+                (context.getApplicationContext()).getAbsolutePath()
+                + File.separator + name;
+        CommonUtil.deleteFile(pathTmp);
+        CommonUtil.deleteFile(path);
+
+    }
 
     /**
      * 获取缓存代理服务,带文件目录的
@@ -117,7 +148,6 @@ public class VideoManager extends VideoBaseManager {
         } else {
             //还没有缓存文件的或者一致的，返回原来
             HttpProxyCacheServer proxy = VideoManager.instance().proxy;
-
             return proxy == null ? (VideoManager.instance().proxy =
                     VideoManager.instance().newProxy(context, file)) : proxy;
         }
@@ -193,11 +223,11 @@ public class VideoManager extends VideoBaseManager {
     public static boolean isFullState(Activity activity) {
         ViewGroup vp = (ViewGroup) (CommonUtil.scanForActivity(activity)).findViewById(Window.ID_ANDROID_CONTENT);
         final View full = vp.findViewById(FULLSCREEN_ID);
-        BaseVideoPlayer gsyVideoPlayer = null;
+        BaseVideoPlayer mVideoPlayer = null;
         if (full != null) {
-            gsyVideoPlayer = (BaseVideoPlayer) full;
+            mVideoPlayer = (BaseVideoPlayer) full;
         }
-        return gsyVideoPlayer != null;
+        return mVideoPlayer != null;
     }
 
 }

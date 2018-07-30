@@ -48,6 +48,14 @@
             android:layout_marginTop="20dp"
             android:text="列表显示页面" />
 
+        <Button
+            android:id="@+id/remove_cache_btn"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="清空缓存" />
+
+
 
     </LinearLayout>
 </LinearLayout>

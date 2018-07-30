@@ -12,7 +12,6 @@ import com.ybj366533.videoplayer.listener.SampleCallBack;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 import com.ybj366533.yy_videoplayer.model.PlayerVideoModel;
-import com.ybj366533.yy_videoplayer.model.VideoModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

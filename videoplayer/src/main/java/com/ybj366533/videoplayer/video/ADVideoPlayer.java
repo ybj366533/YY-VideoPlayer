@@ -10,11 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 //import com.danikula.videocache.HttpProxyCacheServer;
+import com.danikula.videocache.HttpProxyCacheServer;
 import com.ybj366533.videoplayer.R;
 import com.ybj366533.videoplayer.VideoADManager;
+import com.ybj366533.videoplayer.VideoManager;
 import com.ybj366533.videoplayer.utils.CommonUtil;
 import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
-import com.ybj366533.videoplayer.video.base.MiGuVideoViewBridge;
+import com.ybj366533.videoplayer.base.VideoViewBridge;
 
 import java.io.File;
 
@@ -53,8 +55,8 @@ public class ADVideoPlayer extends StandardVideoPlayer {
             mJumpAd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (getGSYVideoManager().listener() != null) {
-                        getGSYVideoManager().listener().onAutoCompletion();
+                    if (getVideoManager().listener() != null) {
+                        getVideoManager().listener().onAutoCompletion();
                     }
                 }
             });
@@ -73,7 +75,7 @@ public class ADVideoPlayer extends StandardVideoPlayer {
     }
 
     @Override
-    public MiGuVideoViewBridge getGSYVideoManager() {
+    public VideoViewBridge getVideoManager() {
         return VideoADManager.instance();
     }
 
@@ -87,11 +89,10 @@ public class ADVideoPlayer extends StandardVideoPlayer {
         VideoADManager.releaseAllVideos();
     }
 
-//    @Override
-//    protected HttpProxyCacheServer getProxy(Context context, File file) {
-//        return VideoADManager.getProxy(context, file);
-//    }
-
+    @Override
+    public HttpProxyCacheServer getProxy(Context context, File file) {
+        return VideoManager.getProxy(context, file);
+    }
 
     @Override
     protected int getFullId() {

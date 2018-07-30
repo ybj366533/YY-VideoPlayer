@@ -29,7 +29,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.ybj366533.videoplayer.widget.viewpager.UgcViewPager
+    <com.migu.videoplayer.widget.viewpager.UgcViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

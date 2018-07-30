@@ -1,6 +1,7 @@
 package com.danikula.videocache.file;
 
-import com.danikula.videocache.HttpProxyCacheDebuger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,9 +16,11 @@ import java.util.List;
 /**
  * Utils for work with files.
  *
+ * @author Alexey Danilov (danikula@gmail.com).
  */
 class Files {
 
+    private static final Logger LOG = LoggerFactory.getLogger("Files");
 
     static void makeDir(File directory) throws IOException {
         if (directory.exists()) {
@@ -37,6 +40,7 @@ class Files {
         File[] files = directory.listFiles();
         if (files != null) {
             result = Arrays.asList(files);
+            //由缓存文件最后一次修改时间排序
             Collections.sort(result, new LastModifiedComparator());
         }
         return result;
@@ -50,13 +54,16 @@ class Files {
                 modify(file);
                 if (file.lastModified() < now) {
                     // NOTE: apparently this is a known issue (see: http://stackoverflow.com/questions/6633748/file-lastmodified-is-never-what-was-set-with-file-setlastmodified)
-                    HttpProxyCacheDebuger.printfWarning("Last modified date {} is not set for file {}", new Date(file.lastModified()).toString() + "\n" + file.getAbsolutePath());
-
+                    LOG.warn("Last modified date {} is not set for file {}", new Date(file.lastModified()), file.getAbsolutePath());
                 }
             }
         }
     }
-
+    /**
+     * 修改文件
+     * @param file
+     * @throws IOException
+     */
     static void modify(File file) throws IOException {
         long size = file.length();
         if (size == 0) {
@@ -64,20 +71,22 @@ class Files {
             return;
         }
 
-        RandomAccessFile accessFile = new RandomAccessFile(file, "rwd");
-        accessFile.seek(size - 1);
-        byte lastByte = accessFile.readByte();
-        accessFile.seek(size - 1);
-        accessFile.write(lastByte);
-        accessFile.close();
-    }
+		RandomAccessFile accessFile = new RandomAccessFile(file, "rwd");
+		accessFile.seek(size - 1);
+		byte lastByte = accessFile.readByte();//读取  8-bit byte 
+		accessFile.seek(size - 1);
+		accessFile.write(lastByte);//写入上一字节数据
+		accessFile.close();
+	}
 
     private static void recreateZeroSizeFile(File file) throws IOException {
         if (!file.delete() || !file.createNewFile()) {
             throw new IOException("Error recreate zero-size file " + file);
         }
     }
-
+    /**
+     * Comparator
+     */
     private static final class LastModifiedComparator implements Comparator<File> {
 
         @Override

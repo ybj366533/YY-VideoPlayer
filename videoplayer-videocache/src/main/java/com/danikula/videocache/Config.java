@@ -10,6 +10,7 @@ import java.io.File;
 /**
  * Configuration for proxy cache.
  *
+ * @author Alexey Danilov (danikula@gmail.com).
  */
 class Config {
 

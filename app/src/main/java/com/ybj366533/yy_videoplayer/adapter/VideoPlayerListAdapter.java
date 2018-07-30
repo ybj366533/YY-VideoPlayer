@@ -1,7 +1,6 @@
 package com.ybj366533.yy_videoplayer.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import com.bumptech.glide.Glide;
 import com.ybj366533.yy_videoplayer.R;
 import com.ybj366533.yy_videoplayer.holder.RecyclerItemBaseHolder;
 import com.ybj366533.yy_videoplayer.model.PlayerVideoModel;
-import com.ybj366533.yy_videoplayer.ui.DetailsPlayerActivity;
 
 import java.util.List;
 

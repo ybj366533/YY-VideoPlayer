@@ -171,7 +171,7 @@ public class VideoPlayerListActivity extends AppCompatActivity {
         //增加封面
         ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        imageView.setImageResource(R.drawable.migu);
+//        imageView.setImageResource(R.drawable.migu);
         videoPlayer.setThumbImageView(imageView);
         //增加title
         videoPlayer.getTitleTextView().setVisibility(View.VISIBLE);
@@ -220,6 +220,7 @@ public class VideoPlayerListActivity extends AppCompatActivity {
         super.onDestroy();
         if (orientationUtils != null)
             orientationUtils.releaseListener();
+//        GTVPlayerCacheHelper.getInstance().deleteCache();
     }
 
     @Override
@@ -255,8 +256,9 @@ public class VideoPlayerListActivity extends AppCompatActivity {
         for (int i = 0; i < 20; i++) {
             PlayerVideoModel videoModel = new PlayerVideoModel();
             String videoPath = m3u8Path[0];
-            videoModel.setPath(videoPath);
-            videoModel.setHd_path(videoPath);
+            String url = "http://strms.migudm.cn/Client/cartoon/sub_opftp_001/20160203/CP1599/CP1599000001481871/gddlc_ptpwq_g000006_HLS/security_gddlc_ptpwq_g000006.m3u8?st=fc4m-7wqCKZlC7-lI27GSw&e=1537516488";
+            videoModel.setPath(url);
+            videoModel.setHd_path(url);
             videoModel.setImgPath(getImg());
             videoModel.setName("测试视频" + i);
             dataList.add(videoModel);

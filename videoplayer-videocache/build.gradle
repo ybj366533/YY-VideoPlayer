@@ -27,5 +27,9 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
+    api rootProject.ext.dependencies['okhttp3']
+    api rootProject.ext.dependencies['logging-interceptor']
+    api rootProject.ext.dependencies['okhttp-urlconnection']
 
+    api 'org.slf4j:slf4j-android:1.7.21'
 }

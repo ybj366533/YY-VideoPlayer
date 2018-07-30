@@ -6,6 +6,7 @@ import java.io.IOException;
 /**
  * Declares how {@link FileCache} will use disc space.
  *
+ * @author Alexey Danilov (danikula@gmail.com).
  */
 public interface DiskUsage {
 

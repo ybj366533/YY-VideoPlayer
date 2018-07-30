@@ -3,7 +3,8 @@ package com.danikula.videocache;
 import android.content.Context;
 import android.os.Environment;
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
@@ -16,9 +17,12 @@ import static android.os.Environment.MEDIA_MOUNTED;
  *
  * @author Sergey Tarasevich (nostra13[at]gmail[dot]com)
  * @since 1.0.0
+ * 
+ * 缓存工具类
  */
 final class StorageUtils {
 
+    private static final Logger LOG = LoggerFactory.getLogger("StorageUtils");
     private static final String INDIVIDUAL_DIR_NAME = "video-cache";
 
     /**
@@ -61,7 +65,7 @@ final class StorageUtils {
         }
         if (appCacheDir == null) {
             String cacheDirPath = "/data/data/" + context.getPackageName() + "/cache/";
-            HttpProxyCacheDebuger.printfWarning("Can't define system cache directory! '" + cacheDirPath + "%s' will be used.");
+            LOG.warn("Can't define system cache directory! '" + cacheDirPath + "%s' will be used.");
             appCacheDir = new File(cacheDirPath);
         }
         return appCacheDir;
@@ -72,7 +76,7 @@ final class StorageUtils {
         File appCacheDir = new File(new File(dataDir, context.getPackageName()), "cache");
         if (!appCacheDir.exists()) {
             if (!appCacheDir.mkdirs()) {
-                HttpProxyCacheDebuger.printfWarning("Unable to create external cache directory");
+                LOG.warn("Unable to create external cache directory");
                 return null;
             }
         }

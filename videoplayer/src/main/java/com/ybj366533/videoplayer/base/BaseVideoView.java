@@ -24,7 +24,6 @@ import com.ybj366533.videoplayer.listener.VideoPlayerListener;
 import com.ybj366533.videoplayer.utils.CommonUtil;
 import com.ybj366533.videoplayer.utils.Debuger;
 import com.ybj366533.videoplayer.utils.NetInfoModule;
-import com.ybj366533.videoplayer.video.base.MiGuVideoViewBridge;
 
 import java.io.File;
 import java.util.HashMap;
@@ -445,9 +444,10 @@ public abstract class BaseVideoView extends TextureRenderView implements MediaPl
                     proxy.registerCacheListener(getVideoManager().getCacheListener(), mOriginUrl);
                 }
             }
-        } else if (!cacheWithPlay && (!url.startsWith("http") && !url.startsWith("rtmp")
+        } else if (cacheWithPlay && (!url.startsWith("http") && !url.startsWith("rtmp")
                 && !url.startsWith("rtsp") && !url.contains(".m3u8"))) {
             mCacheFile = true;
+
         }
         this.mUrl = url;
         if (changeState)
@@ -565,6 +565,7 @@ public abstract class BaseVideoView extends TextureRenderView implements MediaPl
 
         startAfterPrepared();
     }
+
     @Override
     public void onAutoCompletion() {
         setStateAndUi(CURRENT_STATE_AUTO_COMPLETE);
@@ -842,6 +843,15 @@ public abstract class BaseVideoView extends TextureRenderView implements MediaPl
 
     /************************* 需要继承处理部分 *************************/
 
+
+    /**
+     * 获取代理服务
+     *
+     * @param file 文件可以为空
+     * @return 如果不需要可以为空
+     */
+    protected abstract HttpProxyCacheServer getProxy(Context context, File file);
+
     /**
      * 释放播放器
      */
@@ -857,7 +867,7 @@ public abstract class BaseVideoView extends TextureRenderView implements MediaPl
     /**
      * 获取管理器桥接的实现
      */
-    public abstract MiGuVideoViewBridge getVideoManager();
+    public abstract VideoViewBridge getVideoManager();
 
     /**
      * 当前UI
@@ -872,13 +882,6 @@ public abstract class BaseVideoView extends TextureRenderView implements MediaPl
 
     /************************* 公开接口 *************************/
 
-    /**
-     * 获取代理服务
-     *
-     * @param file 文件可以为空
-     * @return 如果不需要可以为空
-     */
-    protected abstract HttpProxyCacheServer getProxy(Context context, File file);
     /**
      * 获取当前播放状态
      */

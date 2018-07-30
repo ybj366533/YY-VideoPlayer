@@ -11,10 +11,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
 
-//import com.danikula.videocache.CacheListener;
-//import com.danikula.videocache.HttpProxyCacheServer;
-//import com.danikula.videocache.file.Md5FileNameGenerator;
-//import com.danikula.videocache.headers.HeaderInjector;
 import com.danikula.videocache.CacheListener;
 import com.danikula.videocache.HttpProxyCacheServer;
 import com.danikula.videocache.file.Md5FileNameGenerator;
@@ -28,14 +24,15 @@ import com.ybj366533.videoplayer.player.IPlayerManager;
 import com.ybj366533.videoplayer.player.SystemPlayerManager;
 import com.ybj366533.videoplayer.utils.CommonUtil;
 import com.ybj366533.videoplayer.utils.Debuger;
+import com.ybj366533.videoplayer.utils.FileOperation;
 import com.ybj366533.videoplayer.utils.FileUtils;
+import com.ybj366533.videoplayer.utils.MyFileNameGenerator;
 import com.ybj366533.videoplayer.utils.StorageUtils;
 import com.ybj366533.videoplayer.utils.VideoType;
-import com.ybj366533.videoplayer.video.base.MiGuVideoViewBridge;
+import com.ybj366533.videoplayer.base.VideoViewBridge;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,15 +40,13 @@ import java.util.Map;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkLibLoader;
 
-import com.ybj366533.videoplayer.model.TextModel;
-
 /**
  * 基类管理器
  */
 
 public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListener, IMediaPlayer.OnCompletionListener,
         IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnErrorListener,
-        IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnInfoListener, CacheListener, MiGuVideoViewBridge {
+        IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnInfoListener,CacheListener, VideoViewBridge {
 
     public static String TAG = "VideoBaseManager";
     //准备
@@ -82,7 +77,7 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
 
     //视频代理
     protected HttpProxyCacheServer proxy;
-    //
+
     //是否需要的自定义缓冲路径
     protected File cacheFile;
 
@@ -132,6 +127,7 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
     private long mFirstVideoDecodeEndTime = 0;
     private long mFirstVideoDisplayEndTime = 0;
 
+
     /**
      * 设置自定义so包加载类
      * 需要在instance之前设置
@@ -148,32 +144,6 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
 
 
     /**
-     * 删除默认所有缓存文件
-     */
-    public static void clearAllDefaultCache(Context context) {
-        String path = StorageUtils.getIndividualCacheDirectory
-                (context.getApplicationContext()).getAbsolutePath();
-        FileUtils.deleteFiles(new File(path));
-    }
-
-    /**
-     * 删除url对应默认缓存文件
-     */
-    public static void clearDefaultCache(Context context, String url) {
-        Md5FileNameGenerator md5FileNameGenerator = new Md5FileNameGenerator();
-        String name = md5FileNameGenerator.generate(url);
-        String pathTmp = StorageUtils.getIndividualCacheDirectory
-                (context.getApplicationContext()).getAbsolutePath()
-                + File.separator + name + ".download";
-        String path = StorageUtils.getIndividualCacheDirectory
-                (context.getApplicationContext()).getAbsolutePath()
-                + File.separator + name;
-        CommonUtil.deleteFile(pathTmp);
-        CommonUtil.deleteFile(path);
-
-    }
-
-    /**
      * 创建缓存代理服务,带文件目录的.
      */
     public HttpProxyCacheServer newProxy(Context context, File file) {
@@ -182,6 +152,7 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
         }
         HttpProxyCacheServer.Builder builder = new HttpProxyCacheServer.Builder(context);
         builder.cacheDirectory(file);
+        builder.fileNameGenerator(new MyFileNameGenerator());
         builder.headerInjector(new UserAgentHeadersInjector());
         cacheFile = file;
         return builder.build();
@@ -198,10 +169,6 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
         return new HttpProxyCacheServer.Builder(context.getApplicationContext())
                 .headerInjector(new UserAgentHeadersInjector()).build();
     }
-
-    /**
-     * 删除url对应默认缓存文件
-     */
 
     /***
      * @param libLoader 是否使用外部动态加载so
@@ -433,7 +400,13 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
                         mFirstVideoDisplayEndTime = System.currentTimeMillis();
                         long FirstVideoDisplayCost = mFirstVideoDisplayEndTime - mPrepareStartTime;
 //                        mHudViewHolder.updateFirstVideoDisplayCost(mFirstVideoDisplayEndTime - mPrepareStartTime);
+
+                        String log = FileOperation.getTime() + ">>>>>>>>>"+getMediaPlayer().getDataSource()+"\nPERF: MEDIA_INFO_VIDEO_RENDERING_START:" + "FirstVideoDisplayCost = " + FirstVideoDisplayCost + "\n";
+                        if (FileOperation.saveTxt(log, context, Environment.getExternalStorageDirectory() + File.separator + "gtvIjk")) {
+                            Log.e(TAG, "PERF: MEDIA_INFO_VIDEO_RENDERING_START:" + "FirstVideoDisplayCost = " + FirstVideoDisplayCost);
+                        }
                         Log.e(TAG, "PERF: MEDIA_INFO_VIDEO_RENDERING_START:" + "FirstVideoDisplayCost = " + FirstVideoDisplayCost);
+
                         break;
                     case IMediaPlayer.MEDIA_INFO_BUFFERING_START:
                         Log.e(TAG, "MEDIA_INFO_BUFFERING_START:");
@@ -491,10 +464,15 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
         });
     }
 
-
     @Override
     public void onCacheAvailable(File cacheFile, String url, int percentsAvailable) {
+//        Log.e(TAG,url);
         buffterPoint = percentsAvailable;
+    }
+
+    @Override
+    public CacheListener getCacheListener() {
+        return this;
     }
 
     @Override
@@ -505,10 +483,6 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
         return null;
     }
 
-    @Override
-    public CacheListener getCacheListener() {
-        return this;
-    }
 
     @Override
     public int getLastState() {
@@ -684,6 +658,7 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
 
         @Override
         public Map<String, String> addHeaders(String url) {
+            Log.e("HeaderInjector",url);
             return (mMapHeadData == null) ? new HashMap<String, String>() : mMapHeadData;
         }
     }
@@ -692,11 +667,12 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
         return videoType;
     }
 
+
     /**
      * 设置了视频的播放类型
      * IJKPLAYER = 0; 默认IJK
-     * IJKEXOPLAYER2 = 2;EXOPlayer2 (最好配合GSYVideoType.SUFRACE)
-     * SYSTEMPLAYER = 4;系统播放器 (最好配合GSYVideoType.SUFRACE)
+     * IJKEXOPLAYER2 = 2;EXOPlayer2 (最好配合VideoType.SUFRACE)
+     * SYSTEMPLAYER = 4;系统播放器 (最好配合VideoType.SUFRACE)
      */
     public void setVideoType(Context context, int videoType) {
         this.context = context.getApplicationContext();
@@ -752,7 +728,7 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
      * <p>
      * 错误码为 ： BUFFER_TIME_OUT_ERROR = -192
      * <p>
-     * 由于onError之后执行GSYVideoPlayer的OnError，如果不想触发错误，
+     * 由于onError之后执行VideoPlayer的OnError，如果不想触发错误，
      * 可以重载onError，在super之前拦截处理。
      * <p>
      * public void onError(int what, int extra){

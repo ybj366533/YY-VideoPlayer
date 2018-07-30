@@ -20,6 +20,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 /**
  * 小窗口预览管理
  */
+@Deprecated
 public class PreViewManager implements IMediaPlayer.OnPreparedListener, IjkMediaPlayer.OnSeekCompleteListener {
 
     public static String TAG = "PreViewManager";

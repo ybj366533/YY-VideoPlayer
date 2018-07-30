@@ -56,12 +56,12 @@ public class ScrollingActivity extends AppCompatActivity {
 
         initView();
 
-        String url = m3u8Path[2];
+        String url = "http://ugc.dls.migudm.cn/Client/ugc/ugcDest2018/20180709/1480226614118/file/36WF3nmzh2Z87ZEO6X5h0DHLSdmn480pDOWNLOAD.mp4?st=s5buspQkVDHNU96t2fsBSQ&e=1537516565";
 
         //增加封面
         ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setImageResource(R.drawable.migu);
+//        imageView.setImageResource(R.drawable.migu);
 
         resolveNormalVideoUI();
 
@@ -79,7 +79,7 @@ public class ScrollingActivity extends AppCompatActivity {
                 .setNeedLockFull(true)
                 .setSeekRatio(1)
                 .setUrl(url)
-                .setCacheWithPlay(false)
+                .setCacheWithPlay(true)
                 .setVideoTitle("测试视频")
                 .setVideoAllCallBack(new SampleCallBack() {
 

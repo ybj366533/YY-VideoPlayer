@@ -24,4 +24,6 @@
     <color name="color_B1AE58">#B1AE58</color>
     <color name="color_1EDB00">#1EDB00</color>
     <color name="color_null">#00000000</color>
+
+    <color name="ijk_transparent_dark">#77000000</color>
 </resources>

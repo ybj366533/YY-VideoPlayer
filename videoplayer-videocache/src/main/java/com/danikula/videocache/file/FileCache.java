@@ -8,11 +8,15 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
+ * 文件缓存实现类
  * {@link Cache} that uses file for storing data.
  *
+ * @author Alexey Danilov (danikula@gmail.com).
  */
 public class FileCache implements Cache {
-
+	/**
+	 * 临时文件后缀名
+	 */
     private static final String TEMP_POSTFIX = ".download";
 
     private final DiskUsage diskUsage;
