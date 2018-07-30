@@ -3,25 +3,14 @@ package com.ybj366533.yy_videoplayer.utils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Rect;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
-import com.danikula.videocache.CacheListener;
-import com.danikula.videocache.HttpProxyCacheServer;
-import com.ybj366533.videoplayer.VideoManager;
 import com.ybj366533.videoplayer.base.BaseVideoPlayer;
-import com.ybj366533.videoplayer.utils.CommonUtil;
 import com.ybj366533.videoplayer.utils.NetworkUtils;
 import com.ybj366533.videoplayer.video.FullScreenVideoView;
-import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
-
-import java.io.File;
 
 /**
  * 计算滑动，自动播放的帮助类

@@ -7,8 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ybj366533.videoplayer.model.VideoEntity;
-import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
-import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MVideoPlayer;
 import com.ybj366533.videoplayer.view.ENDownloadView;
 
 import java.io.File;
@@ -105,7 +104,7 @@ public class ListVideoPlayer extends StandardVideoPlayer {
     }
 
     @Override
-    protected void cloneParams(MiGuVideoPlayer from, MiGuVideoPlayer to) {
+    protected void cloneParams(MVideoPlayer from, MVideoPlayer to) {
         super.cloneParams(from, to);
         ListVideoPlayer sf = (ListVideoPlayer) from;
         ListVideoPlayer st = (ListVideoPlayer) to;
@@ -114,8 +113,8 @@ public class ListVideoPlayer extends StandardVideoPlayer {
     }
 
     @Override
-    public MiGuVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
-        MiGuVideoPlayer gsyMiGuVideoPlayer = super.startWindowFullscreen(context, actionBar, statusBar);
+    public MVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
+        MVideoPlayer gsyMiGuVideoPlayer = super.startWindowFullscreen(context, actionBar, statusBar);
         if (gsyMiGuVideoPlayer != null) {
             ListVideoPlayer listGSYVideoPlayer = (ListVideoPlayer) gsyMiGuVideoPlayer;
             VideoEntity videoEntity = mUriList.get(mPlayPosition);
@@ -127,7 +126,7 @@ public class ListVideoPlayer extends StandardVideoPlayer {
     }
 
     @Override
-    protected void resolveNormalVideoShow(View oldF, ViewGroup vp, MiGuVideoPlayer gsyVideoPlayer) {
+    protected void resolveNormalVideoShow(View oldF, ViewGroup vp, MVideoPlayer gsyVideoPlayer) {
         if (gsyVideoPlayer != null) {
             ListVideoPlayer listGSYVideoPlayer = (ListVideoPlayer) gsyVideoPlayer;
             VideoEntity videoEntity = mUriList.get(mPlayPosition);

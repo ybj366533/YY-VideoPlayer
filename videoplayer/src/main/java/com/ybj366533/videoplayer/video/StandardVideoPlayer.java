@@ -16,28 +16,23 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.danikula.videocache.HttpProxyCacheServer;
 import com.ybj366533.videoplayer.R;
-import com.ybj366533.videoplayer.VideoManager;
 import com.ybj366533.videoplayer.listener.VideoShotListener;
 import com.ybj366533.videoplayer.listener.VideoShotSaveListener;
 import com.ybj366533.videoplayer.utils.Debuger;
 import com.ybj366533.videoplayer.utils.NetworkUtils;
-import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
-import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MVideoPlayer;
 import com.ybj366533.videoplayer.view.ENDownloadView;
 import com.ybj366533.videoplayer.view.ENPlayView;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
  * 标准播放器，继承之后实现一些ui显示效果，如显示／隐藏ui，播放按键等
  */
 
-public class StandardVideoPlayer extends MiGuVideoPlayer {
+public class StandardVideoPlayer extends MVideoPlayer {
 
     //亮度dialog
     protected Dialog mBrightnessDialog;
@@ -337,7 +332,7 @@ public class StandardVideoPlayer extends MiGuVideoPlayer {
     }
 
     @Override
-    protected void cloneParams(MiGuVideoPlayer from, MiGuVideoPlayer to) {
+    protected void cloneParams(MVideoPlayer from, MVideoPlayer to) {
         super.cloneParams(from, to);
         StandardVideoPlayer sf = (StandardVideoPlayer) from;
         StandardVideoPlayer st = (StandardVideoPlayer) to;
@@ -362,8 +357,8 @@ public class StandardVideoPlayer extends MiGuVideoPlayer {
      * @return
      */
     @Override
-    public MiGuVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
-        MiGuVideoPlayer gsyMiGuVideoPlayer = super.startWindowFullscreen(context, actionBar, statusBar);
+    public MVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
+        MVideoPlayer gsyMiGuVideoPlayer = super.startWindowFullscreen(context, actionBar, statusBar);
         if (gsyMiGuVideoPlayer != null) {
             StandardVideoPlayer gsyVideoPlayer = (StandardVideoPlayer) gsyMiGuVideoPlayer;
             gsyVideoPlayer.setLockClickListener(mLockClickListener);

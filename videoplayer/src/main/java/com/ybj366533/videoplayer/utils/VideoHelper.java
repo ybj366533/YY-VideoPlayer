@@ -18,7 +18,7 @@ import com.ybj366533.videoplayer.listener.VideoAllCallBack;
 import com.ybj366533.videoplayer.listener.VideoProgressListener;
 import com.ybj366533.videoplayer.render.view.MiguVideoGLView;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
-import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MVideoPlayer;
 import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
 import com.transitionseverywhere.TransitionManager;
 
@@ -201,7 +201,7 @@ public class VideoHelper {
     /**
      * 如果是5.0的，要从原位置过度到全屏位置
      */
-    private void resolveMaterialFullVideoShow(MiGuVideoPlayer gsyVideoPlayer) {
+    private void resolveMaterialFullVideoShow(MVideoPlayer gsyVideoPlayer) {
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) gsyVideoPlayer.getLayoutParams();
         lp.setMargins(0, 0, 0, 0);
         lp.height = ViewGroup.LayoutParams.MATCH_PARENT;

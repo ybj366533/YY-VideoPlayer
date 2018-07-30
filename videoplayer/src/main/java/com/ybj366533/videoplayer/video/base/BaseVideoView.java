@@ -42,7 +42,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  * Created by guoshuyu on 2017/8/2.
  */
 
-public abstract class BaseVideoView extends MiGuTextureRenderView implements MediaPlayerListener {
+public abstract class BaseVideoView extends MTextureRenderView implements MediaPlayerListener {
 
     //正常
     public static final int CURRENT_STATE_NORMAL = 0;

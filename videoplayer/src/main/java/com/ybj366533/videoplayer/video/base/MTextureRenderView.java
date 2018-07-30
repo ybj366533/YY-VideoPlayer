@@ -23,7 +23,7 @@ import com.ybj366533.videoplayer.utils.VideoType;
  * 绘制View
  */
 
-public abstract class MiGuTextureRenderView extends FrameLayout implements IMiGuSurfaceListener, MeasureHelper.MeasureFormVideoParamsListener {
+public abstract class MTextureRenderView extends FrameLayout implements IMiGuSurfaceListener, MeasureHelper.MeasureFormVideoParamsListener {
 
     //native绘制
     protected Surface mSurface;
@@ -52,15 +52,15 @@ public abstract class MiGuTextureRenderView extends FrameLayout implements IMiGu
     //GL的布局模式
     protected int mMode = MiguVideoGLView.MODE_LAYOUT_SIZE;
 
-    public MiGuTextureRenderView(@NonNull Context context) {
+    public MTextureRenderView(@NonNull Context context) {
         super(context);
     }
 
-    public MiGuTextureRenderView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public MTextureRenderView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MiGuTextureRenderView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public MTextureRenderView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

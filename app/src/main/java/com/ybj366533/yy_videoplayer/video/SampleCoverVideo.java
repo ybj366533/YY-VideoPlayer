@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
-import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 
 /**
@@ -59,8 +59,8 @@ public class SampleCoverVideo extends StandardVideoPlayer {
     }
 
     @Override
-    public MiGuVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
-        MiGuVideoPlayer gsyBaseVideoPlayer = super.startWindowFullscreen(context, actionBar, statusBar);
+    public MVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
+        MVideoPlayer gsyBaseVideoPlayer = super.startWindowFullscreen(context, actionBar, statusBar);
         SampleCoverVideo sampleCoverVideo = (SampleCoverVideo) gsyBaseVideoPlayer;
         sampleCoverVideo.loadCoverImage(mCoverOriginUrl, mDefaultRes);
         return gsyBaseVideoPlayer;

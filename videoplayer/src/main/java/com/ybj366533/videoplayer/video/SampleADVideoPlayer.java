@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.ybj366533.videoplayer.R;
 import com.ybj366533.videoplayer.model.VideoEntity;
 import com.ybj366533.videoplayer.utils.CommonUtil;
-import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MVideoPlayer;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -232,7 +232,7 @@ public class SampleADVideoPlayer extends ListVideoPlayer {
     }
 
     @Override
-    protected void cloneParams(MiGuVideoPlayer from, MiGuVideoPlayer to) {
+    protected void cloneParams(MVideoPlayer from, MVideoPlayer to) {
         super.cloneParams(from, to);
         SampleADVideoPlayer sf = (SampleADVideoPlayer) from;
         SampleADVideoPlayer st = (SampleADVideoPlayer) to;

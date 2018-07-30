@@ -27,7 +27,7 @@ import com.ybj366533.videoplayer.utils.OrientationUtils;
 import com.ybj366533.yy_videoplayer.R;
 import com.ybj366533.yy_videoplayer.adapter.VideoPlayerListAdapter;
 import com.ybj366533.yy_videoplayer.model.PlayerVideoModel;
-import com.ybj366533.yy_videoplayer.video.MiGuListVideoPlayer;
+import com.ybj366533.yy_videoplayer.video.MListVideoPlayer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -50,7 +50,7 @@ public class VideoPlayerListActivity extends AppCompatActivity {
     @BindView(R.id.btn_stop_gif)
     Button btnStopGIF;
     @BindView(R.id.video_player)
-    MiGuListVideoPlayer videoPlayer;
+    MListVideoPlayer videoPlayer;
     @BindView(R.id.list_item_recycler)
     RecyclerView videoList;
 

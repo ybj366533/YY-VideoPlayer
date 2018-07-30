@@ -15,7 +15,7 @@ import com.ybj366533.videoplayer.R;
 import com.ybj366533.videoplayer.VideoADManager;
 import com.ybj366533.videoplayer.VideoManager;
 import com.ybj366533.videoplayer.utils.CommonUtil;
-import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MVideoPlayer;
 import com.ybj366533.videoplayer.base.VideoViewBridge;
 
 import java.io.File;
@@ -206,7 +206,7 @@ public class ADVideoPlayer extends StandardVideoPlayer {
     }
 
     @Override
-    protected void cloneParams(MiGuVideoPlayer from, MiGuVideoPlayer to) {
+    protected void cloneParams(MVideoPlayer from, MVideoPlayer to) {
         super.cloneParams(from, to);
         ADVideoPlayer sf = (ADVideoPlayer) from;
         ADVideoPlayer st = (ADVideoPlayer) to;

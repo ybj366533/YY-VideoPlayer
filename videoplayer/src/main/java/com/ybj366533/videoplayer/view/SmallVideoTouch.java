@@ -4,7 +4,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MVideoPlayer;
 
 /**
  * 小窗口触摸移动
@@ -14,10 +14,10 @@ public class SmallVideoTouch implements View.OnTouchListener {
     private int mDownX, mDownY;
     private int mMarginLeft, mMarginTop;
     private int _xDelta, _yDelta;
-    private MiGuVideoPlayer mGsyMiGuVideoPlayer;
+    private MVideoPlayer mGsyMiGuVideoPlayer;
 
 
-    public SmallVideoTouch(MiGuVideoPlayer gsyMiGuVideoPlayer, int marginLeft, int marginTop) {
+    public SmallVideoTouch(MVideoPlayer gsyMiGuVideoPlayer, int marginLeft, int marginTop) {
         super();
         mMarginLeft = marginLeft;
         mMarginTop = marginTop;

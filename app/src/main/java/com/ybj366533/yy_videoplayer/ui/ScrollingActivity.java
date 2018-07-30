@@ -20,7 +20,7 @@ import com.ybj366533.videoplayer.listener.VideoProgressListener;
 import com.ybj366533.videoplayer.utils.CommonUtil;
 import com.ybj366533.videoplayer.utils.Debuger;
 import com.ybj366533.videoplayer.utils.OrientationUtils;
-import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 import com.ybj366533.yy_videoplayer.listener.AppBarStateChangeListener;
 import com.ybj366533.yy_videoplayer.video.LandLayoutVideo;
@@ -235,7 +235,7 @@ public class ScrollingActivity extends AppCompatActivity {
         });
     }
 
-    private MiGuVideoPlayer getCurPlay() {
+    private MVideoPlayer getCurPlay() {
         if (detailPlayer.getFullWindowPlayer() != null) {
             return detailPlayer.getFullWindowPlayer();
         }

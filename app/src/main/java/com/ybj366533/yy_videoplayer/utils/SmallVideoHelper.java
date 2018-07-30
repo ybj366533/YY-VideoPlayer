@@ -20,7 +20,7 @@ import com.ybj366533.videoplayer.render.view.MiguVideoGLView;
 import com.ybj366533.videoplayer.utils.Debuger;
 import com.ybj366533.videoplayer.utils.OrientationUtils;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
-import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MVideoPlayer;
 import com.transitionseverywhere.TransitionManager;
 
 import java.io.File;
@@ -209,7 +209,7 @@ public class SmallVideoHelper {
     /**
      * 如果是5.0的，要从原位置过度到全屏位置
      */
-    private void resolveMaterialFullVideoShow(MiGuVideoPlayer gsyVideoPlayer) {
+    private void resolveMaterialFullVideoShow(MVideoPlayer gsyVideoPlayer) {
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) gsyVideoPlayer.getLayoutParams();
         lp.setMargins(0, 0, 0, 0);
         lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -264,7 +264,7 @@ public class SmallVideoHelper {
     /**
      * 动画回到正常效果
      */
-    private void resolveMaterialToNormal(final MiGuVideoPlayer gsyVideoPlayer) {
+    private void resolveMaterialToNormal(final MVideoPlayer gsyVideoPlayer) {
         if (gsyVideoOptionBuilder.isShowFullAnimation() && fullViewContainer instanceof FrameLayout) {
             int delay = orientationUtils.backToProtVideo();
             handler.postDelayed(new Runnable() {
@@ -490,7 +490,7 @@ public class SmallVideoHelper {
      * @param statusBar 是否有状态栏
      */
     public void showSmallVideo(Point size, final boolean actionBar, final boolean statusBar) {
-        if (gsyVideoPlayer.getCurrentState() == MiGuVideoPlayer.CURRENT_STATE_PLAYING) {
+        if (gsyVideoPlayer.getCurrentState() == MVideoPlayer.CURRENT_STATE_PLAYING) {
             gsyVideoPlayer.showSmallVideo(size, actionBar, statusBar);
             isSmall = true;
         }

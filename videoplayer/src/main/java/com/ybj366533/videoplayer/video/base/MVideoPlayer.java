@@ -28,7 +28,7 @@ import tv.danmaku.ijk.media.player.IMediaPlayer;
  * Created by shuyu on 2016/11/17.
  */
 
-public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
+public abstract class MVideoPlayer extends MVideoControlView {
 
     //保存系统状态ui
     protected int mSystemUiVisibility;
@@ -69,19 +69,19 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
     //全屏返回监听，如果设置了，默认返回无效
     protected View.OnClickListener mBackFromFullScreenListener;
 
-    public MiGuVideoPlayer(Context context, Boolean fullFlag) {
+    public MVideoPlayer(Context context, Boolean fullFlag) {
         super(context, fullFlag);
     }
 
-    public MiGuVideoPlayer(Context context) {
+    public MVideoPlayer(Context context) {
         super(context);
     }
 
-    public MiGuVideoPlayer(Context context, AttributeSet attrs) {
+    public MVideoPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MiGuVideoPlayer(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MVideoPlayer(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -199,7 +199,7 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
      * @param from
      * @param to
      */
-    protected void cloneParams(MiGuVideoPlayer from, MiGuVideoPlayer to) {
+    protected void cloneParams(MVideoPlayer from, MVideoPlayer to) {
         to.mHadPlay = from.mHadPlay;
         to.mPlayTag = from.mPlayTag;
         to.mPlayPosition = from.mPlayPosition;
@@ -259,7 +259,7 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
     /**
      * 全屏的暂停返回的时候返回页面不黑色
      */
-    private void pauseFullBackCoverLogic(MiGuVideoPlayer mVideoPlayer) {
+    private void pauseFullBackCoverLogic(MVideoPlayer mVideoPlayer) {
         //如果是暂停状态
         if (mVideoPlayer.mCurrentState == CURRENT_STATE_PAUSE
                 && mVideoPlayer.mTextureView != null && mShowPauseCover) {
@@ -282,7 +282,7 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
     /**
      * 全屏
      */
-    protected void resolveFullVideoShow(Context context, final MiGuVideoPlayer mVideoPlayer, final FrameLayout frameLayout) {
+    protected void resolveFullVideoShow(Context context, final MVideoPlayer mVideoPlayer, final FrameLayout frameLayout) {
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mVideoPlayer.getLayoutParams();
         lp.setMargins(0, 0, 0, 0);
         lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -332,7 +332,7 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
     /**
      * 恢复
      */
-    protected void resolveNormalVideoShow(View oldF, ViewGroup vp, MiGuVideoPlayer mVideoPlayer) {
+    protected void resolveNormalVideoShow(View oldF, ViewGroup vp, MVideoPlayer mVideoPlayer) {
 
         if (oldF != null && oldF.getParent() != null) {
             ViewGroup viewGroup = (ViewGroup) oldF.getParent();
@@ -406,9 +406,9 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
         final ViewGroup vp = getViewGroup();
 
         final View oldF = vp.findViewById(getFullId());
-        final MiGuVideoPlayer mVideoPlayer;
+        final MVideoPlayer mVideoPlayer;
         if (oldF != null) {
-            mVideoPlayer = (MiGuVideoPlayer) oldF;
+            mVideoPlayer = (MVideoPlayer) oldF;
             //如果暂停了
             pauseFullBackCoverLogic(mVideoPlayer);
             if (mShowFullAnimation) {
@@ -561,7 +561,7 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
      * @param statusBar 是否有状态bar，有的话需要隐藏
      */
     @SuppressWarnings("ResourceType, unchecked")
-    public MiGuVideoPlayer startWindowFullscreen(final Context context, final boolean actionBar, final boolean statusBar) {
+    public MVideoPlayer startWindowFullscreen(final Context context, final boolean actionBar, final boolean statusBar) {
 
 
         mSystemUiVisibility = ((Activity) context).getWindow().getDecorView().getSystemUiVisibility();
@@ -597,20 +597,20 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
         boolean hadNewConstructor = true;
 
         try {
-            MiGuVideoPlayer.this.getClass().getConstructor(Context.class, Boolean.class);
+            MVideoPlayer.this.getClass().getConstructor(Context.class, Boolean.class);
         } catch (Exception e) {
             hadNewConstructor = false;
         }
 
         try {
             //通过被重载的不同构造器来选择
-            Constructor<MiGuVideoPlayer> constructor;
-            final MiGuVideoPlayer mVideoPlayer;
+            Constructor<MVideoPlayer> constructor;
+            final MVideoPlayer mVideoPlayer;
             if (!hadNewConstructor) {
-                constructor = (Constructor<MiGuVideoPlayer>) MiGuVideoPlayer.this.getClass().getConstructor(Context.class);
+                constructor = (Constructor<MVideoPlayer>) MVideoPlayer.this.getClass().getConstructor(Context.class);
                 mVideoPlayer = constructor.newInstance(getActivityContext());
             } else {
-                constructor = (Constructor<MiGuVideoPlayer>) MiGuVideoPlayer.this.getClass().getConstructor(Context.class, Boolean.class);
+                constructor = (Constructor<MVideoPlayer>) MVideoPlayer.this.getClass().getConstructor(Context.class, Boolean.class);
                 mVideoPlayer = constructor.newInstance(getActivityContext(), true);
             }
 
@@ -692,7 +692,7 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
      * 显示小窗口
      */
     @SuppressWarnings("ResourceType, unchecked")
-    public MiGuVideoPlayer showSmallVideo(Point size, final boolean actionBar, final boolean statusBar) {
+    public MVideoPlayer showSmallVideo(Point size, final boolean actionBar, final boolean statusBar) {
 
         final ViewGroup vp = getViewGroup();
 
@@ -703,8 +703,8 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
         }
 
         try {
-            Constructor<MiGuVideoPlayer> constructor = (Constructor<MiGuVideoPlayer>) MiGuVideoPlayer.this.getClass().getConstructor(Context.class);
-            MiGuVideoPlayer mVideoPlayer = constructor.newInstance(getActivityContext());
+            Constructor<MVideoPlayer> constructor = (Constructor<MVideoPlayer>) MVideoPlayer.this.getClass().getConstructor(Context.class);
+            MVideoPlayer mVideoPlayer = constructor.newInstance(getActivityContext());
             mVideoPlayer.setId(getSmallId());
 
             FrameLayout.LayoutParams lpParent = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -757,7 +757,7 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
     @SuppressWarnings("ResourceType")
     public void hideSmallVideo() {
         final ViewGroup vp = getViewGroup();
-        MiGuVideoPlayer mPlayer = (MiGuVideoPlayer) vp.findViewById(getSmallId());
+        MVideoPlayer mPlayer = (MVideoPlayer) vp.findViewById(getSmallId());
         removeVideo(vp, getSmallId());
         mCurrentState = getVideoManager().getLastState();
         if (mPlayer != null) {
@@ -835,12 +835,12 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
      * @return VideoPlayer 如果没有则返回空。
      */
     @SuppressWarnings("ResourceType")
-    public MiGuVideoPlayer getFullWindowPlayer() {
+    public MVideoPlayer getFullWindowPlayer() {
         ViewGroup vp = (ViewGroup) (CommonUtil.scanForActivity(getContext())).findViewById(Window.ID_ANDROID_CONTENT);
         final View full = vp.findViewById(getFullId());
-        MiGuVideoPlayer mVideoPlayer = null;
+        MVideoPlayer mVideoPlayer = null;
         if (full != null) {
-            mVideoPlayer = (MiGuVideoPlayer) full;
+            mVideoPlayer = (MVideoPlayer) full;
         }
         return mVideoPlayer;
     }
@@ -851,12 +851,12 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
      * @return VideoPlayer 如果没有则返回空。
      */
     @SuppressWarnings("ResourceType")
-    public MiGuVideoPlayer getSmallWindowPlayer() {
+    public MVideoPlayer getSmallWindowPlayer() {
         ViewGroup vp = (ViewGroup) (CommonUtil.scanForActivity(getContext())).findViewById(Window.ID_ANDROID_CONTENT);
         final View small = vp.findViewById(getSmallId());
-        MiGuVideoPlayer mVideoPlayer = null;
+        MVideoPlayer mVideoPlayer = null;
         if (small != null) {
-            mVideoPlayer = (MiGuVideoPlayer) small;
+            mVideoPlayer = (MVideoPlayer) small;
         }
         return mVideoPlayer;
     }
@@ -864,7 +864,7 @@ public abstract class MiGuVideoPlayer extends MiGuVideoControlView {
     /**
      * 获取当前长在播放的播放控件
      */
-    public MiGuVideoPlayer getCurrentPlayer() {
+    public MVideoPlayer getCurrentPlayer() {
         if (getFullWindowPlayer() != null) {
             return getFullWindowPlayer();
         }

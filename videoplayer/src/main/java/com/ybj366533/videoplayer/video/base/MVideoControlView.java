@@ -42,7 +42,7 @@ import static com.ybj366533.videoplayer.utils.CommonUtil.hideNavKey;
  * Created by guoshuyu on 2017/8/2.
  */
 
-public abstract class MiGuVideoControlView extends BaseVideoPlayer implements View.OnClickListener, View.OnTouchListener, IndicatorSeekBarListener {
+public abstract class MVideoControlView extends BaseVideoPlayer implements View.OnClickListener, View.OnTouchListener, IndicatorSeekBarListener {
 
 
     //手指放下的位置
@@ -183,19 +183,19 @@ public abstract class MiGuVideoControlView extends BaseVideoPlayer implements Vi
     private int[] imgPath = {R.drawable.images_0, R.drawable.images_1, R.drawable.images_2, R.drawable.images_3, R.drawable.images_4, R.drawable.images_5, R.drawable.images_6, R.drawable.images_7, R.drawable.images_8, R.drawable.images_9,};
 
 
-    public MiGuVideoControlView(@NonNull Context context) {
+    public MVideoControlView(@NonNull Context context) {
         super(context);
     }
 
-    public MiGuVideoControlView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public MVideoControlView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MiGuVideoControlView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public MVideoControlView(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public MiGuVideoControlView(Context context, Boolean fullFlag) {
+    public MVideoControlView(Context context, Boolean fullFlag) {
         super(context, fullFlag);
     }
 
@@ -407,10 +407,10 @@ public abstract class MiGuVideoControlView extends BaseVideoPlayer implements Vi
             if (mVideoAllCallBack != null && isCurrentMediaListener()) {
                 if (mIfCurrentIsFullscreen) {
                     Debuger.printfLog("onClickBlankFullscreen");
-                    mVideoAllCallBack.onClickBlankFullscreen(mOriginUrl, mTitle, MiGuVideoControlView.this);
+                    mVideoAllCallBack.onClickBlankFullscreen(mOriginUrl, mTitle, MVideoControlView.this);
                 } else {
                     Debuger.printfLog("onClickBlank");
-                    mVideoAllCallBack.onClickBlank(mOriginUrl, mTitle, MiGuVideoControlView.this);
+                    mVideoAllCallBack.onClickBlank(mOriginUrl, mTitle, MVideoControlView.this);
                 }
             }
             startDismissControlViewTimer();

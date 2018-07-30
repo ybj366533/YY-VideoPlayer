@@ -8,12 +8,12 @@ import android.view.View;
 import com.ybj366533.videoplayer.builder.VideoOptionBuilder;
 import com.ybj366533.videoplayer.listener.VideoAllCallBack;
 import com.ybj366533.videoplayer.utils.OrientationUtils;
-import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MVideoPlayer;
 
 /**
  * 详情模式播放页面基础类
  */
-public abstract class BaseActivityDetail<T extends MiGuVideoPlayer> extends Activity implements VideoAllCallBack {
+public abstract class BaseActivityDetail<T extends MVideoPlayer> extends Activity implements VideoAllCallBack {
 
     protected boolean isPlay;
 

@@ -11,8 +11,7 @@ import android.widget.TextView;
 
 import com.ybj366533.videoplayer.utils.VideoType;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
-import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
-import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 
 
@@ -187,7 +186,7 @@ public class SampleControlVideo extends StandardVideoPlayer {
      * @return
      */
     @Override
-    public MiGuVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
+    public MVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
         SampleControlVideo sampleVideo = (SampleControlVideo) super.startWindowFullscreen(context, actionBar, statusBar);
         sampleVideo.mSourcePosition = mSourcePosition;
         sampleVideo.mType = mType;
@@ -210,7 +209,7 @@ public class SampleControlVideo extends StandardVideoPlayer {
      * @param gsyVideoPlayer
      */
     @Override
-    protected void resolveNormalVideoShow(View oldF, ViewGroup vp, MiGuVideoPlayer gsyVideoPlayer) {
+    protected void resolveNormalVideoShow(View oldF, ViewGroup vp, MVideoPlayer gsyVideoPlayer) {
         super.resolveNormalVideoShow(oldF, vp, gsyVideoPlayer);
         if (gsyVideoPlayer != null) {
             SampleControlVideo sampleVideo = (SampleControlVideo) gsyVideoPlayer;

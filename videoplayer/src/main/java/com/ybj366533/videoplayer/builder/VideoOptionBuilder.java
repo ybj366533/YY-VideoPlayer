@@ -9,7 +9,7 @@ import com.ybj366533.videoplayer.listener.VideoProgressListener;
 import com.ybj366533.videoplayer.render.effect.NoEffect;
 import com.ybj366533.videoplayer.render.view.MiguVideoGLView;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
-import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MVideoPlayer;
 
 import java.io.File;
 import java.util.Map;
@@ -563,10 +563,10 @@ public class VideoOptionBuilder {
             mVideoPlayer.setDialogProgressColor(mDialogProgressHighLightColor, mDialogProgressNormalColor);
         }
 
-        build((MiGuVideoPlayer) mVideoPlayer);
+        build((MVideoPlayer) mVideoPlayer);
     }
 
-    public void build(MiGuVideoPlayer mVideoPlayer) {
+    public void build(MVideoPlayer mVideoPlayer) {
         mVideoPlayer.setPlayTag(mPlayTag);
         mVideoPlayer.setPlayPosition(mPlayPosition);
 

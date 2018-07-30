@@ -11,8 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.ybj366533.videoplayer.utils.VideoType;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
-import com.ybj366533.videoplayer.video.base.MiGuVideoPlayer;
-import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
+import com.ybj366533.videoplayer.video.base.MVideoPlayer;
 import com.ybj366533.yy_videoplayer.R;
 import com.ybj366533.yy_videoplayer.model.SwitchVideoModel;
 import com.ybj366533.yy_videoplayer.view.SwitchVideoTypeDialog;
@@ -235,7 +234,7 @@ public class SampleVideo extends StandardVideoPlayer {
      * @return
      */
     @Override
-    public MiGuVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
+    public MVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
         SampleVideo sampleVideo = (SampleVideo) super.startWindowFullscreen(context, actionBar, statusBar);
         sampleVideo.mSourcePosition = mSourcePosition;
         sampleVideo.mType = mType;
@@ -260,7 +259,7 @@ public class SampleVideo extends StandardVideoPlayer {
      * @param gsyVideoPlayer
      */
     @Override
-    protected void resolveNormalVideoShow(View oldF, ViewGroup vp, MiGuVideoPlayer gsyVideoPlayer) {
+    protected void resolveNormalVideoShow(View oldF, ViewGroup vp, MVideoPlayer gsyVideoPlayer) {
         super.resolveNormalVideoShow(oldF, vp, gsyVideoPlayer);
         if (gsyVideoPlayer != null) {
             SampleVideo sampleVideo = (SampleVideo) gsyVideoPlayer;
@@ -327,8 +326,8 @@ public class SampleVideo extends StandardVideoPlayer {
             public void onItemClick(int position) {
                 final String name = mUrlList.get(position).getName();
                 if (mSourcePosition != position) {
-                    if ((mCurrentState == MiGuVideoPlayer.CURRENT_STATE_PLAYING
-                            || mCurrentState == MiGuVideoPlayer.CURRENT_STATE_PAUSE)
+                    if ((mCurrentState == MVideoPlayer.CURRENT_STATE_PLAYING
+                            || mCurrentState == MVideoPlayer.CURRENT_STATE_PAUSE)
                             && getVideoManager().getMediaPlayer() != null) {
                         final String url = mUrlList.get(position).getUrl();
                         onVideoPause();
