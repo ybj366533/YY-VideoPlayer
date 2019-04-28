@@ -65,6 +65,7 @@ public class VideoPlayerListActivity extends AppCompatActivity {
     private GifCreateHelper mGifCreateHelper;
 
     private float speed = 1;
+    //TODO 相关视频URL由于防盗链问题已过期，需要展示的话可以网上爬一下。
 
     private String[] pathList = {"http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060414/26428035455673878.mp4?st=T3V5sa52Sf0NtbzJ7kOWmQ&e=15282831354",
             "http://ugc.dls.migudm.cn/Client/ugc/funshoot/product/2018060416/26434037802427631.mp4?st=38VuCklTtfCM1-EFva0Shg&e=1528283135",

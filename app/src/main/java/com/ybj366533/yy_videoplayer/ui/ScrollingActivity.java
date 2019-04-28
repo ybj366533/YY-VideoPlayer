@@ -43,6 +43,7 @@ public class ScrollingActivity extends AppCompatActivity {
     private CollapsingToolbarLayout toolBarLayout;
 
     private AppBarStateChangeListener.State curState;
+    //TODO 相关视频URL由于防盗链问题已过期，需要展示的话可以网上爬一下。
     private String[] m3u8Path = {
             "http://ugc.strms.migudm.cn/Client/ugc/ugcDest2018/20180519/78061570/file/3DQU4HdXl8XaNQP7UhjnkiHLSdmn480pDOWNLOAD_HLS/security_3DQU4HdXl8XaNQP7UhjnkiHLSdmn480pDOWNLOAD.m3u8?st=talDZ9kwZHgDQCWVkW1jiw&e=1532846162",
             "http://ugc.strms.migudm.cn/Client/ugc/ugcDest2018/20180420/11344280/file/1oZqpnQ55bPX8rwztp0qCjHLSdmn480pDOWNLOAD_HLS/security_1oZqpnQ55bPX8rwztp0qCjHLSdmn480pDOWNLOAD.m3u8?st=g2OB8FxeM8j1B4ENSeFdrQ&e=1532846180",

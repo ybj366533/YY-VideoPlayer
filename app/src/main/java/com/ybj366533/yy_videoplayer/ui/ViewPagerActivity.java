@@ -32,6 +32,7 @@ public class ViewPagerActivity extends AppCompatActivity {
     private ViewPlageCalculatorHelper viewPageCalculatorHelper;
 
     private ArrayList<VideoModel> mData = new ArrayList<>();
+    //TODO 相关视频URL由于防盗链问题已过期，需要展示的话可以网上爬一下。
 
     private String[] pathList = {
 
