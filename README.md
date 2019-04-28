@@ -15,7 +15,7 @@
 * **UI      UI控件层**：VideoControlView、VideoPlayer、StandardVideoPlayer。
 #### 结构如下图：
 
-![框架图][avatar](VideoPalyer_Structure.jpg)
+![框架图](VideoPalyer_Structure.jpg)
 
 
 #### 应用接口文档
