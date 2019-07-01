@@ -7,8 +7,6 @@ import android.animation.*
  */
 
 open class ValueAnim : ValueAnimator(), AnimListener {
-
-
     companion object {
         internal val argbEvaluator = ArgbEvaluator()
 
