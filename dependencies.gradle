@@ -6,8 +6,8 @@ ext {
             "kotlin"                 : android.kotlin_version,
             "anko"                   : android.anko_version,
             //IJKPLAYER
-            "ijkplayer"            : '0.8.8',
-            "exo_player2"          : '2.6.1',
+            "ijkplayer"              : '0.8.8',
+            "exo_player2"            : '2.6.1',
             // App dependencies
             "appCompatVersion"       : "1.0.2",
             "annotationVersion"      : "1.1.0",
@@ -39,7 +39,7 @@ ext {
 
             "multidex"                       : "androidx.multidex:multidex:2.0.0",
             "support-v4"                     : "androidx.legacy:legacy-support-v4:1.0.0",
-
+            "material"                       : "com.google.android.material:material:${version['materialVersion']}",
             "constraint-layout"              : "androidx.constraintlayout:constraintlayout:${version['constraintLayoutVersion']}",
             "appcompat"                      : "androidx.appcompat:appcompat:${version['appCompatVersion']}",
             "annotation"                     : "androidx.annotation:${version['annotationVersion']}",
@@ -118,17 +118,17 @@ ext {
             ////// ====== library ====== //////
 
             // Bilibili/ijkplayer
-            "ijkplayer_java"                : "tv.danmaku.ijk.media:ijkplayer-java:${version["ijkplayer"]}",
-            "ijkplayer_armv7a"              : "tv.danmaku.ijk.media:ijkplayer-armv7a:${version["ijkplayer"]}",
-            "ijkplayer_armv5"               : "tv.danmaku.ijk.media:ijkplayer-armv5:${version["ijkplayer"]}",
-            "ijkplayer_arm64"               : "tv.danmaku.ijk.media:ijkplayer-arm64:${version["ijkplayer"]}",
-            "ijkplayer_x86_64"              : "tv.danmaku.ijk.media:ijkplayer-x86_64:${version["ijkplayer"]}",
-            "ijkplayer_x86"                 : "tv.danmaku.ijk.media:ijkplayer-x86:${version["ijkplayer"]}",
-            "ijkplayer_exo"                 : "tv.danmaku.ijk.media:ijkplayer-exo:${version["ijkplayer"]}",
+            "ijkplayer_java"                 : "tv.danmaku.ijk.media:ijkplayer-java:${version["ijkplayer"]}",
+            "ijkplayer_armv7a"               : "tv.danmaku.ijk.media:ijkplayer-armv7a:${version["ijkplayer"]}",
+            "ijkplayer_armv5"                : "tv.danmaku.ijk.media:ijkplayer-armv5:${version["ijkplayer"]}",
+            "ijkplayer_arm64"                : "tv.danmaku.ijk.media:ijkplayer-arm64:${version["ijkplayer"]}",
+            "ijkplayer_x86_64"               : "tv.danmaku.ijk.media:ijkplayer-x86_64:${version["ijkplayer"]}",
+            "ijkplayer_x86"                  : "tv.danmaku.ijk.media:ijkplayer-x86:${version["ijkplayer"]}",
+            "ijkplayer_exo"                  : "tv.danmaku.ijk.media:ijkplayer-exo:${version["ijkplayer"]}",
 
             // google/ExoPlayer
-            "exo_player2"                   : "com.google.android.exoplayer:exoplayer:${version["exo_player2"]}",
-            "exo_player2_rtmp"              : "com.google.android.exoplayer:extension-rtmp:${version["exo_player2"]}",
+            "exo_player2"                    : "com.google.android.exoplayer:exoplayer:${version["exo_player2"]}",
+            "exo_player2_rtmp"               : "com.google.android.exoplayer:extension-rtmp:${version["exo_player2"]}",
 
 
             ////// ====== local library ====== ////////
