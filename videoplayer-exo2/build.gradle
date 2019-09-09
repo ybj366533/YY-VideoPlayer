@@ -28,9 +28,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation rootProject.ext.dependencies['appcompat']
 //    api rootProject.ext.dependencies['ijkplayer_java']
-    api rootProject.ext.dependencies['exo_player2']
-    api rootProject.ext.dependencies['exo_player2_rtmp']
-//    implementation project(':videoplayer-java')
+//    api rootProject.ext.dependencies['exo_player2']
+//    api rootProject.ext.dependencies['exo_player2_rtmp']
+    implementation project(':videoplayer-core')
     testImplementation 'junit:junit:4.12'
 
 }

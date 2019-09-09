@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/videoplayer/videoplayer.iml" filepath="$PROJECT_DIR$/videoplayer/videoplayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/videoplayer-arm64/videoplayer-arm64.iml" filepath="$PROJECT_DIR$/videoplayer-arm64/videoplayer-arm64.iml" />
       <module fileurl="file://$PROJECT_DIR$/videoplayer-armv7a/videoplayer-armv7a.iml" filepath="$PROJECT_DIR$/videoplayer-armv7a/videoplayer-armv7a.iml" />
+      <module fileurl="file://$PROJECT_DIR$/videoplayer-core/videoplayer-core.iml" filepath="$PROJECT_DIR$/videoplayer-core/videoplayer-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/videoplayer-exo2/videoplayer-exo2.iml" filepath="$PROJECT_DIR$/videoplayer-exo2/videoplayer-exo2.iml" />
       <module fileurl="file://$PROJECT_DIR$/videoplayer-java/videoplayer-java.iml" filepath="$PROJECT_DIR$/videoplayer-java/videoplayer-java.iml" />
       <module fileurl="file://$PROJECT_DIR$/videoplayer-videocache/videoplayer-videocache.iml" filepath="$PROJECT_DIR$/videoplayer-videocache/videoplayer-videocache.iml" />
