@@ -31,10 +31,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation rootProject.ext.dependencies['appcompat-v7']
-    implementation rootProject.ext.dependencies['recyclerview-v7']
+    implementation rootProject.ext.dependencies['appcompat']
+    implementation rootProject.ext.dependencies['recyclerview']
 
-    implementation rootProject.ext.dependencies['transitions_everywhere']
     implementation project(':videoplayer-arm64')
     implementation project(':videoplayer-armv7a')
     implementation project(':videoplayer-videocache')

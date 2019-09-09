@@ -24,6 +24,11 @@ android {
             jni.srcDirs = [] // This prevents the auto generation of Android.mk
         }
     }
+    externalNativeBuild {
+        ndkBuild {
+            path file('src/main/jni/Android.mk')
+        }
+    }
 }
 
 dependencies {

@@ -32,35 +32,23 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation rootProject.ext.dependencies['appcompat']
+    implementation rootProject.ext.dependencies['constraint-layout']
+    implementation rootProject.ext.dependencies['recyclerview']
 
-    implementation rootProject.ext.dependencies['appcompat-v7']
-    implementation rootProject.ext.dependencies['recyclerview-v7']
-    implementation rootProject.ext.dependencies['support-v4']
-    implementation rootProject.ext.dependencies['design']
-    annotationProcessor rootProject.ext.dependencies['apt_butterKnife']
-    implementation rootProject.ext.dependencies['butterKnife']
-
-
-    implementation rootProject.ext.dependencies['rxjava2']
-    implementation rootProject.ext.dependencies['rxandroid2']
-    implementation rootProject.ext.dependencies['rxpermissions2']
-    implementation rootProject.ext.dependencies['rxlifecycle2'], {
-        exclude module: 'rxjava'
-    }
-    implementation rootProject.ext.dependencies['rxlifecycle2-components']
+    implementation rootProject.ext.dependencies['anko']
+    implementation rootProject.ext.dependencies['core-ktx']
 
     implementation rootProject.ext.dependencies['glide']
     implementation rootProject.ext.dependencies['glide-loader-okhttp3']
     implementation rootProject.ext.dependencies['fresco']
 
-    implementation rootProject.ext.dependencies['cymRecyclerViewAdapter']
-
 
     implementation project(':videoplayer')
-    testImplementation 'junit:junit:4.12'
+
+    testImplementation rootProject.ext.dependencies['junit']
+    androidTestImplementation rootProject.ext.dependencies['runner']
+    androidTestImplementation rootProject.ext.dependencies['espresso-core']
 
 }
