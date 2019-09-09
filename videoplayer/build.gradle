@@ -38,7 +38,7 @@ dependencies {
     implementation project(':videoplayer-armv7a')
     implementation project(':videoplayer-videocache')
     implementation project(':videoplayer-java')
-    implementation project(':videoplayer-exo2')
+//    implementation project(':videoplayer-exo2')
 
     testImplementation 'junit:junit:4.12'
 

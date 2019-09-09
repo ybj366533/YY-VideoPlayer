@@ -15,7 +15,6 @@ import com.ybj366533.videoplayer.listener.VideoAllCallBack;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
 import com.ybj366533.videoplayer.video.base.MVideoPlayer;
 import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
-import com.transitionseverywhere.TransitionManager;
 
 import java.io.File;
 import java.util.Map;
@@ -245,7 +244,6 @@ public class ListVideoUtil {
             @Override
             public void run() {
                 //开始动画
-                TransitionManager.beginDelayedTransition(fullViewContainer);
                 resolveMaterialFullVideoShow(gsyVideoPlayer);
                 resolveChangeFirstLogic(600);
             }
@@ -308,7 +306,6 @@ public class ListVideoUtil {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    TransitionManager.beginDelayedTransition(fullViewContainer);
                     FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) gsyVideoPlayer.getLayoutParams();
                     lp.setMargins(listItemRect[0], listItemRect[1], 0, 0);
                     lp.width = listItemSize[0];

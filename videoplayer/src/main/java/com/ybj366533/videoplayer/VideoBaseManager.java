@@ -18,7 +18,6 @@ import com.danikula.videocache.headers.HeaderInjector;
 import com.ybj366533.videoplayer.listener.MediaPlayerListener;
 import com.ybj366533.videoplayer.model.VideoModel;
 import com.ybj366533.videoplayer.model.VideoOptionModel;
-import com.ybj366533.videoplayer.player.EXO2PlayerManager;
 import com.ybj366533.videoplayer.player.IJKPlayerManager;
 import com.ybj366533.videoplayer.player.IPlayerManager;
 import com.ybj366533.videoplayer.player.SystemPlayerManager;
@@ -185,7 +184,7 @@ public abstract class VideoBaseManager implements IMediaPlayer.OnPreparedListene
     protected IPlayerManager getPlayManager(int videoType) {
         switch (videoType) {
             case VideoType.IJKEXOPLAYER2:
-                return new EXO2PlayerManager();
+//                return new EXO2PlayerManager();
             case VideoType.SYSTEMPLAYER:
                 return new SystemPlayerManager();
             case VideoType.IJKPLAYER:

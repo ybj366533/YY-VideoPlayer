@@ -25,15 +25,20 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.TextureView;
 
+import androidx.annotation.Nullable;
+
 import com.google.android.exoplayer2.C;
+import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.PlayerMessage;
 import com.google.android.exoplayer2.Renderer;
 import com.google.android.exoplayer2.RenderersFactory;
+import com.google.android.exoplayer2.SeekParameters;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.audio.AudioAttributes;
 import com.google.android.exoplayer2.audio.AudioRendererEventListener;
@@ -445,6 +450,40 @@ public class SimpleExoPlayer2 implements ExoPlayer {
   }
 
   @Override
+  public void retry() {
+
+  }
+
+  @Nullable
+  @Override
+  public AudioComponent getAudioComponent() {
+    return null;
+  }
+
+  @Nullable
+  @Override
+  public VideoComponent getVideoComponent() {
+    return null;
+  }
+
+  @Nullable
+  @Override
+  public TextComponent getTextComponent() {
+    return null;
+  }
+
+  @Nullable
+  @Override
+  public MetadataComponent getMetadataComponent() {
+    return null;
+  }
+
+  @Override
+  public Looper getApplicationLooper() {
+    return null;
+  }
+
+  @Override
   public void addListener(Player.EventListener listener) {
     player.addListener(listener);
   }
@@ -459,6 +498,12 @@ public class SimpleExoPlayer2 implements ExoPlayer {
     return player.getPlaybackState();
   }
 
+  @Nullable
+  @Override
+  public ExoPlaybackException getPlaybackError() {
+    return null;
+  }
+
   @Override
   public void prepare(MediaSource mediaSource) {
     player.prepare(mediaSource);
@@ -467,6 +512,11 @@ public class SimpleExoPlayer2 implements ExoPlayer {
   @Override
   public void prepare(MediaSource mediaSource, boolean resetPosition, boolean resetState) {
     player.prepare(mediaSource, resetPosition, resetState);
+  }
+
+  @Override
+  public PlayerMessage createMessage(PlayerMessage.Target target) {
+    return null;
   }
 
   @Override
@@ -526,6 +576,26 @@ public class SimpleExoPlayer2 implements ExoPlayer {
   }
 
   @Override
+  public boolean hasPrevious() {
+    return false;
+  }
+
+  @Override
+  public void previous() {
+
+  }
+
+  @Override
+  public boolean hasNext() {
+    return false;
+  }
+
+  @Override
+  public void next() {
+
+  }
+
+  @Override
   public void setPlaybackParameters(PlaybackParameters playbackParameters) {
     player.setPlaybackParameters(playbackParameters);
   }
@@ -538,6 +608,11 @@ public class SimpleExoPlayer2 implements ExoPlayer {
   @Override
   public void stop() {
     player.stop();
+  }
+
+  @Override
+  public void stop(boolean reset) {
+
   }
 
   @Override
@@ -560,6 +635,21 @@ public class SimpleExoPlayer2 implements ExoPlayer {
   @Override
   public void blockingSendMessages(ExoPlayerMessage... messages) {
     player.blockingSendMessages(messages);
+  }
+
+  @Override
+  public void setSeekParameters(@Nullable SeekParameters seekParameters) {
+
+  }
+
+  @Override
+  public SeekParameters getSeekParameters() {
+    return null;
+  }
+
+  @Override
+  public void setForegroundMode(boolean foregroundMode) {
+
   }
 
   @Override
@@ -612,6 +702,12 @@ public class SimpleExoPlayer2 implements ExoPlayer {
     return player.getPreviousWindowIndex();
   }
 
+  @Nullable
+  @Override
+  public Object getCurrentTag() {
+    return null;
+  }
+
   @Override
   public long getDuration() {
     return player.getDuration();
@@ -630,6 +726,11 @@ public class SimpleExoPlayer2 implements ExoPlayer {
   @Override
   public int getBufferedPercentage() {
     return player.getBufferedPercentage();
+  }
+
+  @Override
+  public long getTotalBufferedDuration() {
+    return 0;
   }
 
   @Override
@@ -658,8 +759,18 @@ public class SimpleExoPlayer2 implements ExoPlayer {
   }
 
   @Override
+  public long getContentDuration() {
+    return 0;
+  }
+
+  @Override
   public long getContentPosition() {
     return player.getContentPosition();
+  }
+
+  @Override
+  public long getContentBufferedPosition() {
+    return 0;
   }
 
   // Internal methods.

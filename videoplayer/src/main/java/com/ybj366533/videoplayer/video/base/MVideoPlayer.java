@@ -17,7 +17,6 @@ import com.ybj366533.videoplayer.utils.CommonUtil;
 import com.ybj366533.videoplayer.utils.Debuger;
 import com.ybj366533.videoplayer.utils.OrientationUtils;
 import com.ybj366533.videoplayer.view.SmallVideoTouch;
-import com.transitionseverywhere.TransitionManager;
 
 import java.lang.reflect.Constructor;
 
@@ -412,7 +411,6 @@ public abstract class MVideoPlayer extends MVideoControlView {
             //如果暂停了
             pauseFullBackCoverLogic(mVideoPlayer);
             if (mShowFullAnimation) {
-                TransitionManager.beginDelayedTransition(vp);
 
                 FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mVideoPlayer.getLayoutParams();
                 lp.setMargins(mListItemRect[0], mListItemRect[1], 0, 0);
@@ -660,7 +658,6 @@ public abstract class MVideoPlayer extends MVideoControlView {
                 postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        TransitionManager.beginDelayedTransition(vp);
                         resolveFullVideoShow(context, mVideoPlayer, frameLayout);
                     }
                 }, 300);

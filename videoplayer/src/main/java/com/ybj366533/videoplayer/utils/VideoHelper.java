@@ -20,7 +20,6 @@ import com.ybj366533.videoplayer.render.view.MiguVideoGLView;
 import com.ybj366533.videoplayer.video.StandardVideoPlayer;
 import com.ybj366533.videoplayer.video.base.MVideoPlayer;
 import com.ybj366533.videoplayer.video.base.BaseVideoPlayer;
-import com.transitionseverywhere.TransitionManager;
 
 import java.io.File;
 import java.util.Map;
@@ -187,11 +186,6 @@ public class VideoHelper {
             @Override
             public void run() {
                 //开始动画
-                if (mFullViewContainer != null) {
-                    TransitionManager.beginDelayedTransition(mFullViewContainer);
-                } else {
-                    TransitionManager.beginDelayedTransition(mWindowViewContainer);
-                }
                 resolveMaterialFullVideoShow(mGsyVideoPlayer);
                 resolveChangeFirstLogic(600);
             }
@@ -262,7 +256,7 @@ public class VideoHelper {
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    TransitionManager.beginDelayedTransition(mFullViewContainer);
+
                     FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) gsyVideoPlayer.getLayoutParams();
                     lp.setMargins(mNormalItemRect[0], mNormalItemRect[1], 0, 0);
                     lp.width = mNormalItemSize[0];

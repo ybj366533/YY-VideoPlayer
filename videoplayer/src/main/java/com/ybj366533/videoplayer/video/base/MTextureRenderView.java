@@ -2,14 +2,15 @@ package com.ybj366533.videoplayer.video.base;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.annotation.AttrRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import androidx.annotation.AttrRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.ybj366533.videoplayer.render.RenderView;
 import com.ybj366533.videoplayer.render.effect.NoEffect;

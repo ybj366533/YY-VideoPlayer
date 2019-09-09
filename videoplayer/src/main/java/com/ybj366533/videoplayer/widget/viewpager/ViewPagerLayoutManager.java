@@ -1,10 +1,11 @@
 package com.ybj366533.videoplayer.widget.viewpager;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PagerSnapHelper;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ViewPagerLayoutManager extends LinearLayoutManager {
     private static final String TAG = "ViewPagerLayoutManager";
