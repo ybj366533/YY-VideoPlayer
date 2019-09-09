@@ -25,12 +25,12 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
-    api rootProject.ext.dependencies['appcompat-v7']
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation rootProject.ext.dependencies['appcompat-v7']
 //    api rootProject.ext.dependencies['ijkplayer_java']
-    api rootProject.ext.dependencies['exo_player2']
-    api rootProject.ext.dependencies['exo_player2_rtmp']
+    implementation rootProject.ext.dependencies['exo_player2']
+    implementation rootProject.ext.dependencies['exo_player2_rtmp']
     implementation project(':videoplayer-java')
-
+    testImplementation 'junit:junit:4.12'
 
 }
