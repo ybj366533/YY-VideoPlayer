@@ -10,7 +10,10 @@ android {
 
         versionCode 1
         versionName "1.0"
-
+        ndk {
+            //设置支持的SO库架构
+            abiFilters  'armeabi-v7a', 'arm64-v8a'
+        }
 
     }
     buildTypes {
@@ -31,15 +34,9 @@ dependencies {
 
     api rootProject.ext.dependencies['appcompat-v7']
     api rootProject.ext.dependencies['recyclerview-v7']
-//    api rootProject.ext.dependencies['ijkplayer_java']
     api rootProject.ext.dependencies['ijkplayer_armv7a']
-    api rootProject.ext.dependencies['ijkplayer_armv5']
     api rootProject.ext.dependencies['ijkplayer_arm64']
-    api rootProject.ext.dependencies['ijkplayer_x86_64']
-    api rootProject.ext.dependencies['ijkplayer_x86']
-//    api rootProject.ext.dependencies['ijkplayer_exo']
     api rootProject.ext.dependencies['transitions_everywhere']
-
     api project(':videoplayer-videocache')
     api project(':videoplayer-java')
     api project(':videoplayer-exo2')
